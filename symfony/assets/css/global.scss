@@ -2,4 +2,6 @@ $roboto-font-path: "~materialize-css/dist/fonts/roboto/" !default;
 
 @import "~materialize-css/sass/materialize";
 
+@import "components/spacing";
 @import "components/icons";
+@import "components/alerts";

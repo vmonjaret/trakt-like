@@ -26,14 +26,14 @@
             <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
         </div>
         <div class="right">
-            <a class='pink-text' href='{{ path('fos_user_resetting_request') }}'><b>Mot de passe oublié?</b></a>
+            <a class='red-text' href='{{ path('fos_user_resetting_request') }}'>Mot de passe oublié?</a>
         </div>
     </div>
 
     <br/>
     <div class="center-align">
         <div class='row'>
-            <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'>
+            <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect'>
                 {{ 'security.login.submit'|trans }}
             </button>
         </div>

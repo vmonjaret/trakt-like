@@ -1,0 +1,19 @@
+@import "~materialize-css/sass/components/color";
+
+// 1. Colors
+// ==========================================================================
+
+$primary-color: color("grey", "darken-4") !default;
+$primary-color-light: lighten($primary-color, 15%) !default;
+$primary-color-dark: darken($primary-color, 15%) !default;
+
+$secondary-color: color("yellow", "darken-2") !default;
+$success-color: color("green", "base") !default;
+$error-color: color("red", "base") !default;
+$link-color: #fff !default;
+
+// 2. Typo
+// ==========================================================================
+
+$roboto-font-path: "~materialize-css/dist/fonts/roboto/" !default;
+$material-font-path: "~material-design-icons/iconfont/";

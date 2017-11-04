@@ -1,0 +1,24 @@
+.brand_nav_right {
+  position: absolute;
+  right: 50%;
+  margin-right: 40px; top: 0;
+}
+
+.brand_nav_left {
+  position: absolute;
+  left: 50%;
+  margin-left: 40px; top: 0
+}
+
+.nav-wrapper {
+  text-transform: uppercase;
+}
+
+.nav-wrapper form.search_form {
+  display: inline-block;
+  vertical-align: top;
+
+  .input-field input[type=search] + label {
+    top: -0.5em !important;
+  }
+}

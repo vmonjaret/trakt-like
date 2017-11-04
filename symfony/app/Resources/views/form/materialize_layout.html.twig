@@ -13,8 +13,23 @@
 {% block form_widget_simple %}
     {% if type is not defined or type not in ['file', 'hidden'] %}
         {%- set attr = attr|merge({class: (attr.class|default(''))|trim}) -%}
+        {{- parent() -}}
+    {% elseif type == 'file' %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <div class="file-field">
+            <div class="btn">
+                <span>{{ label }}</span>
+                {{- parent() -}}
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+        </div>
+    {% else %}
+        {{- parent() -}}
     {% endif %}
-    {{- parent() -}}
     {% if tooltip is defined %}
         <span class="material-icons dp48 tooltipped"
               data-position="bottom" data-delay="50" data-tooltip="{{ tooltip }}">error
@@ -36,7 +51,8 @@
 {%- endblock checkbox_row %}
 
 {% block checkbox_widget -%}
-    <input type="checkbox" class="filled-in"{{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+    <input type="checkbox"
+           class="filled-in"{{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
 {%- endblock checkbox_widget %}
 
 {# Checkbox label is raw here #}
@@ -103,3 +119,26 @@
         </ul>
     {%- endif -%}
 {%- endblock form_errors -%}
+
+{% block vich_image_widget %}
+    {% spaceless %}
+        <div class="row">
+            {% if image_uri %}
+                <div class="col s6">
+                    <a href="{{ image_uri }}"><img src="{{ image_uri }}" class="circle" alt="" height="100px"/></a>
+                </div>
+            {% endif %}
+            <div class="col s6">
+                {% if form.delete is defined %}
+                    {{ form_row(form.delete) }}
+                {% endif %}
+                {% if download_uri %}
+                    <a href="{{ download_uri }}">{{ translation_domain is same as(false) ? download_label : download_label|trans({}, translation_domain) }}</a>
+                {% endif %}
+            </div>
+            <div class="col s12">
+                {{ form_widget(form.file) }}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}

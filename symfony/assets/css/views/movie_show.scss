@@ -1,0 +1,41 @@
+.actor_container{
+  .card-content {
+    padding: 1em 0.5em;
+  }
+  .actor_name {
+    font-weight: bold;
+  }
+  .actor_role {
+    font-size: 0.9em;
+  }
+}
+
+.avatar_comments_container{
+  padding: 0;
+  width: 84px !important;
+  height: 84px;
+  overflow: hidden;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.comments_container_movieShowPage {
+  padding: 2em 0;
+  background-color: #000000;
+  color: #ffffff;
+
+  .title_comments {
+    font-weight: bold;
+  }
+  
+  h5 {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 0;
+  }
+
+  a {
+    color: gold;
+  }
+}

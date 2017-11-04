@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Movie</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ movie.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ movie.title }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ movie.slug }}</td>
+            </tr>
+            <tr>
+                <th>Releasedate</th>
+                <td>{% if movie.releaseDate %}{{ movie.releaseDate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Runtime</th>
+                <td>{{ movie.runtime }}</td>
+            </tr>
+            <tr>
+                <th>Shortplot</th>
+                <td>{{ movie.shortPlot }}</td>
+            </tr>
+            <tr>
+                <th>Longplot</th>
+                <td>{{ movie.longPlot }}</td>
+            </tr>
+            <tr>
+                <th>Poster</th>
+                <td>{{ movie.poster }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('movie_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

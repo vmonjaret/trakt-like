@@ -8,7 +8,7 @@
                 <img src="{{ movie.poster }}" alt="" class="col l4 pl-0">
                 <div class="col l8">
                     <div class="col l7">
-                        <h1 class="m-0 mb-2" style="font-size: 2em;">{{ movie.title }} {% if movie.releaseDate %}({{ movie.releaseDate|date('Y-m-d') }}){% endif %}</h1>
+                        <h1 class="m-0 mb-2" style="font-size: 2em;">{{ movie.title }} {% if movie.releaseDate %}({{ movie.releaseDate|date('d/m/Y') }}){% endif %}</h1>
                         <p class="m-0">Durée : {{ movie.runtime }} min</p>
                         <p class="m-0">Genres : </p>
                         <p class="m-0">Langue originale : Anglais</p>
@@ -153,7 +153,7 @@
             <div>
                 <div class="col l4 p-0 movie_vignette">
                     <div style="background-image: url('{{ asset('images/divergente.jpg') }}');"></div>
-                    <div>
+                    <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
                         <div>
                             <i class="small material-icons p-1 right">playlist_add</i>
                             <i class="small material-icons p-1 right">remove_red_eye</i>
@@ -167,7 +167,7 @@
 
                 <div class="col l4 p-0 movie_vignette">
                     <div style="background-image: url('{{ asset('images/starwars.jpg') }}');"></div>
-                    <div>
+                    <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
                         <div>
                             <i class="small material-icons p-1 right">playlist_add</i>
                             <i class="small material-icons p-1 right">remove_red_eye</i>
@@ -179,8 +179,8 @@
                     </div>
                 </div>
                 <div class="col l4 p-0 movie_vignette">
-                    <div style="background-image: url('{{ asset('images/deadpool.jpg') }}');"></div>
-                    <div>
+                    <div style="background-image: url('{{ movie.poster }}');"></div>
+                    <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
                         <div>
                             <i class="small material-icons p-1 right">playlist_add</i>
                             <i class="small material-icons p-1 right">remove_red_eye</i>
@@ -191,14 +191,7 @@
                         <p>Deadpool - 2012</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
-    <ul>
-        <li>
-            <a href="{{ path('movie_index') }}">Back to the list</a>
-        </li>
-    </ul>
 {% endblock %}

@@ -12,7 +12,7 @@
                         <p class="m-0">Durée : {{ movie.runtime }} min</p>
                         <p class="m-0">Genres : </p>
                         <p class="m-0">Langue originale : Anglais</p>
-                        <p>Spectateurs</p>
+                        <p class="watchers">Spectateurs</p>
                         <div>
                             <i class="tiny material-icons">grade</i>
                             <i class="tiny material-icons">grade</i>
@@ -28,20 +28,20 @@
                         <i class="small material-icons p-1 right">favorite</i>
                         <a class="waves-effect waves-light btn p-0 pl-2 pr-2 mt-2 right"><i class="material-icons left">shuffle</i>Film aléatoire</a>
                     </div>
-                    <div class="col l12">
+                    <div class="col l12 mt-3">
                         <h5 style="font-size: 1.5em">Synopsis et détails</h5>
                         <p>{{ movie.longPlot }}</p>
-                        <div>
-                            <div class="col l5">
-                                <span>Ma note</span>
-                                <i class="tiny material-icons">grade</i>
-                                <i class="tiny material-icons">grade</i>
-                                <i class="tiny material-icons">grade</i>
-                                <i class="tiny material-icons">grade</i>
-                                <i class="tiny material-icons">grade</i>
+                        <div class="mt-4">
+                            <div class="col l5 pl-0">
+                                <span>Ma note :</span>
+                                <i class="small material-icons user_rate">grade</i>
+                                <i class="small material-icons user_rate">grade</i>
+                                <i class="small material-icons user_rate">grade</i>
+                                <i class="small material-icons user_rate">grade</i>
+                                <i class="small material-icons user_rate">grade</i>
                             </div>
                             <div class="col l5">
-                                <a class="waves-effect waves-light btn p-0 pl-1 pr-1 mt-2 right" style="font-size: 0.9em; text-transform: none;"><i class="material-icons left m-0 mr-2">edit</i>Ajouter un commentaire</a>
+                                <a class="waves-effect waves-light btn p-0 pl-1 pr-1 right" style="font-size: 0.9em; text-transform: none;"><i class="material-icons left m-0 mr-2">edit</i>Ajouter un commentaire</a>
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
         <div class="row">
             <h4>Acteurs</h4>
             <div class="row actor_container mb-0">
-                <div class="col s12 m2">
+                <div class="col m4 l2">
                     <div class="card">
                         <div class="card-image">
                             <img src="{{ asset('images/gosling.png') }}">
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s12 m2">
+                <div class="col m4 l2">
                     <div class="card">
                         <div class="card-image">
                             <img src="{{ asset('images/armas.jpg') }}">
@@ -76,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s12 m2">
+                <div class="col m4 l2">
                     <div class="card">
                         <div class="card-image">
                             <img src="{{ asset('images/gosling.png') }}">
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s12 m2">
+                <div class="col m4 l2">
                     <div class="card">
                         <div class="card-image">
                             <img src="{{ asset('images/armas.jpg') }}">
@@ -143,6 +143,55 @@
                         <a href="" class="col l12 pl-0">Lire la suite</a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container pb-4 pt-4">
+        <div class="row">
+            <h5 class="pb-4">Nos recommendations</h5>
+            <div>
+                <div class="col l4 p-0 movie_vignette">
+                    <div style="background-image: url('{{ asset('images/divergente.jpg') }}');"></div>
+                    <div>
+                        <div>
+                            <i class="small material-icons p-1 right">playlist_add</i>
+                            <i class="small material-icons p-1 right">remove_red_eye</i>
+                            <i class="small material-icons p-1 right">favorite</i>
+                        </div>
+                    </div>
+                    <div>
+                        <p>Divergente - 2012</p>
+                    </div>
+                </div>
+
+                <div class="col l4 p-0 movie_vignette">
+                    <div style="background-image: url('{{ asset('images/starwars.jpg') }}');"></div>
+                    <div>
+                        <div>
+                            <i class="small material-icons p-1 right">playlist_add</i>
+                            <i class="small material-icons p-1 right">remove_red_eye</i>
+                            <i class="small material-icons p-1 right">favorite</i>
+                        </div>
+                    </div>
+                    <div>
+                        <p>Star Wars Episode III - 1997</p>
+                    </div>
+                </div>
+                <div class="col l4 p-0 movie_vignette">
+                    <div style="background-image: url('{{ asset('images/deadpool.jpg') }}');"></div>
+                    <div>
+                        <div>
+                            <i class="small material-icons p-1 right">playlist_add</i>
+                            <i class="small material-icons p-1 right">remove_red_eye</i>
+                            <i class="small material-icons p-1 right">favorite</i>
+                        </div>
+                    </div>
+                    <div>
+                        <p>Deadpool - 2012</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

@@ -40,3 +40,7 @@ services:
         arguments: ['@router']
         tags:
             - { name: kernel.event_subscriber }
+
+    AppBundle\Utils\MovieDb:
+        arguments:
+            $apiKey: %moviedb_api_key%

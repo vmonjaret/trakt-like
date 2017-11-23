@@ -2,7 +2,10 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Genre;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Movie
@@ -22,6 +25,13 @@ class Movie
     private $id;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="tm_db_id", type="integer")
+     */
+    private $tmDbId;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
@@ -31,6 +41,7 @@ class Movie
     /**
      * @var string
      *
+     * @Gedmo\Slug(fields={"title"}, updatable=false)
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
     private $slug;
@@ -38,30 +49,21 @@ class Movie
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="releaseDate", type="date")
+     * @ORM\Column(name="releaseDate", type="date", nullable=true)
      */
     private $releaseDate;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="runtime", type="integer")
+     * @ORM\Column(name="runtime", type="integer", nullable=true)
      */
     private $runtime;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="shortPlot", type="text")
+     * @ORM\Column(name="overview", type="text")
      */
-    private $shortPlot;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="longPlot", type="text")
-     */
-    private $longPlot;
+    private $overview;
 
     /**
      * @var string
@@ -70,6 +72,19 @@ class Movie
      */
     private $poster;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Genre", inversedBy="movies")
+     *
+     */
+    private $genres;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->genres = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -81,6 +96,27 @@ class Movie
         return $this->id;
     }
 
+
+    /**
+     * @param int $tmDbId
+     *
+     * @return Movie
+     */
+    public function setTmDbId( int $tmDbId ): Movie
+    {
+        $this->tmDbId = $tmDbId;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTmDbId(): int
+    {
+        return $this->tmDbId;
+    }
+
     /**
      * Set title
      *
@@ -88,7 +124,7 @@ class Movie
      *
      * @return Movie
      */
-    public function setTitle($title)
+    public function setTitle( $title )
     {
         $this->title = $title;
 
@@ -112,7 +148,7 @@ class Movie
      *
      * @return Movie
      */
-    public function setSlug($slug)
+    public function setSlug( $slug )
     {
         $this->slug = $slug;
 
@@ -136,7 +172,7 @@ class Movie
      *
      * @return Movie
      */
-    public function setReleaseDate($releaseDate)
+    public function setReleaseDate( $releaseDate )
     {
         $this->releaseDate = $releaseDate;
 
@@ -160,7 +196,7 @@ class Movie
      *
      * @return Movie
      */
-    public function setRuntime($runtime)
+    public function setRuntime( $runtime )
     {
         $this->runtime = $runtime;
 
@@ -177,52 +213,28 @@ class Movie
         return $this->runtime;
     }
 
+
     /**
-     * Set shortPlot
+     * Set overview
      *
-     * @param string $shortPlot
-     *
+     * @param mixed $overview
      * @return Movie
      */
-    public function setShortPlot($shortPlot)
+    public function setOverview( $overview )
     {
-        $this->shortPlot = $shortPlot;
+        $this->overview = $overview;
 
         return $this;
     }
 
     /**
-     * Get shortPlot
+     * Get overview
      *
-     * @return string
+     * @return mixed
      */
-    public function getShortPlot()
+    public function getOverview()
     {
-        return $this->shortPlot;
-    }
-
-    /**
-     * Set longPlot
-     *
-     * @param string $longPlot
-     *
-     * @return Movie
-     */
-    public function setLongPlot($longPlot)
-    {
-        $this->longPlot = $longPlot;
-
-        return $this;
-    }
-
-    /**
-     * Get longPlot
-     *
-     * @return string
-     */
-    public function getLongPlot()
-    {
-        return $this->longPlot;
+        return $this->overview;
     }
 
     /**
@@ -232,9 +244,9 @@ class Movie
      *
      * @return Movie
      */
-    public function setPoster($poster)
+    public function setPoster( $poster )
     {
-        $this->poster = $poster;
+        $this->poster = "https://image.tmdb.org/t/p/w500" . $poster;
 
         return $this;
     }
@@ -248,5 +260,38 @@ class Movie
     {
         return $this->poster;
     }
-}
 
+    /**
+     * Add genre
+     *
+     * @param Genre $genre
+     *
+     * @return Movie
+     */
+    public function addGenre( Genre $genre )
+    {
+        $this->genres[] = $genre;
+
+        return $this;
+    }
+
+    /**
+     * Remove genre
+     *
+     * @param Genre $genre
+     */
+    public function removeGenre( Genre $genre )
+    {
+        $this->genres->removeElement($genre);
+    }
+
+    /**
+     * Get genres
+     *
+     * @return Collection
+     */
+    public function getGenres()
+    {
+        return $this->genres;
+    }
+}

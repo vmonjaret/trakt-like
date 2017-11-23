@@ -40,12 +40,35 @@
                 <li><a href="{{ path('fos_user_security_login') }}"><i class="material-icons hide-on-large-only">account_circle</i> <span class="hide-on-med-and-down">Connexion</span></a></li>
             </ul>
         </div>
-    </nav>
+    </nav>+
 </header>
 
 {% block body %}{% endblock %}
 {% block javascripts %}
     <script src="{{ asset('build/app.js') }}"></script>
 {% endblock %}
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l2 s12">
+                    <h6 class="white-text"><a href="">A propos</a></h6>
+                </div>
+                <div class="col l2 s12">
+                    <h6 class="white-text"><a href="">Aide</a></h6>
+                </div>
+                <div class="col l3 s12">
+                    <h6 class="white-text"><a href="">Conditions d'utilisation</a></h6>
+                </div>
+                <div class="col l3 s12">
+                    <h6 class="white-text"><a href="">Politique de confidentialité</a></h6>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2017 Random Movie. All rights reserved.
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

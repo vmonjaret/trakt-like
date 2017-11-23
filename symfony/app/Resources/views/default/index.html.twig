@@ -2,14 +2,27 @@
 
 {% block body %}
 
-    <div id="presentation_container">
+    <div id="presentation_container_homePage">
         <div class="presentation_description">
             <h1>Random Movie</h1>
-            <p>A cours d'idée pour vos soirées ? </p>
+            <p>A cours d'idée pour vos soirées ?</p>
             <p>Nous nous occupons de tout !</p>
             <a href="{{ path('fos_user_registration_register') }}" class="btn">Rejoins la communauté</a>
         </div>
         <img src="{{ asset('images/dark_vador_homepage.jpg') }}" alt="">
+    </div>
+
+    <div id="find_idea_homePage">
+        <h2>Trouvez facilement des idées</h2>
+        <p>Nous vous recommandons personnellement des films, en plus de voir ce que vos amis regarde en ce moment !</p>
+
+        <div class="images">
+            <img src="{{ asset('images/deadpool.jpg') }}" alt=""><!--
+            --><img src="{{ asset('images/divergente.jpg') }}" alt=""><!--
+            --><img src="{{ asset('images/starwars.jpg') }}" alt=""><!--
+             --><img src="{{ asset('images/deadpool.jpg') }}" alt=""><!--
+             --><img src="{{ asset('images/divergente.jpg') }}" alt="">
+        </div>
     </div>
 
 {% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div>
+        <div class="row mb-0" style="background-color: black;">
+
+            <div class="col l3" style="position: fixed; color: #ffffff;">
+                <ul>
+                    <li>Best</li>
+                </ul>
+            </div>
+            <div class="col l9 p-0 offset-l3">
+                {% for movie in movies %}
+                    <!-- shortPlot -->
+                    <div class="col l4 p-0 movie_vignette">
+                        <div style="background-image: url('{{ movie.poster }}');"></div>
+                            <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
+                                <div>
+                                    <i class="small material-icons p-1 right"><a href="#1">playlist_add</a></i>
+                                    <i class="small material-icons p-1 right"><a href="#1">remove_red_eye</a></i>
+                                    <i class="small material-icons p-1 right"><a href="#1">favorite</a></i>
+                                </div>
+                            </div>
+                        <div>
+                            <p>{{ movie.title }} {% if movie.releaseDate %}- {{ movie.releaseDate|date('Y') }}{% endif %}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    
+{% endblock %}
+
+
+{% block javascripts %}
+
+{% endblock %}

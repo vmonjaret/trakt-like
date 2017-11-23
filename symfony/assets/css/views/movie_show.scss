@@ -49,10 +49,15 @@
   }
 }
 
+/** MOVIE INDEX **/
 .movie_vignette {
   position: relative;
   border-bottom: solid 1px #2d2d2d;
   border-right: solid 1px #2d2d2d;
+  background-color: #000000;
+  color: #ffffff;
+  margin: 0;
+  height: 290px;
 
   &>div:first-child {
     width:100%;
@@ -73,24 +78,46 @@
     &:hover {
       opacity: 1;
       background-color: rgba(0,0,0,0.7);
+      cursor: pointer;
+    }
+
+    i:hover {
+      cursor: pointer;
     }
   }
-  &>div:last-child {
-    background-color: #000;
+  &>div.movie_title {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 0 !important;
+
+    p {
+      width: 85%;
+      display: inline-block;
+      vertical-align: top;
+      padding-top: 0.1em;
+      padding-left: 0.5em;
+    }
+
+    i {
+      float: right !important;
+      margin: 0;
+      padding-top: 0 !important;
+      color: #ffffff;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  &>div.movie_title, div.card-reveal {
+    background-color: #000000;
     color: #ffffff;
     padding: 0.5em;
 
     p {
-      font-size: 0.8em;
+      font-size: 1em;
       margin: 0;
-    }
-  }
-
-  i {
-    color: #ffffff;
-
-    &:hover {
-      cursor: pointer;
     }
   }
 }

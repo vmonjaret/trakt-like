@@ -41,6 +41,6 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    AppBundle\Utils\MovieDb:
+    AppBundle\Utils\Api:
         arguments:
             $apiKey: %moviedb_api_key%

@@ -2,12 +2,12 @@
 
 namespace AppBundle\Utils;
 
-class MovieDb
+class TvDb
 {
     private $api;
 
     /**
-     * MovieDb constructor.
+     * TvDb constructor.
      * @param $api
      */
     public function __construct( Api $api )
@@ -15,24 +15,24 @@ class MovieDb
         $this->api = $api;
     }
 
-    public function searchMovie( string $query, string $language = 'fr-FR' ): array
+    public function searchTv( string $query, string $language = 'fr-FR' ): array
     {
         $query = urlencode($query);
-        $url = "search/movie?language={$language}&query={$query}";
+        $url = "search/tv?language={$language}&query={$query}";
 
         return $this->api->callForTMDb($url)[ 'results' ];
     }
 
-    public function getMovieDetails( int $tmdbId, string $language = 'fr-FR'): array
+    public function getTvDetails( int $tmdbId, string $language = 'fr-FR'): array
     {
-        $url = "movie/{$tmdbId}?language={$language}";
+        $url = "tv/{$tmdbId}?language={$language}";
 
         return $this->api->callForTMDb($url);
     }
 
     public function getGenres( string $language = 'fr-FR' ): array
     {
-        $url = "genre/movie/list?language={$language}";
+        $url = "genre/tv/list?language={$language}";
 
         return $this->api->callForTMDb($url)['genres'];
     }

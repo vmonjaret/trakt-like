@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Front;
 
 use AppBundle\Entity\Movie;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -26,7 +26,7 @@ class MovieController extends Controller
 
         $movies = $em->getRepository('AppBundle:Movie')->findAll();
 
-        return $this->render('movie/index.html.twig', array(
+        return $this->render('front/movie/index.html.twig', array(
             'movies' => $movies,
         ));
     }
@@ -40,7 +40,7 @@ class MovieController extends Controller
     public function showAction(Movie $movie)
     {
 
-        return $this->render('movie/show.html.twig', array(
+        return $this->render('front/movie/show.html.twig', array(
             'movie' => $movie,
         ));
     }

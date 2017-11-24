@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Front;
 
 use AppBundle\Manager\MovieManager;
 use AppBundle\Utils\MovieDb;
@@ -15,7 +15,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request, MovieDb $movieDb, MovieManager $movieManager)
     {
-        return $this->render('default/index.html.twig', [
+        return $this->render('front/default/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
         ]);
     }

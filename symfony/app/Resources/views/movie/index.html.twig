@@ -6,15 +6,19 @@
         <div class="row mb-0" style="background-color: black;">
 
             <div class="col l3" style="position: fixed; color: #ffffff;">
-                <form action="">
+                <form action="" class="mt-2">
                     <select name="" id="" style="display: block; color: #000000;">
                         <option value="">Genres</option>
                         <option value="">Action</option>
                         <option value="">Aventure</option>
                         <option value="">Fantastique</option>
                     </select>
-                    <input type="date">
-                </form>
+                    <div class="input-field col s6">
+                        <input type="date">
+                    </div>
+                    <div class="input-field col s6">
+                        <input type="date">
+                    </div>
                 <ul>
                     <li style="margin: 1em 0; text-transform: uppercase;  font-size: 1.2em;"><a href="">Les plus populaires</a></li>
                     <li style="margin: 1em 0; text-transform: uppercase;  font-size: 1.2em;"><a href="">Derniers ajouts</a></li>
@@ -25,13 +29,13 @@
                     <!-- shortPlot -->
                     <div class="col l4 p-0 movie_vignette card">
                         <div style="background-image: url('{{ movie.poster }}');"></div>
-                            <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
-                                <div>
-                                    <i class="small material-icons p-1 right"><a href="/index">playlist_add</a></i>
-                                    <i class="small material-icons p-1 right"><a href="/a">remove_red_eye</a></i>
-                                    <i class="small material-icons p-1 right"><a href="/about">favorite</a></i>
-                                </div>
+                        <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
+                            <div>
+                                <i class="small material-icons p-1 right"><a href="/index">playlist_add</a></i>
+                                <i class="small material-icons p-1 right"><a href="/a">remove_red_eye</a></i>
+                                <i class="small material-icons p-1 right"><a href="/about">favorite</a></i>
                             </div>
+                        </div>
                         <div class="movie_title">
                             <p>{{ movie.title }} {% if movie.releaseDate %}- {{ movie.releaseDate|date('Y') }}{% endif %}</p>
                             <i class="small material-icons p-1 right activator">more_vert</i>
@@ -56,12 +60,5 @@
             </div>
         </div>
     </div>
-
-
     
-{% endblock %}
-
-
-{% block javascripts %}
-    {{ parent() }}
 {% endblock %}

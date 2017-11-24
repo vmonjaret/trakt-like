@@ -5,7 +5,7 @@
     <div style="background-color: rgba(255, 40, 50, 0.9)">
         <div class="container pt-5 pb-4">
             <div class="row">
-                <img src="{{ movie.poster }}" alt="" class="col l4 pl-0">
+                <img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="col l4 pl-0">
                 <div class="col l8">
                     <div class="col l7">
                         <h1 class="m-0 mb-2" style="font-size: 2em;">{{ movie.title }} {% if movie.releaseDate %}({{ movie.releaseDate|date('d/m/Y') }}){% endif %}</h1>
@@ -57,11 +57,11 @@
                 <div class="col m4 l2">
                     <div class="card">
                         <div class="card-image">
-                            <img src="{{ asset('images/gosling.png') }}">
+                            <img src="{{ asset('images/ryan_reynolds.jpg') }}" alt="Acteur {{ movie.title }}">
                         </div>
                         <div class="card-content">
-                            <p class="actor_name">Ryan Gosling</p>
-                            <p class="actor_role">K</p>
+                            <p class="actor_name">Ryan Reynolds</p>
+                            <p class="actor_role">Wade Wilson</p>
                         </div>
                     </div>
                 </div>
@@ -90,11 +90,11 @@
                 <div class="col m4 l2">
                     <div class="card">
                         <div class="card-image">
-                            <img src="{{ asset('images/armas.jpg') }}">
+                            <img src="{{ asset('images/ryan_reynolds.jpg') }}" alt="Acteur {{ movie.title }}">
                         </div>
                         <div class="card-content">
-                            <p class="actor_name">Harrison Ford</p>
-                            <p class="actor_role">Rick Deckard</p>
+                            <p class="actor_name">Ryan Reynolds</p>
+                            <p class="actor_role">Deadpool</p>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                 <a href="" class="right">Voir tous les commentaires</a>
                 <div>
                     <div class="col l6 pl-0">
-                        <div class="avatar_comments_container col l3" style="background-image: url('{{ asset('images/gosling.png') }}');"></div>
+                        <div class="avatar_comments_container col l3" style="background-image: url('{{ asset('images/ryan_reynolds.jpg') }}');"></div>
                         <div class="col l9">
                             <p class="title_comments m-0">Commentaire positif le plus utile</p>
                             <p class="m-0">Par Ryan1552, le 10/10/2017</p>
@@ -151,7 +151,7 @@
         <div class="row">
             <h5 class="pb-4">Nos recommendations</h5>
             <div>
-                <div class="col l4 p-0 movie_vignette">
+                <div class="col l4 p-0 movie_vignette card">
                     <div style="background-image: url('{{ asset('images/divergente.jpg') }}');"></div>
                     <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
                         <div>
@@ -160,12 +160,17 @@
                             <i class="small material-icons p-1 right">favorite</i>
                         </div>
                     </div>
-                    <div>
+                    <div class="movie_title">
                         <p>Divergente - 2012</p>
+                        <i class="small material-icons p-1 right activator">more_vert</i>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title gre-text text-darken-4">Divergente <i class="material-icons right">close</i> </span>
+                        <p>Un peu de texte</p>
                     </div>
                 </div>
 
-                <div class="col l4 p-0 movie_vignette">
+                <div class="col l4 p-0 movie_vignette card">
                     <div style="background-image: url('{{ asset('images/starwars.jpg') }}');"></div>
                     <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
                         <div>
@@ -174,11 +179,16 @@
                             <i class="small material-icons p-1 right">favorite</i>
                         </div>
                     </div>
-                    <div>
+                    <div class="movie_title">
                         <p>Star Wars Episode III - 1997</p>
+                        <i class="small material-icons p-1 right activator">more_vert</i>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title gre-text text-darken-4">Divergente <i class="material-icons right">close</i> </span>
+                        <p>Un peu de texte</p>
                     </div>
                 </div>
-                <div class="col l4 p-0 movie_vignette">
+                <div class="col l4 p-0 movie_vignette card">
                     <div style="background-image: url('{{ movie.poster }}');"></div>
                     <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
                         <div>
@@ -187,8 +197,13 @@
                             <i class="small material-icons p-1 right">favorite</i>
                         </div>
                     </div>
-                    <div>
+                    <div class="movie_title">
                         <p>Deadpool - 2012</p>
+                        <i class="small material-icons p-1 right activator">more_vert</i>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title gre-text text-darken-4">Divergente <i class="material-icons right">close</i> </span>
+                        <p>Un peu de texte</p>
                     </div>
                 </div>
             </div>

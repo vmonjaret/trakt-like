@@ -28,20 +28,34 @@
                 <li><a href="sass.html">Series</a></li>
             </ul>
             <ul class="hide-on-med-and-down brand_nav_left">
-                <li><a href="badges.html">Films</a></li>
+                <li><a href="{{ path('movie_index') }}">Films</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
                 <li><a href="sass.html">Series</a></li>
-                <li><a href="badges.html">Films</a></li>
+                <li><a href="{{ path('movie_index') }}">Films</a></li>
             </ul>
 
-            <a href="#" class="brand-logo center"> <img src="{{ asset('images/logo.png') }}" alt="Logo Random Movie"></a>
+            <a href="#" class="brand-logo center">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo Random Movie">
+            </a>
 
             <ul class="right">
-                <li><a href="{{ path('fos_user_security_login') }}"><i class="material-icons hide-on-large-only">account_circle</i> <span class="hide-on-med-and-down">Connexion</span></a></li>
+                <li>
+                    {% if app.user %}
+                        {# TODO: beautify this #}
+                        <img src="{{ app.user.avatar ? app.user.avatar : asset('images/avatar_default.jpg') }}"
+                             alt="{{ app.user.username }}" class="circle" width="50px">
+                        <span>{{ app.user.username }}</span>
+                    {% else %}
+                        <a href="{{ path('fos_user_security_login') }}">
+                            <i class="material-icons hide-on-large-only">account_circle</i>
+                            <span class="hide-on-med-and-down">Connexion</span>
+                        </a>
+                    {% endif %}
+                </li>
             </ul>
         </div>
-    </nav>+
+    </nav>
 </header>
 
 {% block body %}{% endblock %}
@@ -72,5 +86,6 @@
 {% block javascripts %}
     <script src="{{ asset('build/app.js') }}"></script>
 {% endblock %}
+
 </body>
 </html>

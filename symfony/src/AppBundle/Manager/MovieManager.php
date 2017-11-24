@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManager;
 
 class MovieManager
 {
-    
+
     private $em;
 
     /**
@@ -20,27 +20,35 @@ class MovieManager
         $this->em = $em;
     }
 
-    public function createFromArray( array $request ): Movie
+    /**
+     * @param array $request
+     * @return Movie|null
+     */
+    public function createFromArray( array $request )
     {
-        $movie = new Movie();
+        if ($request['poster_path'] != '' && $request['release_date'] != '' && $request['overview'] != '') {
 
-        $movie->setTmDbId($request['id']);
-        $movie->setTitle($request['title']);
-        $movie->setPoster($request['poster_path']);
-        $movie->setOverview($request['overview']);
-        $movie->setRuntime($request['runtime']);
-        if ( $request['release_date'] !== '' ) {
-            $movie->setReleaseDate(\DateTime::createFromFormat('Y-m-d', $request['release_date']));
+            $movie = new Movie();
+
+            $movie->setTmDbId($request['id']);
+            $movie->setTitle($request['title']);
+            if ($request['poster_path'] !== '') {
+                $movie->setPoster($request['poster_path']);
+            }
+            $movie->setOverview($request['overview']);
+            $movie->setRuntime($request['runtime']);
+            if ( $request['release_date'] !== '' ) {
+                $movie->setReleaseDate(\DateTime::createFromFormat('Y-m-d', $request['release_date']));
+            }
+
+            foreach ( $request[ 'genres' ] as $genre ) {
+                $genre = $this->em->getRepository(Genre::class)->findOneByTmDbId($genre['id']);
+                $movie->addGenre($genre);
+            }
+
+            return $movie;
         }
 
-        foreach ( $request[ 'genres' ] as $genre ) {
-            $genre = $this->em->getRepository(Genre::class)->findOneByTmDbId($genre['id']);
-            $movie->addGenre($genre);
-        }
-
-        $this->em->persist($movie);
-        $this->em->flush();
-
-        return $movie;
+        return null;
     }
 }

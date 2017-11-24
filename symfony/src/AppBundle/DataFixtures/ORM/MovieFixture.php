@@ -25,23 +25,9 @@ class MovieFixture extends Fixture
      */
     public function load( ObjectManager $manager )
     {
-        $movieDb = $this->container->get(MovieDb::class);
-        $movieManager = $this->container->get(MovieManager::class);
-
-        $request = $movieDb->searchMovie('deadpool');
-
-        foreach ( $request as $movie ) {
-            $movie = $movieDb->getMovieDetails($movie['id']);
-            $movie = $movieManager->createFromArray($movie);
-            $manager->persist($movie);
-        }
-
-        $request = $movieDb->searchMovie('star wars');
-        foreach ( $request as $movie ) {
-            $movie = $movieDb->getMovieDetails($movie['id']);
-            $movie = $movieManager->createFromArray($movie);
-            $manager->persist($movie);
-        }
+        $this->createFromRequest('deadpool', $manager);
+        $this->createFromRequest('star wars', $manager);
+        $this->createFromRequest('hunger games', $manager);
 
         $manager->flush();
     }
@@ -51,5 +37,19 @@ class MovieFixture extends Fixture
         return [ GenreFixture::class ];
     }
 
+    private function createFromRequest( string $request, ObjectManager $manager )
+    {
+        $movieDb = $this->container->get(MovieDb::class);
+        $movieManager = $this->container->get(MovieManager::class);
+
+        $request = $movieDb->searchMovie($request);
+        foreach ( $request as $movie ) {
+            $movie = $movieDb->getMovieDetails($movie['id']);
+            $movie = $movieManager->createFromArray($movie);
+            if ($movie) {
+                $manager->persist($movie);
+            }
+        }
+    }
 
 }

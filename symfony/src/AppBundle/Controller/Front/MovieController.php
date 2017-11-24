@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Front;
 
 use AppBundle\Entity\Movie;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

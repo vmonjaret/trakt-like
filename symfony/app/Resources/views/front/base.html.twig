@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('build/global.css') }}">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
     <title>{% block meta_title %}Random Movie{% endblock %}</title>
@@ -27,15 +28,15 @@
                 <li><a href="sass.html">Series</a></li>
             </ul>
             <ul class="hide-on-med-and-down brand_nav_left">
-                <li><a href="badges.html">Films</a></li>
+                <li><a href="{{ path('movie_index') }}">Films</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
                 <li><a href="sass.html">Series</a></li>
-                <li><a href="badges.html">Films</a></li>
+                <li><a href="{{ path('movie_index') }}">Films</a></li>
             </ul>
 
             <a href="#" class="brand-logo center">
-                <img src="{{ asset('images/logo.png') }}" alt="" style="width: 80px; padding-top: 0.1em;">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo Random Movie">
             </a>
 
             <ul class="right">
@@ -58,9 +59,7 @@
 </header>
 
 {% block body %}{% endblock %}
-{% block javascripts %}
-    <script src="{{ asset('build/app.js') }}"></script>
-{% endblock %}
+
 <footer class="page-footer">
     <div class="container">
         <div class="row">
@@ -84,5 +83,9 @@
         </div>
     </div>
 </footer>
+{% block javascripts %}
+    <script src="{{ asset('build/app.js') }}"></script>
+{% endblock %}
+
 </body>
 </html>

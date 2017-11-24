@@ -15,8 +15,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request, MovieDb $movieDb, MovieManager $movieManager)
     {
-        die('toto');
-        return $this->render('default/index.html.twig', [
+        return $this->render('back/default/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
         ]);
     }

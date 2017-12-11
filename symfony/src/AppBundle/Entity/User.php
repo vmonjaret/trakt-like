@@ -35,6 +35,12 @@ class User extends BaseUser
     private $avatarFile;
 
     /**
+     * @var string
+     * @ORM\Column(name="background", type="string", length=255)
+     */
+    private $background = 'random';
+
+    /**
      * @var \DateTime
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
@@ -74,7 +80,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getAvatar()
+    public function getAvatar(): string
     {
         return $this->avatar;
     }
@@ -82,7 +88,7 @@ class User extends BaseUser
     /**
      * @param File $file
      */
-    public function setAvatarFile( File $file = null )
+    public function setAvatarFile( File $file = null ): User
     {
         $this->avatarFile = $file;
 
@@ -99,6 +105,25 @@ class User extends BaseUser
     public function getAvatarFile()
     {
         return $this->avatarFile;
+    }
+
+    /**
+     * @param string $background
+     * @return User
+     */
+    public function setBackground( string $background ): User
+    {
+        $this->background = $background;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBackground(): string
+    {
+        return $this->background;
     }
 
     /**

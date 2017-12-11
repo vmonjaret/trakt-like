@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import Trianglify from 'trianglify';
 
 require("materialize-css/dist/js/materialize");
 
@@ -13,15 +12,35 @@ $('body').on('click', '.alert .close', function () {
 });
 
 let triangles = $('.trianglify');
+let trianglesMin = $('.trianglify-min');
 
-if (triangles !== null) {
-    for (let tri of triangles) {
-        let pattern = Trianglify({
-            height   : tri.offsetHeight,
-            width    : tri.offsetWidth,
-            cell_size: 200
-        });
+if (triangles !== null || trianglesMin !== null) {
+    import('trianglify').then( Trianglify => {
+        for (let tri of triangles) {
+            setGeometricBackground(tri);
+        }
 
-        tri.style.backgroundImage = `url('${pattern.png()}')`
-    }
+        for (let tri of trianglesMin) {
+            setGeometricBackground(tri, 20);
+        }
+
+        function setGeometricBackground(element, size = 200) {
+            let pattern = Trianglify({
+                height   : element.offsetHeight,
+                width    : element.offsetWidth,
+                x_colors : $(element).data('trianglify') || 'random',
+                cell_size: size
+            });
+
+            element.style.backgroundImage = `url('${pattern.png()}')`;
+        }
+    });
+
+    $('.background-form-item').click( (event) => {
+        let elem = $(event.target);
+        let value = elem.data('trianglify');
+        $(`input[name="fos_user_profile_form[background]"]`).val([value]);
+        $('.background-form-item').removeClass('active');
+        elem.addClass('active');
+    })
 }

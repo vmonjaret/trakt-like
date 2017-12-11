@@ -1,6 +1,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div id="user_profile" class="trianglify">
+<div id="user_profile" class="trianglify" data-trianglify="{{ app.user.background }}">
     <div class="container">
         <a href="{{ path('fos_user_profile_edit') }}" class="btn right">Modifier</a>
         <img src="{{ getUserAvatar(app.user) }}" alt="{{ app.user.username }}" class="circle" height="100px">

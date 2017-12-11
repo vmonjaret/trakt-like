@@ -42,9 +42,7 @@
             <ul class="right">
                 <li>
                     {% if app.user %}
-                        {# TODO: beautify this #}
-                        <img src="{{ app.user.avatar ? app.user.avatar : asset('images/avatar_default.jpg') }}"
-                             alt="{{ app.user.username }}" class="circle" width="50px">
+                        <img src="{{ getUserAvatar(app.user) }}" alt="{{ app.user.username }}" class="circle" width="50px">
                         <span>{{ app.user.username }}</span>
                     {% else %}
                         <a href="{{ path('fos_user_security_login') }}">

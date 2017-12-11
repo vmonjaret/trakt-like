@@ -35,10 +35,22 @@ class User extends BaseUser
     private $avatarFile;
 
     /**
+     * @var string
+     * @ORM\Column(name="background", type="string", length=255)
+     */
+    private $background = 'random';
+
+    /**
      * @var \DateTime
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
 
     /**
      * User constructor.
@@ -46,6 +58,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
+        $this->createdAt = new \DateTime();
     }
 
     /**
@@ -67,7 +80,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getAvatar()
+    public function getAvatar(): string
     {
         return $this->avatar;
     }
@@ -75,7 +88,7 @@ class User extends BaseUser
     /**
      * @param File $file
      */
-    public function setAvatarFile( File $file = null )
+    public function setAvatarFile( File $file = null ): User
     {
         $this->avatarFile = $file;
 
@@ -95,6 +108,25 @@ class User extends BaseUser
     }
 
     /**
+     * @param string $background
+     * @return User
+     */
+    public function setBackground( string $background ): User
+    {
+        $this->background = $background;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBackground(): string
+    {
+        return $this->background;
+    }
+
+    /**
      * @param \DateTime $updatedAt
      */
     private function setUpdatedAt()
@@ -108,5 +140,13 @@ class User extends BaseUser
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
     }
 }

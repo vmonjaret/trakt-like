@@ -1,0 +1,13 @@
+$active-color: color("light-blue", "lighten-1") !default;
+
+.background-form-item {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 5px;
+  cursor: pointer;
+  &.active {
+    border: 3px solid $active-color;
+  }
+}

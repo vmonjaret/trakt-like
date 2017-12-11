@@ -142,3 +142,20 @@
         </div>
     {% endspaceless %}
 {% endblock %}
+
+{% block background_row -%}
+    <div class="row {% if not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        <div class="row mt-2">
+            {{ form_widget(form) }}
+        </div>
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock background_row %}
+
+{% block background_widget -%}
+    {% for child in form %}
+        <div class="trianglify-min background-form-item" data-trianglify="{{ child.vars.value }}"></div>
+        <input type="radio" class="hide" {{ block('widget_attributes') }}{% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %} />
+    {% endfor %}
+{%- endblock background_widget %}

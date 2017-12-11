@@ -1,4 +1,5 @@
 var Encore = require('@symfony/webpack-encore');
+var WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 
 Encore
     .setOutputPath('web/build/')
@@ -18,5 +19,6 @@ Encore
 var config = Encore.getWebpackConfig();
 
 config.watchOptions = {poll: true, ignored: /node_modules/};
+config.plugins.push(new WebpackBuildNotifierPlugin({sound: false}));
 
 module.exports = config;

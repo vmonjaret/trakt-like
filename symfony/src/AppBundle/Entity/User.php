@@ -41,11 +41,18 @@ class User extends BaseUser
     private $updatedAt;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         parent::__construct();
+        $this->createdAt = new \DateTime();
     }
 
     /**
@@ -108,5 +115,13 @@ class User extends BaseUser
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
     }
 }

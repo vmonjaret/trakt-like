@@ -1,6 +1,40 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="fos_user_user_show">
-    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+<div id="user_profile" class="trianglify">
+    <div class="container">
+        <a href="{{ path('fos_user_profile_edit') }}" class="btn right">Modifier</a>
+        <img src="{{ getUserAvatar(app.user) }}" alt="{{ app.user.username }}" class="circle" height="100px">
+        <div class="user_info">
+            <h3>{{ user.username }}</h3>
+            <p>Membre depuis: {{ user.createdAt | date('d/m/Y') }}</p>
+        </div>
+    </div>
+    <div class="user_tracking p-3">
+        <div class="container">
+            <div class="row mb-0">
+                <div class="col s6">
+                    <div class="row mb-0">
+                        <div class="col s2">
+                            <i class="material-icons md-xl">local_movies</i>
+                        </div>
+                        <div class="col s10">
+                            <p>12 heures, 10 minutes et 15 secondes</p>
+                            <p>200 films</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s6">
+                    <div class="row mb-0">
+                        <div class="col s2">
+                            <i class="material-icons md-xl">local_movies</i>
+                        </div>
+                        <div class="col s10">
+                            <p>12 heures, 10 minutes et 15 secondes</p>
+                            <p>200 films</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

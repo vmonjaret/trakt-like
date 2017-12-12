@@ -13,9 +13,9 @@ class MovieManager
 
     /**
      * MovieManager constructor.
-     * @param $em
+     * @param EntityManager $em
      */
-    public function __construct( EntityManager $em )
+    public function __construct( EntityManager $em)
     {
         $this->em = $em;
     }
@@ -28,22 +28,30 @@ class MovieManager
     {
         if ($request['poster_path'] != '' && $request['release_date'] != '' && $request['overview'] != '') {
 
-            $movie = new Movie();
+            $movie = $this->em->getRepository(Movie::class)->findOneByTmDbId($request['id']);
 
-            $movie->setTmDbId($request['id']);
-            $movie->setTitle($request['title']);
-            if ($request['poster_path'] !== '') {
-                $movie->setPoster($request['poster_path']);
-            }
-            $movie->setOverview($request['overview']);
-            $movie->setRuntime($request['runtime']);
-            if ( $request['release_date'] !== '' ) {
-                $movie->setReleaseDate(\DateTime::createFromFormat('Y-m-d', $request['release_date']));
-            }
+            if (null === $movie) {
+                $movie = new Movie();
+                $movie->setTmDbId($request['id']);
+                $movie->setTitle($request['title']);
+                if ($request['poster_path'] !== '') {
+                    $movie->setPoster($request['poster_path']);
+                }
+                $movie->setOverview($request['overview']);
+                $movie->setRuntime($request['runtime']);
+                if ( $request['release_date'] !== '' ) {
+                    $movie->setReleaseDate(\DateTime::createFromFormat('Y-m-d', $request['release_date']));
+                }
 
-            foreach ( $request[ 'genres' ] as $genre ) {
-                $genre = $this->em->getRepository(Genre::class)->findOneByTmDbId($genre['id']);
-                $movie->addGenre($genre);
+                foreach ( $request[ 'genres' ] as $genre ) {
+                    $myGenre = $this->em->getRepository(Genre::class)->findOneByTmDbId($genre['id']);
+                    if (null === $myGenre) {
+                        $myGenre = new Genre($genre['id'], $genre['name']);
+                        $this->em->persist($myGenre);
+                        $this->em->flush();
+                    }
+                    $movie->addGenre($myGenre);
+                }
             }
 
             return $movie;

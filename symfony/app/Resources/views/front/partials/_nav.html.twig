@@ -3,8 +3,7 @@
         {% if app.user %}
             <div class="user-view">
                 <a href="{{ path('fos_user_profile_show') }}">
-                    <div class="background">
-                        <img src="{{ asset('images/images.jpg') }}">
+                    <div class="background trianglify" data-trianglify="{{ app.user.background }}">
                     </div>
                     <img class="circle" src="{{ app.user.avatar ? app.user.avatar : asset('images/avatar_default.jpg') }}">
                     <span class="white-text name">{{ app.user.username }}</span>

@@ -12,19 +12,42 @@
 }
 
 #user_profile {
-  padding: 1rem 0;
+  padding: 1rem 0 0 0;
 
   .user_info {
     display: inline-block;
     vertical-align: top;
+    padding-left: 1em;
 
     h3, p {
       margin: 0;
     }
+
+    h3 {
+      font-size: 1.9em;
+    }
+
+    p {
+      font-size: 1.3em;
+      color: #4a4a4a;
+    }
   }
 
   .user_tracking {
-    background: rgba(0, 0, 0, 0.1);
+    margin-top: 1em;
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+.profile_menu {
+  text-align: center;
+  text-transform: uppercase;
+
+  li.active {
+    border-bottom: 1px solid $secondary-color;
+  }
+  a {
+    color: $secondary-color;
   }
 }
 

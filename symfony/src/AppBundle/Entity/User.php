@@ -80,7 +80,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getAvatar(): string
+    public function getAvatar(): ?string
     {
         return $this->avatar;
     }

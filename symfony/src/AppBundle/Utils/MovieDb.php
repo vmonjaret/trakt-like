@@ -16,7 +16,7 @@ class MovieDb
         $this->apiKey = $apiKey;
     }
 
-    public function searchMovie( string $query, string $language = 'fr-FR' ): array
+    public function search( string $query, string $language = 'fr-FR' ): array
     {
         $query = urlencode($query);
         $url = "{$this->baseUrl}/search/movie?language={$language}&query={$query}";
@@ -24,7 +24,7 @@ class MovieDb
         return $this->callApi($url)[ 'results' ];
     }
 
-    public function getMovieDetails( int $tmdbId, string $language = 'fr-FR'): array
+    public function getDetails( int $tmdbId, string $language = 'fr-FR'): array
     {
         $url = "{$this->baseUrl}/movie/{$tmdbId}?language={$language}";
 

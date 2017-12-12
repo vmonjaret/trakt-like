@@ -42,9 +42,9 @@ class MovieFixture extends Fixture
         $movieDb = $this->container->get(MovieDb::class);
         $movieManager = $this->container->get(MovieManager::class);
 
-        $request = $movieDb->searchMovie($request);
+        $request = $movieDb->search($request);
         foreach ( $request as $movie ) {
-            $movie = $movieDb->getMovieDetails($movie['id']);
+            $movie = $movieDb->getDetails($movie['id']);
             $movie = $movieManager->createFromArray($movie);
             if ($movie) {
                 $manager->persist($movie);

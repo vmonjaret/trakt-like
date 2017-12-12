@@ -1,0 +1,38 @@
+<ul id="slide-out" class="side-nav">
+    <li>
+        {% if app.user %}
+            <div class="user-view">
+                <a href="{{ path('fos_user_profile_show') }}">
+                    <div class="background">
+                        <img src="{{ asset('images/images.jpg') }}">
+                    </div>
+                    <img class="circle" src="{{ app.user.avatar ? app.user.avatar : asset('images/avatar_default.jpg') }}">
+                    <span class="white-text name">{{ app.user.username }}</span>
+                    <span class="white-text email">{{ app.user.email }}</span>
+                </a>
+            </div>
+        {% else %}
+            <div class="user-view">
+                <div class="background">
+                    <img src="{{ asset('images/dark_vador_homepage.jpg') }}">
+                </div>
+                <span>Random Movie</span>
+            </div>
+        {% endif %}
+    </li>
+    <li><a href=""><i class="material-icons">live_tv</i>Series</a></li>
+    <li><a href="{{ path('movie_index') }}"><i class="material-icons">local_movies</i>Films</a></li>
+    <li><div class="divider"></div></li>
+    {% if app.user %}
+        <li><a class="subheader">Profil</a></li>
+        <li><a href="{{ path('fos_user_profile_show') }}"><i class="material-icons">dashboard</i>Dashboard</a></li>
+        <li><a href=""><i class="material-icons">view_list</i>Progression</a></li>
+        <li><a href=""><i class="material-icons">favorite</i>Favoris</a></li>
+        <li><a href=""><i class="material-icons">insert_comment</i>Notes & Critiques</a></li>
+        <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+    {% else %}
+        <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
+        <li><a href="{{ path('fos_user_registration_register') }}" class="btn">S'inscrire</a></li>
+    {% endif %}
+</ul>
+<a href="#" data-activates="slide-out" class="button-collapse right"><i class="material-icons">menu</i></a>

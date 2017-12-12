@@ -23,15 +23,10 @@
                     <i class="material-icons">close</i>
                 </div>
             </form>
-            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="hide-on-med-and-down brand_nav_right">
                 <li><a href="sass.html">Series</a></li>
             </ul>
             <ul class="hide-on-med-and-down brand_nav_left">
-                <li><a href="{{ path('movie_index') }}">Films</a></li>
-            </ul>
-            <ul class="side-nav" id="mobile-demo">
-                <li><a href="sass.html">Series</a></li>
                 <li><a href="{{ path('movie_index') }}">Films</a></li>
             </ul>
 
@@ -39,11 +34,13 @@
                 <img src="{{ asset('images/logo.png') }}" alt="Logo Random Movie">
             </a>
 
-            <ul class="right">
+            <ul class="right hide-on-med-and-down">
                 <li>
                     {% if app.user %}
-                        <img src="{{ getUserAvatar(app.user) }}" alt="{{ app.user.username }}" class="circle" width="50px">
-                        <span>{{ app.user.username }}</span>
+                        <div data-activates="slide-out" class="button-collapse profil_nav_icon_pseudo">
+                            <img src="{{ getUserAvatar(app.user) }}" alt="{{ app.user.username }}" class="circle" width="50px">
+                            <span>{{ app.user.username }}</span>
+                        </div>
                     {% else %}
                         <a href="{{ path('fos_user_security_login') }}">
                             <i class="material-icons hide-on-large-only">account_circle</i>
@@ -52,6 +49,8 @@
                     {% endif %}
                 </li>
             </ul>
+
+            {% include 'front/partials/_nav.html.twig' %}
         </div>
     </nav>
 </header>
@@ -83,6 +82,11 @@
 </footer>
 {% block javascripts %}
     <script src="{{ asset('build/app.js') }}"></script>
+    <script>
+        $('.button-collapse').sideNav({
+            edge: 'right'
+        });
+    </script>
 {% endblock %}
 
 </body>

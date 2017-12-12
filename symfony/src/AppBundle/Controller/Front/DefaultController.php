@@ -15,8 +15,11 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request, MovieDb $movieDb, MovieManager $movieManager)
     {
+        $movies = $movieDb->getPopular(5);
+
         return $this->render('front/default/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'movies' => $movies['movies']
         ]);
     }
 }

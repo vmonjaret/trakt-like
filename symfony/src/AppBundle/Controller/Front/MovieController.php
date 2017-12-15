@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Front;
 
 use AppBundle\Entity\Movie;
+use AppBundle\Utils\MovieDb;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,15 +20,17 @@ class MovieController extends Controller
      *
      * @Route("/", name="movie_index")
      * @Method("GET")
+     * @param MovieDb $movieDb
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction(MovieDb $movieDb)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $movies = $em->getRepository('AppBundle:Movie')->findAll();
+        $movies = $movieDb->getPopular();
 
         return $this->render('front/movie/index.html.twig', array(
-            'movies' => $movies,
+            'movies' => $movies['movies'],
+            'totalPage' => $movies['totalPage']
         ));
     }
 

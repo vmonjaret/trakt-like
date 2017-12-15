@@ -33,7 +33,7 @@
                             <div>
                                 <i class="small material-icons p-1 right"><a href="/index">playlist_add</a></i>
                                 <i class="small material-icons p-1 right"><a href="/a">remove_red_eye</a></i>
-                                <i class="small material-icons p-1 right"><a href="/about">favorite</a></i>
+                                <i class="small material-icons p-1 right addToFavorite" data-movieId="{{ movie.id }}">favorite</i>
                             </div>
                         </div>
                         <div class="movie_title">
@@ -61,4 +61,32 @@
         </div>
     </div>
     
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $('.addToFavorite').click(function (e) {
+            e.stopPropagation();
+            console.log(e)
+            console.log(e.attr('data-movieId'))
+            var movieId = $('.addToFavorite').attr('data-movieId');
+            console.log(movieId)
+           /* $.ajax({
+                url:'{{ (path('movie_like')) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "movieId": movieId
+                },
+                async: true,
+                success: function (data) {
+                    console.log(data)
+                    $('div#ajax-results').html(data.output);
+                }
+            });*/
+            console.log('fonctionne')
+        });
+    </script>
 {% endblock %}

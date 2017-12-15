@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -53,12 +54,20 @@ class User extends BaseUser
     private $createdAt;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie")
+     * @ORM\JoinTable("liked_movies")
+     *
+     */
+    private $moviesLiked;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         parent::__construct();
         $this->createdAt = new \DateTime();
+        $this->moviesLiked = new ArrayCollection();
     }
 
     /**
@@ -148,5 +157,53 @@ class User extends BaseUser
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return User
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Add moviesLiked
+     *
+     * @param \AppBundle\Entity\User $moviesLiked
+     *
+     * @return User
+     */
+    public function addMoviesLiked(\AppBundle\Entity\User $moviesLiked)
+    {
+        $this->moviesLiked[] = $moviesLiked;
+
+        return $this;
+    }
+
+    /**
+     * Remove moviesLiked
+     *
+     * @param \AppBundle\Entity\User $moviesLiked
+     */
+    public function removeMoviesLiked(\AppBundle\Entity\User $moviesLiked)
+    {
+        $this->moviesLiked->removeElement($moviesLiked);
+    }
+
+    /**
+     * Get moviesLiked
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMoviesLiked()
+    {
+        return $this->moviesLiked;
     }
 }

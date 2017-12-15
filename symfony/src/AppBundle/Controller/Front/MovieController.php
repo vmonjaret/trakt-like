@@ -7,6 +7,8 @@ use AppBundle\Utils\MovieDb;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\BrowserKit\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Movie controller.
@@ -39,6 +41,8 @@ class MovieController extends Controller
      *
      * @Route("/{id}", name="movie_show")
      * @Method("GET")
+     * @param Movie $movie
+     * @return Response
      */
     public function showAction(Movie $movie)
     {
@@ -46,5 +50,30 @@ class MovieController extends Controller
         return $this->render('front/movie/show.html.twig', array(
             'movie' => $movie,
         ));
+    }
+
+    /**
+     * Like a movie
+     *
+     * @Route("/like", name="movie_like")
+     * @Method("POST")
+     * @param Request $request
+     * @internal param Movie $movie
+     * @return Response
+     */
+    public function likeAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if ($request->isXmlHttpRequest()) {
+            $movieId = $request->request->get('movieId');
+
+            $user = $this->getUser();
+
+            $user->addMoviesLiked($movieId);
+            $em->flush();
+        }
+
+        return new Response("Not an AJAX request", 400);
     }
 }

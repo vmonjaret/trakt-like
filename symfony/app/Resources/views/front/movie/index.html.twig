@@ -19,6 +19,7 @@
                     <div class="input-field col s6">
                         <input type="date">
                     </div>
+                </form>
                 <ul>
                     <li style="margin: 1em 0; text-transform: uppercase;  font-size: 1.2em;"><a href="">Les plus populaires</a></li>
                     <li style="margin: 1em 0; text-transform: uppercase;  font-size: 1.2em;"><a href="">Derniers ajouts</a></li>
@@ -31,8 +32,8 @@
                         <div style="background-image: url('{{ movie.poster }}');"></div>
                         <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
                             <div>
-                                <i class="small material-icons p-1 right"><a href="/index">playlist_add</a></i>
-                                <i class="small material-icons p-1 right"><a href="/a">remove_red_eye</a></i>
+                                <i class="small material-icons p-1 right" data-movieId="{{ movie.id }}">playlist_add</i>
+                                <i class="small material-icons p-1 right" data-movieId="{{ movie.id }}">remove_red_eye</i>
                                 <i class="small material-icons p-1 right addToFavorite" data-movieId="{{ movie.id }}">favorite</i>
                             </div>
                         </div>
@@ -69,24 +70,18 @@
     <script>
         $('.addToFavorite').click(function (e) {
             e.stopPropagation();
-            console.log(e)
-            console.log(e.attr('data-movieId'))
-            var movieId = $('.addToFavorite').attr('data-movieId');
-            console.log(movieId)
-           /* $.ajax({
+            var movieId = $(this).attr('data-movieId');
+            $.ajax({
                 url:'{{ (path('movie_like')) }}',
                 type: "POST",
                 dataType: "json",
                 data: {
                     "movieId": movieId
                 },
-                async: true,
-                success: function (data) {
-                    console.log(data)
-                    $('div#ajax-results').html(data.output);
+                success: function () {
+                    e.target.style.color = 'red';
                 }
-            });*/
-            console.log('fonctionne')
+            });
         });
     </script>
 {% endblock %}

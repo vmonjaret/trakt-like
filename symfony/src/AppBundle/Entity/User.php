@@ -176,11 +176,11 @@ class User extends BaseUser
     /**
      * Add moviesLiked
      *
-     * @param \AppBundle\Entity\User $moviesLiked
+     * @param \AppBundle\Entity\Movie $moviesLiked
      *
      * @return User
      */
-    public function addMoviesLiked(\AppBundle\Entity\User $moviesLiked)
+    public function addMoviesLiked(\AppBundle\Entity\Movie $moviesLiked)
     {
         $this->moviesLiked[] = $moviesLiked;
 
@@ -190,9 +190,9 @@ class User extends BaseUser
     /**
      * Remove moviesLiked
      *
-     * @param \AppBundle\Entity\User $moviesLiked
+     * @param \AppBundle\Entity\Movie $moviesLiked
      */
-    public function removeMoviesLiked(\AppBundle\Entity\User $moviesLiked)
+    public function removeMoviesLiked(\AppBundle\Entity\Movie $moviesLiked)
     {
         $this->moviesLiked->removeElement($moviesLiked);
     }

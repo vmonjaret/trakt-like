@@ -4,10 +4,12 @@ namespace AppBundle\Controller\Front;
 
 use AppBundle\Entity\Movie;
 use AppBundle\Utils\MovieDb;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\BrowserKit\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -59,6 +61,7 @@ class MovieController extends Controller
      * @Method("POST")
      * @param Request $request
      * @internal param Movie $movie
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @return Response
      */
     public function likeAction(Request $request)
@@ -68,10 +71,20 @@ class MovieController extends Controller
         if ($request->isXmlHttpRequest()) {
             $movieId = $request->request->get('movieId');
 
-            $user = $this->getUser();
+            $movie = $this->getDoctrine()
+                ->getRepository(Movie::class)
+                ->find($movieId);
 
-            $user->addMoviesLiked($movieId);
-            $em->flush();
+            if ($movie != null) {
+                $user = $this->getUser();
+
+                $user->addMoviesLiked($movie);
+                $em->flush();
+
+                return new JsonResponse('Sucess');
+            }
+
+            return new JsonResponse('Error:Movie not found', 400);
         }
 
         return new Response("Not an AJAX request", 400);

@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Squada+One');
 
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
 #presentation_container_homePage {
   position: relative;
 

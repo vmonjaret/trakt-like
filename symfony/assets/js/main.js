@@ -28,7 +28,7 @@ if (triangles !== null || trianglesMin !== null) {
             let pattern = Trianglify({
                 height   : element.offsetHeight,
                 width    : element.offsetWidth,
-                x_colors : $(element).data('trianglify') || 'random',
+                x_colors : $(element).data('trianglify') || 'Blues',
                 cell_size: size
             });
 

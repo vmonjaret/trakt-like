@@ -6,7 +6,7 @@
         <img src="{{ getUserAvatar(app.user) }}" alt="{{ app.user.username }}" class="circle" height="100px">
         <div class="user_info">
             <h3>{{ user.username }}</h3>
-            <p>Membre depuis: {{ user.createdAt | date('d/m/Y') }}</p>
+            <p>Membre depuis {{ user.createdAt | date('d/m/Y') }}</p>
         </div>
     </div>
     <div class="user_tracking p-3">
@@ -18,8 +18,8 @@
                             <i class="material-icons md-xl">local_movies</i>
                         </div>
                         <div class="col s10">
-                            <p>12 heures, 10 minutes et 15 secondes</p>
-                            <p>200 films</p>
+                            <p class="mt-0 mb-0">12 heures, 10 minutes et 15 secondes</p>
+                            <p class="mt-0">200 films</p>
                         </div>
                     </div>
                 </div>
@@ -29,12 +29,26 @@
                             <i class="material-icons md-xl">local_movies</i>
                         </div>
                         <div class="col s10">
-                            <p>12 heures, 10 minutes et 15 secondes</p>
-                            <p>200 films</p>
+                            <p class="mt-0 mb-0">12 heures, 10 minutes et 15 secondes</p>
+                            <p class="mt-0">200 films</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div class="row container">
+    <div class="col s12 profile_menu">
+        <ul class="tabs">
+            <li class="tab col s3"><a class="active" href="#resume">Résumé</a></li>
+            <li class="tab col s3"><a href="#progression">Progression</a></li>
+            <li class="tab col s3"><a href="#favorite">Favoris</a></li>
+            <li class="tab col s3"><a href="#rate">Notes & critiques</a></li>
+        </ul>
+    </div>
+    <div id="resume" class="col s12">Test 1</div>
+    <div id="progression" class="col s12">Test 2</div>
+    <div id="favorite" class="col s12">Test 3</div>
+    <div id="rate" class="col s12">Test 4</div>
 </div>

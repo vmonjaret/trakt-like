@@ -3,3 +3,21 @@
 {% block body %}
     {% include "@FOSUser/Profile/show_content.html.twig" %}
 {% endblock body %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script>
+        window.addEventListener('hashchange', function () {
+            var url = window.location.toString();
+            var array = url.split('/');
+
+            var lastsegment = array[array.length-1];
+
+            $('ul.tabs').tabs('select_tab', lastsegment.substring(1));
+            $('.button-collapse').sideNav('hide');
+        });
+    </script>
+
+{% endblock %}

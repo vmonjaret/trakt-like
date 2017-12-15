@@ -1,0 +1,11 @@
+{% extends 'front/base.html.twig' %}
+
+{% block body %}
+    <div class="error_container">
+        <h1>404</h1>
+        <h2>Page non trouvée</h2>
+
+        <p>Nous n'avons pas trouvé la page que vous avez demandé.</p>
+        <p><a href="{{ path('homepage') }}">Retour à la page d'accueil</a></p>
+    </div>
+{% endblock %}

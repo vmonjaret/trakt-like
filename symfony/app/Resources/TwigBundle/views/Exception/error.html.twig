@@ -1,0 +1,10 @@
+{% extends 'front/base.html.twig' %}
+
+{% block body %}
+    <div class="error_container">
+        <h1>{{ status_code }}</h1>
+        <h2>{{ status_text }}</h2>
+
+        <p><a href="{{ path('homepage') }}">Retour à la page d'accueil</a></p>
+    </div>
+{% endblock %}

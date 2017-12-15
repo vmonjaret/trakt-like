@@ -1,6 +1,8 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\Movie;
+use AppBundle\Entity\User;
 
 /**
  * MovieRepository
@@ -10,4 +12,15 @@ namespace AppBundle\Repository;
  */
 class MovieRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function hasLikedMovie(Movie $movie, User $user){
+        $query = $this->createQueryBuilder('m')
+            ->from('AppBundle:Movie', 'm')
+            ->leftJoin('m.usersLiked', 'u')
+            ->where('u.id = :user')
+            ->andWhere('m.id = :movie')
+            ->setParameter('user', $user->getId())
+            ->setParameter('movie', $movie->getId());
+
+        return $query->getQuery()->getFirstResult() !== null;
+    }
 }

@@ -54,7 +54,7 @@ class User extends BaseUser
     private $createdAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersLiked")
      * @ORM\JoinTable("liked_movies")
      *
      */

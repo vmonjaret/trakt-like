@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Front;
 
 use AppBundle\Entity\Movie;
+use AppBundle\Repository\MovieRepository;
 use AppBundle\Utils\MovieDb;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -67,18 +68,21 @@ class MovieController extends Controller
     public function likeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $movieRepo = $em->getRepository(Movie::class);
 
         if ($request->isXmlHttpRequest()) {
             $movieId = $request->request->get('movieId');
 
-            $movie = $this->getDoctrine()
-                ->getRepository(Movie::class)
-                ->find($movieId);
+            $movie = $movieRepo->find($movieId);
 
             if ($movie != null) {
                 $user = $this->getUser();
+                if ($movieRepo->hasLikedMovie($movie, $user)) {
+                    $user->removeMoviesLiked($movie);
+                } else {
+                    $user->addMoviesLiked($movie);
+                }
 
-                $user->addMoviesLiked($movie);
                 $em->flush();
 
                 return new JsonResponse('Sucess');

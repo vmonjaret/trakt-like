@@ -57,7 +57,7 @@ class MovieDb
         $results = [];
 
         foreach ($apiResults as $result) {
-            $result = $this->getMovieDetails($result['id']);
+            $result = $this->getDetails($result['id']);
             $myMovie = $this->movieManager->createFromArray($result);
             if (null === $myMovie->getId()) {
                 $this->em->persist($myMovie);

@@ -54,6 +54,8 @@ class MovieManager
                 }
             }
 
+            $movie->setPopularity($request['popularity']);
+
             return $movie;
         }
 

@@ -7,6 +7,7 @@ use AppBundle\Utils\MovieDb;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Movie controller.
@@ -18,12 +19,12 @@ class MovieController extends Controller
     /**
      * Lists all movie entities.
      *
-     * @Route("/", name="movie_index")
+     * @Route("/{page}", name="movie_index", requirements={"page"="\d+"})
      * @Method("GET")
      * @param MovieDb $movieDb
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(MovieDb $movieDb)
+    public function indexAction(Request $request, $page = 1)
     {
         $em = $this->getDoctrine()->getManager();
         $movies = $em->getRepository(Movie::class)->findAll();
@@ -36,7 +37,7 @@ class MovieController extends Controller
     /**
      * Finds and displays a movie entity.
      *
-     * @Route("/{id}", name="movie_show")
+     * @Route("/{slug}", name="movie_show")
      * @Method("GET")
      */
     public function showAction(Movie $movie)

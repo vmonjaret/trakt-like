@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\Movie;
 
 /**
  * MovieRepository
@@ -10,4 +11,14 @@ namespace AppBundle\Repository;
  */
 class MovieRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findPopular($page = 1, $limit = 20)
+    {
+        $query = $this->createQueryBuilder('m')
+            ->from('Movie', 'm')
+            ->orderBy('m.popularity', 'DESC')
+            ->setMaxResults($limit)
+            ->setFirstResult($page);
+
+
+    }
 }

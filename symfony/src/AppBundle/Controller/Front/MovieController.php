@@ -31,11 +31,10 @@ class MovieController extends Controller
     public function indexAction(MovieDb $movieDb)
     {
         $em = $this->getDoctrine()->getManager();
-        $movies = $movieDb->getPopular();
+        $movies = $em->getRepository(Movie::class)->findAll();
 
         return $this->render('front/movie/index.html.twig', array(
-            'movies' => $movies['movies'],
-            'totalPage' => $movies['totalPage']
+            'movies' => $movies,
         ));
     }
 

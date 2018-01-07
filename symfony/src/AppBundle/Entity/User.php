@@ -37,9 +37,9 @@ class User extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(name="background", type="string", length=255)
+     * @ORM\Column(name="background", type="string", length=255, nullable=true)
      */
-    private $background = 'random';
+    private $background = 'Blues';
 
     /**
      * @var \DateTime

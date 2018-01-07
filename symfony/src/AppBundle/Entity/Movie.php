@@ -73,6 +73,13 @@ class Movie
     private $poster;
 
     /**
+     * @var
+     *
+     * @ORM\Column(name="popularity", type="float")
+     */
+    private $popularity;
+
+    /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Genre", inversedBy="movies")
      *
      */
@@ -264,6 +271,24 @@ class Movie
     public function getPoster()
     {
         return $this->poster;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPopularity()
+    {
+        return $this->popularity;
+    }
+
+    /**
+     * @param mixed $popularity
+     * @return Movie
+     */
+    public function setPopularity($popularity)
+    {
+        $this->popularity = $popularity;
+        return $this;
     }
 
     /**

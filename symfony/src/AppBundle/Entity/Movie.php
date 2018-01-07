@@ -86,6 +86,11 @@ class Movie
     private $genres;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="moviesLiked")
+     */
+    private $usersLiked;
+
+    /**
      * Constructor
      */
     public function __construct()

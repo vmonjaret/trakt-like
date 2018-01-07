@@ -5,9 +5,16 @@
     <div>
         <div class="row mb-0" style="background-color: black;">
 
-            <div class="col l3" style="position: fixed; color: #ffffff;">
-                <form action="" class="mt-2">
-                    <select name="" id="" style="display: block; color: #000000;">
+            <div class="col l3 movie_tv_menu">
+                <h2>Films</h2>
+
+                <ul class="mb-3">
+                    <li><a href="">Les plus populaires</a></li>
+                    <li><a href="">Derniers ajouts</a></li>
+                </ul>
+                <div class="line"></div>
+                <form action="" class="mt-4">
+                    <select name="" id="">
                         <option value="">Genres</option>
                         <option value="">Action</option>
                         <option value="">Aventure</option>
@@ -19,11 +26,11 @@
                     <div class="input-field col s6">
                         <input type="date">
                     </div>
+                    <div class="search">
+                        <input type="submit" value="Chercher" class="btn">
+                    </div>
                 </form>
-                <ul>
-                    <li style="margin: 1em 0; text-transform: uppercase;  font-size: 1.2em;"><a href="">Les plus populaires</a></li>
-                    <li style="margin: 1em 0; text-transform: uppercase;  font-size: 1.2em;"><a href="">Derniers ajouts</a></li>
-                </ul>
+
             </div>
             <div class="col l9 p-0 offset-l3">
                 {% for movie in movies %}
@@ -38,7 +45,7 @@
                             </div>
                         </div>
                         <div class="movie_title">
-                            <p>{{ movie.title }} {% if movie.releaseDate %}- {{ movie.releaseDate|date('Y') }}{% endif %}</p>
+                            <p class="activator">{{ movie.title }} {% if movie.releaseDate %}- {{ movie.releaseDate|date('Y') }}{% endif %}</p>
                             <i class="small material-icons p-1 right activator">more_vert</i>
                         </div>
                         <div class="card-reveal">

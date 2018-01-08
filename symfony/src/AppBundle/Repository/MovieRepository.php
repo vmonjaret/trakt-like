@@ -23,4 +23,16 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getQuery()->getFirstResult() !== null;
     }
+
+    public function hasWishedMovie(Movie $movie, User $user){
+        $query = $this->createQueryBuilder('m')
+            ->from('AppBundle:Movie', 'm')
+            ->leftJoin('m.usersWish', 'u')
+            ->where('u.id = :user')
+            ->andWhere('m.id = :movie')
+            ->setParameter('user', $user->getId())
+            ->setParameter('movie', $movie->getId());
+
+        return $query->getQuery()->getFirstResult() !== null;
+    }
 }

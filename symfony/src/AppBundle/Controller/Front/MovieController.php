@@ -84,7 +84,46 @@ class MovieController extends Controller
 
                 $em->flush();
 
-                return new JsonResponse('Sucess');
+                return new JsonResponse('Success');
+            }
+
+            return new JsonResponse('Error:Movie not found', 400);
+        }
+
+        return new Response("Not an AJAX request", 400);
+    }
+
+    /**
+     * Add/remove a movie from the wish list
+     *
+     * @Route("/wish", name="movie_wish")
+     * @Method("POST")
+     * @param Request $request
+     * @internal param Movie $movie
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @return Response
+     */
+    public function wishListAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $movieRepo = $em->getRepository(Movie::class);
+
+        if ($request->isXmlHttpRequest()) {
+            $movieId = $request->request->get('movieId');
+
+            $movie = $movieRepo->find($movieId);
+
+            if ($movie != null) {
+                $user = $this->getUser();
+                if ($movieRepo->hasWishedMovie($movie, $user)) {
+                    $user->removeMoviesWish($movie);
+                } else {
+                    $user->addMoviesWish($movie);
+                }
+
+                $em->flush();
+
+                return new JsonResponse('Success');
             }
 
             return new JsonResponse('Error:Movie not found', 400);

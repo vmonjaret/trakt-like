@@ -61,6 +61,13 @@ class User extends BaseUser
     private $moviesLiked;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersWishList")
+     * @ORM\JoinTable("wish_movies")
+     *
+     */
+    private $moviesWish;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -68,6 +75,7 @@ class User extends BaseUser
         parent::__construct();
         $this->createdAt = new \DateTime();
         $this->moviesLiked = new ArrayCollection();
+        $this->moviesWish  = new ArrayCollection();
     }
 
     /**
@@ -205,5 +213,38 @@ class User extends BaseUser
     public function getMoviesLiked()
     {
         return $this->moviesLiked;
+    }
+
+    /**
+     * Add moviesLiked
+     *
+     * @param \AppBundle\Entity\Movie $moviesWish
+     *
+     * @return User
+     */
+    public function addMoviesWish(\AppBundle\Entity\Movie $moviesWish)
+    {
+        $this->moviesLiked[] = $moviesWish;
+
+        return $this;
+    }
+
+    /**
+     * Remove moviesLiked
+     *
+     * @param \AppBundle\Entity\Movie $moviesWish
+     */
+    public function removeMoviesWish(\AppBundle\Entity\Movie $moviesWish)
+    {
+        $this->moviesLiked->removeElement($moviesWish);
+    }
+
+    /**
+     * Get moviesWish
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMoviesWish()
+    {
+        return $this->moviesWish;
     }
 }

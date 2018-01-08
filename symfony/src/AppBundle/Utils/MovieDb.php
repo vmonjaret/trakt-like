@@ -49,7 +49,11 @@ class MovieDb
     {
         $url = "{$this->baseUrl}/movie/popular?language={$language}&page=$page";
 
-        return $this->callApi($url)['results'];
+        $apiResults = $this->callApi($url)['results'];
+
+        $apiResults = array_slice($apiResults, 0, $limit, true);
+
+        return $apiResults;
     }
 
     private function callApi(string $url, string $method = "GET", $data = null): array

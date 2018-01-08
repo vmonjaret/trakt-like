@@ -54,50 +54,19 @@
         <div class="row">
             <h4>Acteurs</h4>
             <div class="row actor_container mb-0">
-                <div class="col m4 l2">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="{{ asset('images/ryan_reynolds.jpg') }}" alt="Acteur {{ movie.title }}">
-                        </div>
-                        <div class="card-content">
-                            <p class="actor_name">Ryan Reynolds</p>
-                            <p class="actor_role">Wade Wilson</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col m4 l2">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="{{ asset('images/armas.jpg') }}">
-                        </div>
-                        <div class="card-content">
-                            <p class="actor_name">Ana de Armas</p>
-                            <p class="actor_role">Joi</p>
+                {% for actor in actors %}
+                    <div class="col m4 l2">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="https://image.tmdb.org/t/p/w500/{{ actor.profile_path }}" alt="Acteur {{ movie.title }}">
+                            </div>
+                            <div class="card-content">
+                                <p class="actor_name">{{ actor.name }}</p>
+                                <p class="actor_role">{{ actor.character }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col m4 l2">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="{{ asset('images/gosling.png') }}">
-                        </div>
-                        <div class="card-content">
-                            <p class="actor_name">Harrison Ford</p>
-                            <p class="actor_role">Rick Deckard</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col m4 l2">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="{{ asset('images/ryan_reynolds.jpg') }}" alt="Acteur {{ movie.title }}">
-                        </div>
-                        <div class="card-content">
-                            <p class="actor_name">Ryan Reynolds</p>
-                            <p class="actor_role">Deadpool</p>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

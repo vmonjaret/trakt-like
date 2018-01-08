@@ -25,10 +25,10 @@ class MovieController extends Controller
      *
      * @Route("/", name="movie_index")
      * @Method("GET")
-     * @param MovieDb $movieDb
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
+     * @internal param MovieDb $movieDb
      */
-    public function indexAction(MovieDb $movieDb)
+    public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
         $movies = $em->getRepository(Movie::class)->findAll();
@@ -44,13 +44,16 @@ class MovieController extends Controller
      * @Route("/{id}", name="movie_show")
      * @Method("GET")
      * @param Movie $movie
+     * @param MovieDb $movieDb
      * @return Response
      */
-    public function showAction(Movie $movie)
+    public function showAction(Movie $movie, MovieDb $movieDb)
     {
-
+        $actors = $movieDb->getActors($movie->getTmDbId(), 5);
+        dump($actors);
         return $this->render('front/movie/show.html.twig', array(
             'movie' => $movie,
+            'actors'=> $actors
         ));
     }
 

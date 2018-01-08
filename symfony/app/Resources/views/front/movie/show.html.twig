@@ -120,61 +120,26 @@
         <div class="row">
             <h5 class="pb-4">Nos recommendations</h5>
             <div>
-                <div class="col l4 p-0 movie_vignette card">
-                    <div style="background-image: url('{{ asset('images/divergente.jpg') }}');"></div>
-                    <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
-                        <div>
-                            <i class="small material-icons p-1 right addToWishList" data-movieId="{{ movie.id }}">playlist_add</i>
-                            <i class="small material-icons p-1 right" data-movieId="{{ movie.id }}">remove_red_eye</i>
-                            <i class="small material-icons p-1 right addToFavorite" data-movieId="{{ movie.id }}">favorite</i>
+                {% for recommendation in recommendations %}
+                    <div class="col l4 p-0 movie_vignette card">
+                        <div style="background-image: url('https://image.tmdb.org/t/p/w500/{{ recommendation.poster_path }}');"></div>
+                        <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': recommendation.id }) }}'">
+                            <div>
+                                <i class="small material-icons p-1 right addToWishList" data-movieId="{{ recommendation.id }}">playlist_add</i>
+                                <i class="small material-icons p-1 right" data-movieId="{{ recommendation.id }}">remove_red_eye</i>
+                                <i class="small material-icons p-1 right addToFavorite" data-movieId="{{ recommendation.id }}">favorite</i>
+                            </div>
+                        </div>
+                        <div class="movie_title">
+                            <p class="activator">{{ recommendation.title }} {% if recommendation.release_date %}- {{ recommendation.release_date|date('Y') }}{% endif %}</p>
+                            <i class="small material-icons p-1 right">more_vert</i>
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title gre-text text-darken-4">{{ recommendation.title }} <i class="material-icons right">close</i> </span>
+                            <p>{{ recommendation.overview }}</p>
                         </div>
                     </div>
-                    <div class="movie_title">
-                        <p class="activator">Divergente - 2012</p>
-                        <i class="small material-icons p-1 right">more_vert</i>
-                    </div>
-                    <div class="card-reveal">
-                        <span class="card-title gre-text text-darken-4">Divergente <i class="material-icons right">close</i> </span>
-                        <p>Un peu de texte</p>
-                    </div>
-                </div>
-
-                <div class="col l4 p-0 movie_vignette card">
-                    <div style="background-image: url('{{ asset('images/starwars.jpg') }}');"></div>
-                    <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
-                        <div>
-                            <i class="small material-icons p-1 right addToWishList" data-movieId="{{ movie.id }}">playlist_add</i>
-                            <i class="small material-icons p-1 right" data-movieId="{{ movie.id }}">remove_red_eye</i>
-                            <i class="small material-icons p-1 right addToFavorite" data-movieId="{{ movie.id }}">favorite</i>
-                        </div>
-                    </div>
-                    <div class="movie_title">
-                        <p class="activator">Star Wars Episode III - 1997</p>
-                        <i class="small material-icons p-1 right">more_vert</i>
-                    </div>
-                    <div class="card-reveal">
-                        <span class="card-title gre-text text-darken-4">Divergente <i class="material-icons right">close</i> </span>
-                        <p>Un peu de texte</p>
-                    </div>
-                </div>
-                <div class="col l4 p-0 movie_vignette card">
-                    <div style="background-image: url('{{ movie.poster }}');"></div>
-                    <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
-                        <div>
-                            <i class="small material-icons p-1 right addToWishList" data-movieId="{{ movie.id }}">playlist_add</i>
-                            <i class="small material-icons p-1 right" data-movieId="{{ movie.id }}">remove_red_eye</i>
-                            <i class="small material-icons p-1 right addToFavorite" data-movieId="{{ movie.id }}">favorite</i>
-                        </div>
-                    </div>
-                    <div class="movie_title">
-                        <p class="activator">Deadpool - 2012</p>
-                        <i class="small material-icons p-1 right">more_vert</i>
-                    </div>
-                    <div class="card-reveal">
-                        <span class="card-title gre-text text-darken-4">Divergente <i class="material-icons right">close</i> </span>
-                        <p>Un peu de texte</p>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

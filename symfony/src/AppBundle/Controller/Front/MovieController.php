@@ -49,11 +49,13 @@ class MovieController extends Controller
      */
     public function showAction(Movie $movie, MovieDb $movieDb)
     {
-        $actors = $movieDb->getActors($movie->getTmDbId(), 5);
-        dump($actors);
+        $actors = $movieDb->getActors($movie->getTmDbId());
+        $recommendations = $movieDb->getRecommendations($movie->getTmDbId(), 3);
+
         return $this->render('front/movie/show.html.twig', array(
             'movie' => $movie,
-            'actors'=> $actors
+            'actors'=> $actors,
+            'recommendations' => $recommendations
         ));
     }
 

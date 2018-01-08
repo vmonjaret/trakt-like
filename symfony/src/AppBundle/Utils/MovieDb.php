@@ -65,6 +65,15 @@ class MovieDb
         return $apiResults;
     }
 
+    public function getRecommendations(int $tmdbId, int $limit = 20, string $language = 'fr-FR'): array
+    {
+        $url = "{$this->baseUrl}/movie/{$tmdbId}/recommendations?language={$language}";
+
+        $apiResults = $this->callApi($url)['results'];
+        $apiResults = array_slice($apiResults, 0, $limit, true);
+
+        return $apiResults;
+    }
 
     private function callApi(string $url, string $method = "GET", $data = null): array
     {

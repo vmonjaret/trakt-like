@@ -32,7 +32,7 @@
                         <div style="background-image: url('{{ movie.poster }}');"></div>
                         <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
                             <div>
-                                <i class="small material-icons p-1 right" data-movieId="{{ movie.id }}">playlist_add</i>
+                                <i class="small material-icons p-1 right addToWishList" data-movieId="{{ movie.id }}">playlist_add</i>
                                 <i class="small material-icons p-1 right" data-movieId="{{ movie.id }}">remove_red_eye</i>
                                 <i class="small material-icons p-1 right addToFavorite" data-movieId="{{ movie.id }}">favorite</i>
                             </div>
@@ -79,7 +79,25 @@
                     "movieId": movieId
                 },
                 success: function () {
-                    e.target.style.color = 'red';
+                    if (e.target.style.color === 'red')    e.target.style.color = 'white';
+                    else                                   e.target.style.color = 'red';
+                }
+            });
+        });
+
+        $('.addToWishList').click(function (e) {
+            e.stopPropagation();
+            var movieId = $(this).attr('data-movieId');
+            $.ajax({
+                url:'{{ (path('movie_wish')) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "movieId": movieId
+                },
+                success: function () {
+                    if (e.target.style.color === 'blue')    e.target.style.color = 'white';
+                    else                                    e.target.style.color = 'blue';
                 }
             });
         });

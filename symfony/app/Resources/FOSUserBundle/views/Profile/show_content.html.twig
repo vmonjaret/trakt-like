@@ -44,11 +44,29 @@
             <li class="tab col s3"><a class="active" href="#resume">Résumé</a></li>
             <li class="tab col s3"><a href="#progression">Progression</a></li>
             <li class="tab col s3"><a href="#favorite">Favoris</a></li>
+            <li class="tab col s3"><a href="#s">Favoris</a></li>
             <li class="tab col s3"><a href="#rate">Notes & critiques</a></li>
         </ul>
     </div>
-    <div id="resume" class="col s12">Test 1</div>
+    <div id="resume" class="col s12">
+
+    </div>
     <div id="progression" class="col s12">Test 2</div>
-    <div id="favorite" class="col s12">Test 3</div>
+
+    <div id="favorite" class="col s12">
+        <div class="col s3 mt-2">
+            <img src="{{ asset('images/deadpool.jpg') }}" alt="" class="col s12 p-0">
+            <div class="col s12 favorite_action_container">
+                <i class="small material-icons p-1 right addToWishList" data-movieId="">playlist_add</i>
+                <i class="small material-icons p-1 right addToWatched" data-movieId="">remove_red_eye</i>
+                <i class="small material-icons p-1 right addToFavorite" data-movieId="">favorite</i>
+            </div>
+            <div class="col s12 favorite_description_container">
+                <p class="m-0">1S02E - Last Jedi</p>
+                <p class="m-0">Black Sails</p>
+            </div>
+        </div>
+    </div>
+
     <div id="rate" class="col s12">Test 4</div>
 </div>

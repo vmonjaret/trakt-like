@@ -1,0 +1,18 @@
+#favorite {
+  .favorite_action_container {
+    background-color: $primary-color;
+    color: #ffffff;
+    
+    i:hover {
+      cursor: pointer;
+    }
+  }
+
+  .favorite_description_container {
+    text-align: center;
+
+    p:last-child {
+      font-weight: bold;
+    }
+  }
+}

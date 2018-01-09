@@ -99,6 +99,45 @@ class MovieController extends Controller
     }
 
     /**
+     * Add/remove a movie as watched
+     *
+     * @Route("/like", name="movie_watched")
+     * @Method("POST")
+     * @param Request $request
+     * @internal param Movie $movie
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @return Response
+     */
+    public function watchedAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $movieRepo = $em->getRepository(Movie::class);
+
+        if ($request->isXmlHttpRequest()) {
+            $movieId = $request->request->get('movieId');
+
+            $movie = $movieRepo->find($movieId);
+
+            if ($movie != null) {
+                $user = $this->getUser();
+                if ($movieRepo->hasWatchedMovie($movie, $user)) {
+                    $user->removeMoviesWatched($movie);
+                } else {
+                    $user->addMoviesWatched($movie);
+                }
+
+                $em->flush();
+
+                return new JsonResponse('Success');
+            }
+
+            return new JsonResponse('Error:Movie not found', 400);
+        }
+
+        return new Response("Not an AJAX request", 400);
+    }
+
+    /**
      * Add/remove a movie from the wish list
      *
      * @Route("/wish", name="movie_wish")

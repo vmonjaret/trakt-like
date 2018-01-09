@@ -61,6 +61,13 @@ class User extends BaseUser
     private $moviesLiked;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersWatched")
+     * @ORM\JoinTable("watched_movies")
+     *
+     */
+    private $moviesWatched;
+
+    /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersWishList")
      * @ORM\JoinTable("wish_movies")
      *
@@ -75,6 +82,7 @@ class User extends BaseUser
         parent::__construct();
         $this->createdAt = new \DateTime();
         $this->moviesLiked = new ArrayCollection();
+        $this->moviesWatched = new ArrayCollection();
         $this->moviesWish  = new ArrayCollection();
     }
 
@@ -213,6 +221,40 @@ class User extends BaseUser
     public function getMoviesLiked()
     {
         return $this->moviesLiked;
+    }
+
+    /**
+     * Add moviesWatched
+     *
+     * @param \AppBundle\Entity\Movie $moviesWatched
+     *
+     * @return User
+     */
+    public function addMoviesWatched(\AppBundle\Entity\Movie $moviesWatched)
+    {
+        $this->moviesWatched[] = $moviesWatched;
+
+        return $this;
+    }
+
+    /**
+     * Remove moviesWatched
+     *
+     * @param \AppBundle\Entity\Movie $moviesWatched
+     */
+    public function removeMoviesWatched(\AppBundle\Entity\Movie $moviesWatched)
+    {
+        $this->moviesWatched->removeElement($moviesWatched);
+    }
+
+    /**
+     * Get moviesWatched
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMoviesWatched()
+    {
+        return $this->moviesWatched;
     }
 
     /**

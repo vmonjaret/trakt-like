@@ -23,8 +23,8 @@
                         </div>
                     </div>
                     <div class="col l5">
-                        <i class="small material-icons p-1 right cursor addToWishList">playlist_add</i>
-                        <i class="small material-icons p-1 right cursor">remove_red_eye</i>
+                        <i class="small material-icons p-1 right cursor addToWishList" data-movieId="{{ movie.id }}">playlist_add</i>
+                        <i class="small material-icons p-1 right cursor addToWatched" data-movieId="{{ movie.id }}">remove_red_eye</i>
                         <i class="small material-icons p-1 right cursor addToFavorite" data-movieId="{{ movie.id }}">favorite</i>
                         <a class="waves-effect waves-light btn p-0 pl-2 pr-2 mt-2 right"><i class="material-icons left">shuffle</i>Film aléatoire</a>
                     </div>
@@ -126,7 +126,7 @@
                         <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': recommendation.id }) }}'">
                             <div>
                                 <i class="small material-icons p-1 right addToWishList" data-movieId="{{ recommendation.id }}">playlist_add</i>
-                                <i class="small material-icons p-1 right" data-movieId="{{ recommendation.id }}">remove_red_eye</i>
+                                <i class="small material-icons p-1 right addToWatched" data-movieId="{{ recommendation.id }}">remove_red_eye</i>
                                 <i class="small material-icons p-1 right addToFavorite" data-movieId="{{ recommendation.id }}">favorite</i>
                             </div>
                         </div>
@@ -162,6 +162,23 @@
                 success: function () {
                     if (e.target.style.color === 'red')    e.target.style.color = 'white';
                     else                                   e.target.style.color = 'red';
+                }
+            });
+        });
+
+        $('.addToWatched').click(function (e) {
+            e.stopPropagation();
+            var movieId = $(this).attr('data-movieId');
+            $.ajax({
+                url:'{{ (path('movie_watched')) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "movieId": movieId
+                },
+                success: function () {
+                    if (e.target.style.color === 'green')  e.target.style.color = 'white';
+                    else                                   e.target.style.color = 'green';
                 }
             });
         });

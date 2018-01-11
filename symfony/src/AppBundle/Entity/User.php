@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Movie as Movie;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="UserRepository")
  * @ORM\Table(name="`user`")
  * @Vich\Uploadable
  */
@@ -68,11 +69,11 @@ class User extends BaseUser
     private $moviesWatched;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersWishList")
-     * @ORM\JoinTable("wish_movies")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersWished")
+     * @ORM\JoinTable("wished_movies")
      *
      */
-    private $moviesWish;
+    private $moviesWished;
 
     /**
      * User constructor.
@@ -83,7 +84,7 @@ class User extends BaseUser
         $this->createdAt = new \DateTime();
         $this->moviesLiked = new ArrayCollection();
         $this->moviesWatched = new ArrayCollection();
-        $this->moviesWish  = new ArrayCollection();
+        $this->moviesWished  = new ArrayCollection();
     }
 
     /**
@@ -112,6 +113,7 @@ class User extends BaseUser
 
     /**
      * @param File $file
+     * @return User
      */
     public function setAvatarFile( File $file = null ): User
     {
@@ -152,7 +154,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param \DateTime $updatedAt
+     * @internal param \DateTime $updatedAt
      */
     private function setUpdatedAt()
     {
@@ -192,11 +194,11 @@ class User extends BaseUser
     /**
      * Add moviesLiked
      *
-     * @param \AppBundle\Entity\Movie $moviesLiked
+     * @param Movie $moviesLiked
      *
      * @return User
      */
-    public function addMoviesLiked(\AppBundle\Entity\Movie $moviesLiked)
+    public function addMoviesLiked(Movie $moviesLiked)
     {
         $this->moviesLiked[] = $moviesLiked;
 
@@ -206,9 +208,9 @@ class User extends BaseUser
     /**
      * Remove moviesLiked
      *
-     * @param \AppBundle\Entity\Movie $moviesLiked
+     * @param Movie $moviesLiked
      */
-    public function removeMoviesLiked(\AppBundle\Entity\Movie $moviesLiked)
+    public function removeMoviesLiked(Movie $moviesLiked)
     {
         $this->moviesLiked->removeElement($moviesLiked);
     }
@@ -226,11 +228,11 @@ class User extends BaseUser
     /**
      * Add moviesWatched
      *
-     * @param \AppBundle\Entity\Movie $moviesWatched
+     * @param Movie $moviesWatched
      *
      * @return User
      */
-    public function addMoviesWatched(\AppBundle\Entity\Movie $moviesWatched)
+    public function addMoviesWatched(Movie $moviesWatched)
     {
         $this->moviesWatched[] = $moviesWatched;
 
@@ -240,9 +242,9 @@ class User extends BaseUser
     /**
      * Remove moviesWatched
      *
-     * @param \AppBundle\Entity\Movie $moviesWatched
+     * @param Movie $moviesWatched
      */
-    public function removeMoviesWatched(\AppBundle\Entity\Movie $moviesWatched)
+    public function removeMoviesWatched(Movie $moviesWatched)
     {
         $this->moviesWatched->removeElement($moviesWatched);
     }
@@ -260,13 +262,13 @@ class User extends BaseUser
     /**
      * Add moviesLiked
      *
-     * @param \AppBundle\Entity\Movie $moviesWish
+     * @param Movie $moviesWished
      *
      * @return User
      */
-    public function addMoviesWish(\AppBundle\Entity\Movie $moviesWish)
+    public function addMoviesWish(Movie $moviesWished)
     {
-        $this->moviesLiked[] = $moviesWish;
+        $this->moviesWished[] = $moviesWished;
 
         return $this;
     }
@@ -274,11 +276,11 @@ class User extends BaseUser
     /**
      * Remove moviesLiked
      *
-     * @param \AppBundle\Entity\Movie $moviesWish
+     * @param Movie $moviesWished
      */
-    public function removeMoviesWish(\AppBundle\Entity\Movie $moviesWish)
+    public function removeMoviesWish(Movie $moviesWished)
     {
-        $this->moviesLiked->removeElement($moviesWish);
+        $this->moviesWished->removeElement($moviesWished);
     }
 
     /**
@@ -287,6 +289,6 @@ class User extends BaseUser
      */
     public function getMoviesWish()
     {
-        return $this->moviesWish;
+        return $this->moviesWished;
     }
 }

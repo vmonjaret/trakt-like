@@ -91,6 +91,12 @@ class Movie
     private $usersLiked;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="moviesWatched")
+     */
+    private $usersWatched;
+
+
+    /**
      * Constructor
      */
     public function __construct()

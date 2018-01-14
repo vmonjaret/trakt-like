@@ -23,4 +23,12 @@ class DefaultController extends Controller
             'movies' => $movies
         ]);
     }
+
+    /**
+     * @Route("/cgu", name="cgu")
+     */
+    public function cguAction()
+    {
+        return $this->render('front/cgu.html.twig');
+    }
 }

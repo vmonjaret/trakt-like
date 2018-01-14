@@ -31,4 +31,12 @@ class DefaultController extends Controller
     {
         return $this->render('front/cgu.html.twig');
     }
+
+    /**
+     * @Route("/legals-mentions", name="legalsMentions")
+     */
+    public function legalsMentionsAction()
+    {
+        return $this->render('front/legals_mentions.html.twig');
+    }
 }

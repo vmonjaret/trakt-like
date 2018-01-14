@@ -86,3 +86,15 @@
     }
   }
 }
+.comments_rate_stats_container {
+  margin-top: 2em;
+  h4 {
+    font-size: 1.2em;
+    margin-bottom: 0;
+  }
+  p {
+    font-size: 2.4em;
+    color: $secondary-color;
+    margin: 0;
+  }
+}

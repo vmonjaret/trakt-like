@@ -63,15 +63,11 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersWatched")
-     * @ORM\JoinTable("watched_movies")
-     *
      */
     private $moviesWatched;
 
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersWished")
-     * @ORM\JoinTable("wished_movies")
-     *
      */
     private $moviesWished;
 

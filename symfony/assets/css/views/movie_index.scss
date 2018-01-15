@@ -1,0 +1,30 @@
+.movie_tv_menu {
+  position: fixed;
+  color: #ffffff;
+
+  h2 {
+    font-size: 3em;
+  }
+  
+  form {
+    select {
+      display: block;
+      color: #000000;
+    }
+    
+    .search {
+      text-align: center;
+    }
+  }
+
+  .line {
+    height: 1px;
+    width: 100%;
+    background-color: #ffffff;
+  }
+
+  ul li {
+    margin: 1em 0;
+    font-size: 1.2em;
+  }
+}

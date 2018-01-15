@@ -49,7 +49,30 @@ class MovieDb
     {
         $url = "{$this->baseUrl}/movie/popular?language={$language}&page=$page";
 
-        return $this->callApi($url)['results'];
+        $apiResults = $this->callApi($url)['results'];
+        $apiResults = array_slice($apiResults, 0, $limit, true);
+
+        return $apiResults;
+    }
+
+    public function getActors(int $tmdbId, string $language = 'fr-FR'): array
+    {
+        $url = "{$this->baseUrl}/movie/{$tmdbId}/credits?language={$language}";
+
+        $apiResults = $this->callApi($url)['cast'];
+        $apiResults = array_slice($apiResults, 0, 6, true);
+
+        return $apiResults;
+    }
+
+    public function getRecommendations(int $tmdbId, int $limit = 20, string $language = 'fr-FR'): array
+    {
+        $url = "{$this->baseUrl}/movie/{$tmdbId}/recommendations?language={$language}";
+
+        $apiResults = $this->callApi($url)['results'];
+        $apiResults = array_slice($apiResults, 0, $limit, true);
+
+        return $apiResults;
     }
 
     private function callApi(string $url, string $method = "GET", $data = null): array

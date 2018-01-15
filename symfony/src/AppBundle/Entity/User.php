@@ -2,13 +2,15 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Movie as Movie;
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="UserRepository")
  * @ORM\Table(name="`user`")
  * @Vich\Uploadable
  */
@@ -53,12 +55,32 @@ class User extends BaseUser
     private $createdAt;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersLiked")
+     * @ORM\JoinTable("liked_movies")
+     *
+     */
+    private $moviesLiked;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersWatched")
+     */
+    private $moviesWatched;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersWished")
+     */
+    private $moviesWished;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         parent::__construct();
         $this->createdAt = new \DateTime();
+        $this->moviesLiked = new ArrayCollection();
+        $this->moviesWatched = new ArrayCollection();
+        $this->moviesWished  = new ArrayCollection();
     }
 
     /**
@@ -87,6 +109,7 @@ class User extends BaseUser
 
     /**
      * @param File $file
+     * @return User
      */
     public function setAvatarFile( File $file = null ): User
     {
@@ -127,7 +150,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param \DateTime $updatedAt
+     * @internal param \DateTime $updatedAt
      */
     private function setUpdatedAt()
     {
@@ -148,5 +171,120 @@ class User extends BaseUser
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return User
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Add moviesLiked
+     *
+     * @param Movie $moviesLiked
+     *
+     * @return User
+     */
+    public function addMoviesLiked(Movie $moviesLiked)
+    {
+        $this->moviesLiked[] = $moviesLiked;
+
+        return $this;
+    }
+
+    /**
+     * Remove moviesLiked
+     *
+     * @param Movie $moviesLiked
+     */
+    public function removeMoviesLiked(Movie $moviesLiked)
+    {
+        $this->moviesLiked->removeElement($moviesLiked);
+    }
+
+    /**
+     * Get moviesLiked
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMoviesLiked()
+    {
+        return $this->moviesLiked;
+    }
+
+    /**
+     * Add moviesWatched
+     *
+     * @param Movie $moviesWatched
+     *
+     * @return User
+     */
+    public function addMoviesWatched(Movie $moviesWatched)
+    {
+        $this->moviesWatched[] = $moviesWatched;
+
+        return $this;
+    }
+
+    /**
+     * Remove moviesWatched
+     *
+     * @param Movie $moviesWatched
+     */
+    public function removeMoviesWatched(Movie $moviesWatched)
+    {
+        $this->moviesWatched->removeElement($moviesWatched);
+    }
+
+    /**
+     * Get moviesWatched
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMoviesWatched()
+    {
+        return $this->moviesWatched;
+    }
+
+    /**
+     * Add moviesLiked
+     *
+     * @param Movie $moviesWished
+     *
+     * @return User
+     */
+    public function addMoviesWish(Movie $moviesWished)
+    {
+        $this->moviesWished[] = $moviesWished;
+
+        return $this;
+    }
+
+    /**
+     * Remove moviesLiked
+     *
+     * @param Movie $moviesWished
+     */
+    public function removeMoviesWish(Movie $moviesWished)
+    {
+        $this->moviesWished->removeElement($moviesWished);
+    }
+
+    /**
+     * Get moviesWish
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMoviesWish()
+    {
+        return $this->moviesWished;
     }
 }

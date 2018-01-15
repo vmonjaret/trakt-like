@@ -86,6 +86,19 @@ class Movie
     private $genres;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="moviesLiked")
+     * @ORM\JoinTable("wished_movies")
+     */
+    private $usersLiked;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="moviesWatched")
+     * @ORM\JoinTable("watched_movies")
+     */
+    private $usersWatched;
+
+
+    /**
      * Constructor
      */
     public function __construct()

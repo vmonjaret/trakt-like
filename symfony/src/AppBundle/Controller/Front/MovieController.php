@@ -3,11 +3,15 @@
 namespace AppBundle\Controller\Front;
 
 use AppBundle\Entity\Movie;
+use AppBundle\Repository\MovieRepository;
 use AppBundle\Utils\MovieDb;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Movie controller.
@@ -21,8 +25,8 @@ class MovieController extends Controller
      *
      * @Route("/{page}", name="movie_index", requirements={"page"="\d+"})
      * @Method("GET")
-     * @param MovieDb $movieDb
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
+     * @internal param MovieDb $movieDb
      */
     public function indexAction(Request $request, $page = 1)
     {
@@ -39,12 +43,136 @@ class MovieController extends Controller
      *
      * @Route("/{slug}", name="movie_show")
      * @Method("GET")
+     * @param Movie $movie
+     * @param MovieDb $movieDb
+     * @return Response
      */
-    public function showAction(Movie $movie)
+    public function showAction(Movie $movie, MovieDb $movieDb)
     {
+        $actors = $movieDb->getActors($movie->getTmDbId());
+        $recommendations = $movieDb->getRecommendations($movie->getTmDbId(), 3);
 
         return $this->render('front/movie/show.html.twig', array(
             'movie' => $movie,
+            'actors'=> $actors,
+            'recommendations' => $recommendations
         ));
+    }
+
+    /**
+     * Like a movie
+     *
+     * @Route("/like", name="movie_like")
+     * @Method("POST")
+     * @param Request $request
+     * @internal param Movie $movie
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @return Response
+     */
+    public function likeAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $movieRepo = $em->getRepository(Movie::class);
+
+        if ($request->isXmlHttpRequest()) {
+            $movieId = $request->request->get('movieId');
+
+            $movie = $movieRepo->find($movieId);
+
+            if ($movie != null) {
+                $user = $this->getUser();
+                if ($movieRepo->hasLikedMovie($movie, $user)) {
+                    $user->removeMoviesLiked($movie);
+                } else {
+                    $user->addMoviesLiked($movie);
+                }
+
+                $em->flush();
+
+                return new JsonResponse('Success');
+            }
+
+            return new JsonResponse('Error:Movie not found', 400);
+        }
+
+        return new Response("Not an AJAX request", 400);
+    }
+
+    /**
+     * Add/remove a movie as watched
+     *
+     * @Route("/like", name="movie_watched")
+     * @Method("POST")
+     * @param Request $request
+     * @internal param Movie $movie
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @return Response
+     */
+    public function watchedAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $movieRepo = $em->getRepository(Movie::class);
+
+        if ($request->isXmlHttpRequest()) {
+            $movieId = $request->request->get('movieId');
+
+            $movie = $movieRepo->find($movieId);
+
+            if ($movie != null) {
+                $user = $this->getUser();
+                if ($movieRepo->hasWatchedMovie($movie, $user)) {
+                    $user->removeMoviesWatched($movie);
+                } else {
+                    $user->addMoviesWatched($movie);
+                }
+
+                $em->flush();
+
+                return new JsonResponse('Success');
+            }
+
+            return new JsonResponse('Error:Movie not found', 400);
+        }
+
+        return new Response("Not an AJAX request", 400);
+    }
+
+    /**
+     * Add/remove a movie from the wish list
+     *
+     * @Route("/wish", name="movie_wish")
+     * @Method("POST")
+     * @param Request $request
+     * @internal param Movie $movie
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @return Response
+     */
+    public function wishListAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $movieRepo = $em->getRepository(Movie::class);
+
+        if ($request->isXmlHttpRequest()) {
+            $movieId = $request->request->get('movieId');
+
+            $movie = $movieRepo->find($movieId);
+
+            if ($movie != null) {
+                $user = $this->getUser();
+                if ($movieRepo->hasWishedMovie($movie, $user)) {
+                    $user->removeMoviesWish($movie);
+                } else {
+                    $user->addMoviesWish($movie);
+                }
+
+                $em->flush();
+
+                return new JsonResponse('Success');
+            }
+
+            return new JsonResponse('Error:Movie not found', 400);
+        }
+
+        return new Response("Not an AJAX request", 400);
     }
 }

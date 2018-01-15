@@ -23,9 +23,9 @@
                         </div>
                     </div>
                     <div class="col l5">
-                        <i class="small material-icons p-1 right">playlist_add</i>
-                        <i class="small material-icons p-1 right">remove_red_eye</i>
-                        <i class="small material-icons p-1 right">favorite</i>
+                        <i class="small material-icons p-1 right cursor addToWishList" data-movieId="{{ movie.id }}">playlist_add</i>
+                        <i class="small material-icons p-1 right cursor addToWatched" data-movieId="{{ movie.id }}">remove_red_eye</i>
+                        <i class="small material-icons p-1 right cursor addToFavorite" data-movieId="{{ movie.id }}">favorite</i>
                         <a class="waves-effect waves-light btn p-0 pl-2 pr-2 mt-2 right"><i class="material-icons left">shuffle</i>Film aléatoire</a>
                     </div>
                     <div class="col l12 mt-3">
@@ -54,50 +54,19 @@
         <div class="row">
             <h4>Acteurs</h4>
             <div class="row actor_container mb-0">
-                <div class="col m4 l2">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="{{ asset('images/ryan_reynolds.jpg') }}" alt="Acteur {{ movie.title }}">
-                        </div>
-                        <div class="card-content">
-                            <p class="actor_name">Ryan Reynolds</p>
-                            <p class="actor_role">Wade Wilson</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col m4 l2">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="{{ asset('images/armas.jpg') }}">
-                        </div>
-                        <div class="card-content">
-                            <p class="actor_name">Ana de Armas</p>
-                            <p class="actor_role">Joi</p>
+                {% for actor in actors %}
+                    <div class="col m4 l2">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="https://image.tmdb.org/t/p/w500/{{ actor.profile_path }}" alt="Acteur {{ movie.title }}">
+                            </div>
+                            <div class="card-content">
+                                <p class="actor_name">{{ actor.name }}</p>
+                                <p class="actor_role">{{ actor.character }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col m4 l2">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="{{ asset('images/gosling.png') }}">
-                        </div>
-                        <div class="card-content">
-                            <p class="actor_name">Harrison Ford</p>
-                            <p class="actor_role">Rick Deckard</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col m4 l2">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="{{ asset('images/ryan_reynolds.jpg') }}" alt="Acteur {{ movie.title }}">
-                        </div>
-                        <div class="card-content">
-                            <p class="actor_name">Ryan Reynolds</p>
-                            <p class="actor_role">Deadpool</p>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -151,62 +120,84 @@
         <div class="row">
             <h5 class="pb-4">Nos recommendations</h5>
             <div>
-                <div class="col l4 p-0 movie_vignette card">
-                    <div style="background-image: url('{{ asset('images/divergente.jpg') }}');"></div>
-                    <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
-                        <div>
-                            <i class="small material-icons p-1 right">playlist_add</i>
-                            <i class="small material-icons p-1 right">remove_red_eye</i>
-                            <i class="small material-icons p-1 right">favorite</i>
+                {% for recommendation in recommendations %}
+                    <div class="col l4 p-0 movie_vignette card">
+                        <div style="background-image: url('https://image.tmdb.org/t/p/w500/{{ recommendation.poster_path }}');"></div>
+                        <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': recommendation.id }) }}'">
+                            <div>
+                                <i class="small material-icons p-1 right addToWishList" data-movieId="{{ recommendation.id }}">playlist_add</i>
+                                <i class="small material-icons p-1 right addToWatched" data-movieId="{{ recommendation.id }}">remove_red_eye</i>
+                                <i class="small material-icons p-1 right addToFavorite" data-movieId="{{ recommendation.id }}">favorite</i>
+                            </div>
+                        </div>
+                        <div class="movie_title">
+                            <p class="activator">{{ recommendation.title }} {% if recommendation.release_date %}- {{ recommendation.release_date|date('Y') }}{% endif %}</p>
+                            <i class="small material-icons p-1 right activator">more_vert</i>
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title gre-text text-darken-4">{{ recommendation.title }} <i class="material-icons right">close</i> </span>
+                            <p>{{ recommendation.overview }}</p>
                         </div>
                     </div>
-                    <div class="movie_title">
-                        <p>Divergente - 2012</p>
-                        <i class="small material-icons p-1 right activator">more_vert</i>
-                    </div>
-                    <div class="card-reveal">
-                        <span class="card-title gre-text text-darken-4">Divergente <i class="material-icons right">close</i> </span>
-                        <p>Un peu de texte</p>
-                    </div>
-                </div>
-
-                <div class="col l4 p-0 movie_vignette card">
-                    <div style="background-image: url('{{ asset('images/starwars.jpg') }}');"></div>
-                    <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
-                        <div>
-                            <i class="small material-icons p-1 right">playlist_add</i>
-                            <i class="small material-icons p-1 right">remove_red_eye</i>
-                            <i class="small material-icons p-1 right">favorite</i>
-                        </div>
-                    </div>
-                    <div class="movie_title">
-                        <p>Star Wars Episode III - 1997</p>
-                        <i class="small material-icons p-1 right activator">more_vert</i>
-                    </div>
-                    <div class="card-reveal">
-                        <span class="card-title gre-text text-darken-4">Divergente <i class="material-icons right">close</i> </span>
-                        <p>Un peu de texte</p>
-                    </div>
-                </div>
-                <div class="col l4 p-0 movie_vignette card">
-                    <div style="background-image: url('{{ movie.poster }}');"></div>
-                    <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
-                        <div>
-                            <i class="small material-icons p-1 right">playlist_add</i>
-                            <i class="small material-icons p-1 right">remove_red_eye</i>
-                            <i class="small material-icons p-1 right">favorite</i>
-                        </div>
-                    </div>
-                    <div class="movie_title">
-                        <p>Deadpool - 2012</p>
-                        <i class="small material-icons p-1 right activator">more_vert</i>
-                    </div>
-                    <div class="card-reveal">
-                        <span class="card-title gre-text text-darken-4">Divergente <i class="material-icons right">close</i> </span>
-                        <p>Un peu de texte</p>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $('.addToFavorite').click(function (e) {
+            e.stopPropagation();
+            var movieId = $(this).attr('data-movieId');
+            $.ajax({
+                url:'{{ (path('movie_like')) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "movieId": movieId
+                },
+                success: function () {
+                    if (e.target.style.color === 'red')    e.target.style.color = 'white';
+                    else                                   e.target.style.color = 'red';
+                }
+            });
+        });
+
+        $('.addToWatched').click(function (e) {
+            e.stopPropagation();
+            var movieId = $(this).attr('data-movieId');
+            $.ajax({
+                url:'{{ (path('movie_watched')) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "movieId": movieId
+                },
+                success: function () {
+                    if (e.target.style.color === 'green')  e.target.style.color = 'white';
+                    else                                   e.target.style.color = 'green';
+                }
+            });
+        });
+
+        $('.addToWishList').click(function (e) {
+            e.stopPropagation();
+            var movieId = $(this).attr('data-movieId');
+            $.ajax({
+                url:'{{ (path('movie_wish')) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "movieId": movieId
+                },
+                success: function () {
+                    if (e.target.style.color === 'blue')    e.target.style.color = 'white';
+                    else                                    e.target.style.color = 'blue';
+                }
+            });
+        });
+    </script>
 {% endblock %}

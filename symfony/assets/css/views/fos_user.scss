@@ -98,3 +98,19 @@
     margin: 0;
   }
 }
+
+/** SELECT MOVIES **/
+.registration_select_movies {
+  .description {
+    h3 {
+      font-size: 2.2em;
+      font-weight:bold;
+    }
+    p:nth-child(2) {
+      font-size: 1.2em;
+    }
+    p:nth-child(3) {
+      color: $primary-color;
+    }
+  }
+}

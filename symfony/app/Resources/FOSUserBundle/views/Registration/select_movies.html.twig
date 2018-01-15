@@ -10,11 +10,40 @@
                 <div class="btn">Continuer</div>
             </div>
 
-            <div class="col s8 movies_gallery">
+            <div class="col s8">
                 {% for movie in movies %}
-                    <img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="col l3 pl-0 pb-2">
+                    <div class="col l3 p-1 movies_gallery">
+                        <i class="material-icons">check_circle</i>
+                        <img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="likeMovie" data-movieId="{{ movie.id }}">
+                    </div>
                 {% endfor %}
             </div>
         </div>
     </div>
 {% endblock body %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script>
+        var moviesId = [];
+
+        $('.likeMovie').click(function (e) {
+            e.stopPropagation();
+            if(e.target.parentNode.classList.contains('active')) {
+                moviesId.splice(moviesId.indexOf($(this).attr('data-movieId')), 1);
+                e.target.parentNode.classList.remove('active');
+            } else {
+                moviesId.push($(this).attr('data-movieId'));
+                e.target.parentNode.classList.add('active');
+            }
+        });
+
+        $('.btn').click(function (e) {
+            e.stopPropagation();
+            console.log(moviesId)
+        });
+    </script>
+
+{% endblock %}

@@ -113,4 +113,27 @@
       color: $primary-color;
     }
   }
+  .movies_gallery {
+    position: relative;
+
+    .material-icons {
+      display: none;
+      z-index: 100;
+      position: absolute;
+      right: 0.5em;
+      top: 0.5em;
+    }
+    img {
+      width: 100%;
+    }
+
+    &.active {
+      .material-icons {
+        display: inline-block;
+      }
+      img {
+        filter: opacity(35%);
+      }
+    }
+  }
 }

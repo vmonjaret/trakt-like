@@ -33,11 +33,11 @@
 
             </div>
             <div class="col l9 p-0 offset-l3">
-                {% for movie in pagination %}
+                {% for movie in movies %}
                     <!-- shortPlot -->
                     <div class="col l4 p-0 movie_vignette card">
                         <div style="background-image: url('{{ movie.poster }}');"></div>
-                        <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': movie.id }) }}'">
+                        <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'slug': movie.slug }) }}'">
                             <div>
                                 <i class="small material-icons p-1 right addToWishList" data-movieId="{{ movie.id }}">playlist_add</i>
                                 <i class="small material-icons p-1 right addToWatched" data-movieId="{{ movie.id }}">remove_red_eye</i>
@@ -55,7 +55,6 @@
                     </div>
                 {% endfor %}
                 <div class="col l12">
-                    {{ knp_pagination_render(pagination) }}
                 </div>
             </div>
         </div>

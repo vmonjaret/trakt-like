@@ -15,10 +15,11 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
     public function findPopular($page = 1, $limit = 20)
     {
         $query = $this->createQueryBuilder('m')
-            ->from('Movie', 'm')
             ->orderBy('m.popularity', 'DESC')
             ->setMaxResults($limit)
             ->setFirstResult($page);
+
+        return $query->getQuery()->getResult();
     }
 
     public function hasLikedMovie(Movie $movie, User $user){

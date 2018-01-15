@@ -26,11 +26,11 @@
                 <div class="col s6">
                     <div class="row mb-0">
                         <div class="col s2">
-                            <i class="material-icons md-xl">local_movies</i>
+                            <i class="material-icons md-xl">live_tv</i>
                         </div>
                         <div class="col s10">
                             <p class="mt-0 mb-0">12 heures, 10 minutes et 15 secondes</p>
-                            <p class="mt-0">200 films</p>
+                            <p class="mt-0">200 séries</p>
                         </div>
                     </div>
                 </div>
@@ -48,12 +48,114 @@
         </ul>
     </div>
     <div id="resume" class="col s12">
+        <div class="col s12 profil_titles mt-4">
+            <i class="small material-icons">av_timer</i>
+            <h3>Prochains épisodes à regarder</h3>
+        </div>
+        <div class="col s12">
+            <div class="col s3 mt-2 profil_movie_vignette">
+                <img src="{{ asset('images/deadpool.jpg') }}" alt="" class="col s12 p-0">
+                <div class="col s12 favorite_action_container">
+                    <i class="small material-icons p-1 right addToWishList" data-movieId="">playlist_add</i>
+                    <i class="small material-icons p-1 right addToWatched" data-movieId="">remove_red_eye</i>
+                    <i class="small material-icons p-1 right addToFavorite" data-movieId="">favorite</i>
+                </div>
+                <div class="col s12 favorite_description_container">
+                    <p class="m-0">1S02E - Last Jedi</p>
+                    <p class="m-0">Black Sails</p>
+                </div>
+            </div>
+        </div>
 
+        <div class="col s12 profil_titles mt-4">
+            <i class="small material-icons">date_range</i>
+            <h3>Episodes à venir</h3>
+        </div>
+        <div class="col s12">
+            <div class="col s3 mt-2 profil_movie_vignette">
+                <img src="{{ asset('images/deadpool.jpg') }}" alt="" class="col s12 p-0">
+                <div class="col s12 favorite_action_container">
+                    <i class="small material-icons p-1 right addToWishList" data-movieId="">playlist_add</i>
+                    <i class="small material-icons p-1 right addToWatched" data-movieId="">remove_red_eye</i>
+                    <i class="small material-icons p-1 right addToFavorite" data-movieId="">favorite</i>
+                </div>
+                <div class="col s12 favorite_description_container">
+                    <p class="m-0">1S02E - Last Jedi</p>
+                    <p class="m-0">Black Sails</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 profil_titles mt-4">
+            <i class="small material-icons">insert_chart</i>
+            <h3>Statistiques</h3>
+        </div>
+        <div class="col s12 profil_chart_favorite_container" style="padding: 1em; background-color: black; color: #ffffff;">
+            <div class="col s6">
+                <h6 style="font-size: 1.1em; text-transform: uppercase">Genres favoris (films)</h6>
+                <div class="col s6" style="margin-top: 1em;">
+                    <div class="profil_chart_description" style="margin-bottom: 0.5em;">
+                        <div style="background-color: darkred; width: 20px; height: 20px; display: inline-block; vertical-align: top;"></div>
+                        Aventure (18,2%)
+                    </div>
+                    <div class="profil_chart_description" style="margin-bottom: 0.5em;">
+                        <div style="background-color: darkgoldenrod; width: 20px; height: 20px; display: inline-block; vertical-align: top;"></div>
+                        Fantastique (14,8%)
+                    </div>
+                    <div class="profil_chart_description">
+                        <div style="background-color: darkmagenta; width: 20px; height: 20px; display: inline-block; vertical-align: top;"></div>
+                        Comédie (10,7%)
+                    </div>
+                </div>
+                <div class="col s6">
+                    <div class="pie-chart-container">
+                        <canvas id="pie-chart-favorite-movie-type" style="width: 100%; height: auto"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s6">
+                <h6 style="font-size: 1.1em; text-transform: uppercase">Genres favoris (séries)</h6>
+                <div class="col s6" style="margin-top: 1em;">
+                    <div class="profil_chart_description" style="margin-bottom: 0.5em;">
+                        <div style="background-color: darkred; width: 20px; height: 20px; display: inline-block; vertical-align: top;"></div>
+                        Aventure (18,2%)
+                    </div>
+                    <div class="profil_chart_description" style="margin-bottom: 0.5em;">
+                        <div style="background-color: darkgoldenrod; width: 20px; height: 20px; display: inline-block; vertical-align: top;"></div>
+                        Fantastique (14,8%)
+                    </div>
+                    <div class="profil_chart_description">
+                        <div style="background-color: darkmagenta; width: 20px; height: 20px; display: inline-block; vertical-align: top;"></div>
+                        Comédie (10,7%)
+                    </div>
+                </div>
+                <div class="col s6">
+                    <div class="pie-chart-container">
+                        <canvas id="pie-chart-favorite-tv-type" style="width: 100%; height: auto"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 comments_rate_stats_container">
+            <div class="col s3">
+                <h4>Commentaires totales</h4>
+                <p>0</p>
+            </div>
+            <div class="col s3">
+                <h4>Notes totales</h4>
+                <p>0</p>
+            </div>
+            <div class="col s6">
+                <h4>Répartition des notes</h4>
+            </div>
+        </div>
     </div>
+
     <div id="progression" class="col s12">Test 2</div>
 
     <div id="favorite" class="col s12">
-        <div class="col s3 mt-2">
+        <div class="col s3 mt-2 profil_movie_vignette">
             <img src="{{ asset('images/deadpool.jpg') }}" alt="" class="col s12 p-0">
             <div class="col s12 favorite_action_container">
                 <i class="small material-icons p-1 right addToWishList" data-movieId="">playlist_add</i>
@@ -69,3 +171,71 @@
 
     <div id="rate" class="col s12">Test 4</div>
 </div>
+
+
+{% block javascripts %}
+
+
+
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/Chart.js') }}"></script>
+
+    <script>
+        $(function(){
+
+            //get the pie chart canvas
+            var ctx1 = $("#pie-chart-favorite-movie-type");
+            var ctx2 = $("#pie-chart-favorite-tv-type");
+
+            //pie chart data
+            var data1 = {
+                labels: ["match1", "match2", "match3", "match4", "match5"],
+                datasets: [
+                    {
+                        data: [10, 50, 25, 70, 40],
+                        backgroundColor: [
+                            "#DEB887",
+                            "#A9A9A9",
+                            "#DC143C",
+                            "#F4A460",
+                            "#2E8B57"
+                        ],
+                        borderColor: [
+                            "#CDA776",
+                            "#989898",
+                            "#CB252B",
+                            "#E39371",
+                            "#1D7A46"
+                        ],
+                        borderWidth: [1, 1, 1, 1, 1]
+                    }
+                ]
+            };
+
+            //options
+            var options = {
+                responsive: true,
+                title: {
+                    display: false
+                },
+                legend: {
+                    display: false
+                }
+            };
+
+            //create Chart class object
+            var chart1 = new Chart(ctx1, {
+                type: "pie",
+                data: data1,
+                options: options
+            });
+
+            var chart2 = new Chart(ctx2, {
+                type: "pie",
+                data: data1,
+                options: options
+            });
+        });
+    </script>
+
+{% endblock %}

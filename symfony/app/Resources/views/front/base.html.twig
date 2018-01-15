@@ -10,7 +10,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
-    <title>{% block meta_title %}Random Movie{% endblock %}</title>
+    <title>{% block meta_title %}{% endblock %}Random Movie</title>
 </head>
 <body>
 <header class="navbar-fixed">
@@ -69,10 +69,10 @@
                 <h6 class="white-text"><a href="">Aide</a></h6>
             </div>
             <div class="col l3 s12">
-                <h6 class="white-text"><a href="">Conditions d'utilisation</a></h6>
+                <h6 class="white-text"><a href="{{ path('cgu') }}">Conditions d'utilisation</a></h6>
             </div>
             <div class="col l3 s12">
-                <h6 class="white-text"><a href="">Politique de confidentialité</a></h6>
+                <h6 class="white-text"><a href="{{ path('legalsMentions') }}">Mentions légales</a></h6>
             </div>
         </div>
     </div>

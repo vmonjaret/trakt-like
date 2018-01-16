@@ -15,6 +15,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Movie
 {
+    const NUM_ITEMS = 20;
+
     /**
      * @var int
      *

@@ -1,14 +1,3 @@
-{#
-/**
- * @file
- * Twitter Bootstrap v4-beta.2 Sliding pagination control implementation.
- *
- * View that can be used with the pagination module
- * from the Twitter Bootstrap CSS Toolkit
- * https://getbootstrap.com/docs/4.0/components/pagination/
- *
- */
-#}
 {% if pageCount > 1 %}
     <ul class="pagination">
         {% if previous is defined %}
@@ -17,7 +6,7 @@
             </li>
         {% else %}
             <li class="disabled">
-                <span class="page-link"><i class="material-icons">chevron_left</i></span>
+                <span class="page-link"><a href="#"><i class="material-icons">chevron_left</i></a></span>
             </li>
         {% endif %}
 
@@ -43,7 +32,7 @@
                 </li>
             {% else %}
                 <li class="active">
-                    <span>{{ page }}</span>
+                    <span><a href="#">{{ page }}</a></span>
                 </li>
             {% endif %}
 
@@ -53,7 +42,7 @@
             {% if pageCount > (endPage + 1) %}
                 {% if pageCount > (endPage + 2) %}
                     <li class="disabled">
-                        <span>&hellip;</span>
+                        <span><a href="#">&hellip;</a></span>
                     </li>
                 {% else %}
                     <li class="waves-effect">
@@ -68,11 +57,11 @@
 
         {% if next is defined %}
             <li class="waves-effect">
-                <a rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}"><i class="chevron_right"></i></a>
+                <a rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}"><i class="material-icons">chevron_right</i></a>
             </li>
         {% else %}
             <li  class="disabled">
-                <span><i class="chevron_right"></i></span>
+                <span><a href="#"><i class="material-icons">chevron_right</i></a></span>
             </li>
         {% endif %}
     </ul>

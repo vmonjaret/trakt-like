@@ -31,19 +31,21 @@
                     <div class="col l12 mt-3">
                         <h5 style="font-size: 1.5em">Synopsis et détails</h5>
                         <p>{{ movie.overview }}</p>
-                        <div class="mt-4">
-                            <div class="col l5 pl-0">
-                                <span>Ma note :</span>
-                                <i class="small material-icons user_rate">grade</i>
-                                <i class="small material-icons user_rate">grade</i>
-                                <i class="small material-icons user_rate">grade</i>
-                                <i class="small material-icons user_rate">grade</i>
-                                <i class="small material-icons user_rate">grade</i>
+                        {% if app.user %}
+                            <div class="mt-4">
+                                <div class="col l5 pl-0">
+                                    <span>Ma note :</span>
+                                    <i class="small material-icons user_rate">grade</i>
+                                    <i class="small material-icons user_rate">grade</i>
+                                    <i class="small material-icons user_rate">grade</i>
+                                    <i class="small material-icons user_rate">grade</i>
+                                    <i class="small material-icons user_rate">grade</i>
+                                </div>
+                                <div class="col l5">
+                                    <a class="waves-effect waves-light btn p-0 pl-1 pr-1 right" style="font-size: 0.9em; text-transform: none;"><i class="material-icons left m-0 mr-2">edit</i>Ajouter un commentaire</a>
+                                </div>
                             </div>
-                            <div class="col l5">
-                                <a class="waves-effect waves-light btn p-0 pl-1 pr-1 right" style="font-size: 0.9em; text-transform: none;"><i class="material-icons left m-0 mr-2">edit</i>Ajouter un commentaire</a>
-                            </div>
-                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -123,13 +125,14 @@
                 {% for recommendation in recommendations %}
                     <div class="col l4 p-0 movie_vignette card">
                         <div style="background-image: url('https://image.tmdb.org/t/p/w500/{{ recommendation.poster_path }}');"></div>
-                        <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'id': recommendation.id }) }}'">
-                            <div>
-                                <i class="small material-icons p-1 right addToWishList" data-movieId="{{ recommendation.id }}">playlist_add</i>
-                                <i class="small material-icons p-1 right addToWatched" data-movieId="{{ recommendation.id }}">remove_red_eye</i>
-                                <i class="small material-icons p-1 right addToFavorite" data-movieId="{{ recommendation.id }}">favorite</i>
-                            </div>
-                        </div>
+                        {# TODO: Add link to movie with db #}
+                        {#<div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'slug': 'ca' }) }}'">#}
+                            {#<div>#}
+                                {#<i class="small material-icons p-1 right addToWishList" data-movieId="{{ recommendation.id }}">playlist_add</i>#}
+                                {#<i class="small material-icons p-1 right addToWatched" data-movieId="{{ recommendation.id }}">remove_red_eye</i>#}
+                                {#<i class="small material-icons p-1 right addToFavorite" data-movieId="{{ recommendation.id }}">favorite</i>#}
+                            {#</div>#}
+                        {#</div>#}
                         <div class="movie_title">
                             <p class="activator">{{ recommendation.title }} {% if recommendation.release_date %}- {{ recommendation.release_date|date('Y') }}{% endif %}</p>
                             <i class="small material-icons p-1 right activator">more_vert</i>

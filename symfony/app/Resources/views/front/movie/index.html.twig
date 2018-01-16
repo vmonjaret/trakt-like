@@ -13,6 +13,7 @@
                     <li><a href="">Derniers ajouts</a></li>
                 </ul>
                 <div class="line"></div>
+                {# TODO: replace with formtype #}
                 <form action="" class="mt-4">
                     <select name="" id="">
                         <option value="">Genres</option>
@@ -37,19 +38,26 @@
                     <!-- shortPlot -->
                     <div class="col l4 p-0 movie_vignette card">
                         <div style="background-image: url('{{ movie.poster }}');"></div>
-                        <div class="actions_buttons" onclick="location.href='{{ path('movie_show', { 'slug': movie.slug }) }}'">
-                            <div>
-                                <i class="small material-icons p-1 right addToWishList" data-movieId="{{ movie.id }}">playlist_add</i>
-                                <i class="small material-icons p-1 right addToWatched" data-movieId="{{ movie.id }}">remove_red_eye</i>
-                                <i class="small material-icons p-1 right addToFavorite" data-movieId="{{ movie.id }}">favorite</i>
-                            </div>
+                        <div class="actions_buttons"
+                             onclick="location.href='{{ path('movie_show', { 'slug': movie.slug }) }}'">
+                            {% if app.user %}
+                                <div>
+                                    <i class="small material-icons p-1 right addToWishList"
+                                       data-movieId="{{ movie.id }}">playlist_add</i>
+                                    <i class="small material-icons p-1 right addToWatched"
+                                       data-movieId="{{ movie.id }}">remove_red_eye</i>
+                                    <i class="small material-icons p-1 right addToFavorite"
+                                       data-movieId="{{ movie.id }}">favorite</i>
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="movie_title">
                             <p class="activator">{{ movie.title }} {% if movie.releaseDate %}- {{ movie.releaseDate|date('Y') }}{% endif %}</p>
                             <i class="small material-icons p-1 right activator">more_vert</i>
                         </div>
                         <div class="card-reveal">
-                            <span class="card-title gre-text text-darken-4">{{ movie.title }} <i class="material-icons right">close</i> </span>
+                            <span class="card-title gre-text text-darken-4">{{ movie.title }} <i
+                                        class="material-icons right">close</i> </span>
                             <p>{{ movie.overview }}</p>
                         </div>
                     </div>
@@ -60,7 +68,7 @@
             </div>
         </div>
     </div>
-    
+
 {% endblock %}
 
 {% block javascripts %}
@@ -71,15 +79,15 @@
             e.stopPropagation();
             var movieId = $(this).attr('data-movieId');
             $.ajax({
-                url:'{{ (path('movie_like')) }}',
+                url: '{{ (path('movie_like')) }}',
                 type: "POST",
                 dataType: "json",
                 data: {
                     "movieId": movieId
                 },
                 success: function () {
-                    if (e.target.style.color === 'red')    e.target.style.color = 'white';
-                    else                                   e.target.style.color = 'red';
+                    if (e.target.style.color === 'red') e.target.style.color = 'white';
+                    else e.target.style.color = 'red';
                 }
             });
         });
@@ -88,15 +96,15 @@
             e.stopPropagation();
             var movieId = $(this).attr('data-movieId');
             $.ajax({
-                url:'{{ (path('movie_watched')) }}',
+                url: '{{ (path('movie_watched')) }}',
                 type: "POST",
                 dataType: "json",
                 data: {
                     "movieId": movieId
                 },
                 success: function () {
-                    if (e.target.style.color === 'green')  e.target.style.color = 'white';
-                    else                                   e.target.style.color = 'green';
+                    if (e.target.style.color === 'green') e.target.style.color = 'white';
+                    else e.target.style.color = 'green';
                 }
             });
         });
@@ -105,15 +113,15 @@
             e.stopPropagation();
             var movieId = $(this).attr('data-movieId');
             $.ajax({
-                url:'{{ (path('movie_wish')) }}',
+                url: '{{ (path('movie_wish')) }}',
                 type: "POST",
                 dataType: "json",
                 data: {
                     "movieId": movieId
                 },
                 success: function () {
-                    if (e.target.style.color === 'blue')    e.target.style.color = 'white';
-                    else                                    e.target.style.color = 'blue';
+                    if (e.target.style.color === 'blue') e.target.style.color = 'white';
+                    else e.target.style.color = 'blue';
                 }
             });
         });

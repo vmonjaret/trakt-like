@@ -3,8 +3,8 @@
 namespace AppBundle\Controller\Front;
 
 use AppBundle\Entity\Movie;
-use AppBundle\Repository\MovieRepository;
 use AppBundle\Utils\MovieDb;
+use Knp\Component\Pager\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -28,20 +28,26 @@ class MovieController extends Controller
      * @return Response
      * @internal param MovieDb $movieDb
      */
-    public function indexAction()
+    public function indexAction(Request $request, Paginator $paginator)
     {
         $em = $this->getDoctrine()->getManager();
-        $movies = $em->getRepository(Movie::class)->findAll();
+        $query = $em->getRepository(Movie::class)->findPopularQuery();
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            Movie::NUM_ITEMS
+        );
 
         return $this->render('front/movie/index.html.twig', array(
-            'movies' => $movies,
+            'pagination' => $pagination
         ));
     }
 
     /**
      * Finds and displays a movie entity.
      *
-     * @Route("/{id}", name="movie_show")
+     * @Route("/{slug}", name="movie_show")
      * @Method("GET")
      * @param Movie $movie
      * @param MovieDb $movieDb

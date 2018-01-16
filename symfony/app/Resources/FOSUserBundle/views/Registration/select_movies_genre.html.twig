@@ -1,0 +1,47 @@
+{% extends "front/base.html.twig" %}
+
+{% block body %}
+    <div class="container mt-4 registration_select_movies">
+        <div class="row">
+            <div class="col s4 description">
+                <h3>Sélectionnez vos genres préférés</h3>
+                <p>Cela nous aidera à trouver des films et séries TV que vous allez adorer !</p>
+                <div class="btn">Continuer</div>
+            </div>
+            <div class="col s8">
+            {% for genre in genres %}
+                <div class="col l3 p-1 movies_genres_gallery">
+                    <i class="material-icons">check_circle</i>
+                    <p class="likeGenre" data-genreId="{{ genre.id }}">{{ genre.name }}</p>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script>
+        var moviesGenreId = [];
+
+        $('.likeGenre').click(function (e) {
+            e.stopPropagation();
+            if(e.target.parentNode.classList.contains('active')) {
+                moviesGenreId.splice(moviesGenreId.indexOf($(this).attr('data-genreId')), 1);
+                e.target.parentNode.classList.remove('active');
+            } else {
+                moviesGenreId.push($(this).attr('data-genreId'));
+                e.target.parentNode.classList.add('active');
+            }
+        });
+
+        $('.btn').click(function (e) {
+            e.stopPropagation();
+            console.log(moviesGenreId)
+        });
+    </script>
+
+{% endblock %}

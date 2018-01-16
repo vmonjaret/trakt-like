@@ -18,9 +18,6 @@ class DefaultController extends Controller
     {
         $movies = $movieDb->getPopular(1, 5);
 
-        $user = $this->getUser()->getMoviesLiked();
-        dump($user);
-
         return $this->render('front/default/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
             'movies' => $movies

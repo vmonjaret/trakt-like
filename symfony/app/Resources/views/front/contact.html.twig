@@ -4,43 +4,44 @@
 
 {% block body %}
 
-<div class="container">
-    <div class="row">
-        <div class="col m10 offset-m1 s12">
-            <h5 class="center-align mt-4">Contact</h5>
-            <div class="row">
-                <form class="col s12">
-                    <div class="row">
-                        <div class="input-field col m4 s12">
-                            <input id="prenom" type="text" class="validate">
-                            <label for="prenom">Prénom</label>
-                        </div>
-                        <div class="input-field col m4 s12">
-                            <input id="nom" type="text" class="validate">
-                            <label for="nom">Nom</label>
-                        </div>
-                        <div class="input-field col m4 s12">
-                            <i class="mdi-content-mail prefix"></i>
-                            <input id="email" type="email" class="validate" required>
-                            <label for="email">Email</label>
-                        </div>
+    <div class="container">
+        <div class="row">
+            <div class="col m10 offset-m1 s12">
+                <h5 class="center-align mt-4">Contact</h5>
+                <div class="row">
+
+                    {{ form_start(form) }}
+
+                    <div>
+                        {{ form_widget(form.subject) }}
+                        {{ form_errors(form.subject) }}
                     </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <textarea id="message" class="materialize-textarea"></textarea>
-                            <label for="message">Message</label>
-                        </div>
+                    <div>
+                        {{ form_widget(form.name) }}
+                        {{ form_errors(form.name) }}
+                    </div>
+                    <div>
+                        {{ form_widget(form.email) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+                    <div>
+                        {{ form_widget(form.message) }}
+                        {{ form_errors(form.message) }}
                     </div>
 
-                    <div class="divider"></div>
-                    <div class="row">
-                        <div class="col m12">
-                            <p class="right-align"><button class="btn btn-large waves-effect waves-light" type="button" name="action">Send Message</button></p>
-                        </div>
+                    <div style="display:none">
+                        {{ form_rest(form) }}
                     </div>
-                </form>
+
+                    <div class="col m12">
+                        <p class="right-align">
+                            <input class="btn btn-large waves-effect waves-light" type="submit" value="Envoyer">
+                        </p>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

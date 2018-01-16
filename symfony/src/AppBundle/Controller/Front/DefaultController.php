@@ -31,35 +31,37 @@ class DefaultController extends Controller
      */
     public function contactAction(Request $request)
     {
-        $form = $this->createForm('AppBundle\Form\ContactType',null,array(
-            'action' => $this->generateUrl('contact'),
-            'method' => 'POST'
+        $form = $this->createForm("AppBundle\Form\ContactType",null,array(
+            "action" => $this->generateUrl("contact"),
+            "method" => "POST"
         ));
 
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod("POST")) {
             $form->handleRequest($request);
 
             if($form->isValid()){
                 // Send mail
                 if($this->sendEmail($form->getData())){
-
-                    return $this->redirectToRoute('movie_index');
+                    $data = $form->getData();
+                    return $this->render("front/contact/send_email.html.twig", array(
+                        "name" => $data["name"]
+                    ));
                 }else{
-                    var_dump("Errooooor :(");
+                    var_dump("Error :(");
                 }
             }
         }
 
-        return $this->render('front/contact.html.twig', array(
+        return $this->render("front/contact.html.twig", array(
             'form' => $form->createView()
         ));
     }
 
     private function sendEmail($data){
-        $myappContactMail = 'haasmyriam8@gmail.com';
-        $myappContactPassword = 'Kosima70';
+        $myappContactMail = "haasmyriam8@gmail.com";
+        $myappContactPassword = "Kosima70";
 
-        $transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465,'ssl')
+        $transport = \Swift_SmtpTransport::newInstance("smtp.gmail.com", 465,"ssl")
             ->setUsername($myappContactMail)
             ->setPassword($myappContactPassword);
 

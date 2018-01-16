@@ -98,6 +98,9 @@
     margin: 0;
   }
 }
+.watched_movies_container, .wished_movies_container {
+  display: none;
+}
 
 /** SELECT MOVIES **/
 .registration_select_movies {

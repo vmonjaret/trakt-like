@@ -43,7 +43,7 @@
         <ul class="tabs">
             <li class="tab col s3"><a class="active" href="#resume">Résumé</a></li>
             <li class="tab col s3"><a href="#progression">Progression</a></li>
-            <li class="tab col s3"><a href="#favorite">Favoris</a></li>
+            <li class="tab col s3"><a href="#favorite">Favoris, Déjà vus, A voir</a></li>
             <li class="tab col s3"><a href="#rate">Notes & critiques</a></li>
         </ul>
     </div>
@@ -152,10 +152,15 @@
         </div>
     </div>
 
-    <div id="progression" class="col s12">Test 2</div>
+    <div id="progression" class="col s12">Fonctionnalité bientôt disponible</div>
 
     <div id="favorite" class="col s12">
-        <div class="col s3 mt-2 profil_movie_vignette">
+        <div class="col s12 mt-4 mb-4" style="text-align: right">
+            <div class="btn mr-1 display_favorite_movies">Favoris</div>
+            <div class="btn mr-1 display_watched_movies">Déjà vus</div>
+            <div class="btn mr-1 display_wished_movies">à voir</div>
+        </div>
+        <div class="col s3 mt-2 profil_movie_vignette favorite_movies_container">
             <img src="{{ asset('images/deadpool.jpg') }}" alt="" class="col s12 p-0">
             <div class="col s12 favorite_action_container">
                 <i class="small material-icons p-1 right addToWishList" data-movieId="">playlist_add</i>
@@ -167,18 +172,77 @@
                 <p class="m-0">Black Sails</p>
             </div>
         </div>
+        <div class="col s3 mt-2 profil_movie_vignette watched_movies_container">
+            <img src="{{ asset('images/starwars.jpg') }}" alt="" class="col s12 p-0">
+            <div class="col s12 favorite_action_container">
+                <i class="small material-icons p-1 right addToWishList" data-movieId="">playlist_add</i>
+                <i class="small material-icons p-1 right addToWatched" data-movieId="">remove_red_eye</i>
+                <i class="small material-icons p-1 right addToFavorite" data-movieId="">favorite</i>
+            </div>
+            <div class="col s12 favorite_description_container">
+                <p class="m-0">1S02E - Last Jedi</p>
+                <p class="m-0">Star Wars</p>
+            </div>
+        </div>
+        <div class="col s3 mt-2 profil_movie_vignette wished_movies_container">
+            <img src="{{ asset('images/divergente.jpg') }}" alt="" class="col s12 p-0">
+            <div class="col s12 favorite_action_container">
+                <i class="small material-icons p-1 right addToWishList" data-movieId="">playlist_add</i>
+                <i class="small material-icons p-1 right addToWatched" data-movieId="">remove_red_eye</i>
+                <i class="small material-icons p-1 right addToFavorite" data-movieId="">favorite</i>
+            </div>
+            <div class="col s12 favorite_description_container">
+                <p class="m-0">1S02E - Last Jedi</p>
+                <p class="m-0">Black Sails</p>
+            </div>
+        </div>
+        <div class="col l12">
+            <ul class="pagination">
+                <li class="disabled"><a href=""><i class="material-icons">chevron_left</i></a></li>
+                <li class="active"><a href="">1</a></li>
+                <li class="waves-effect"><a href="">2</a></li>
+                <li class="waves-effect"><a href="">3</a></li>
+                <li class="waves-effect"><a href="">4</a></li>
+                <li class="waves-effect"><a href="">5</a></li>
+                <li class="waves-effect"><a href=""><i class="material-icons">chevron_right</i></a></li>
+            </ul>
+        </div>
     </div>
 
-    <div id="rate" class="col s12">Test 4</div>
+    <div id="rate" class="col s12">Fonctionnalité bientôt disponible</div>
 </div>
 
 
 {% block javascripts %}
 
-
-
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('js/Chart.js') }}"></script>
+
+    <script>
+        $('.display_favorite_movies').click(function () {
+            if($('.favorite_movies_container').css('display') === 'none') {
+                $('.favorite_movies_container').show();
+            } else {
+                $('.favorite_movies_container').hide();
+            }
+        });
+
+        $('.display_watched_movies').click(function () {
+            if($('.watched_movies_container').css('display') === 'none') {
+                $('.watched_movies_container').show();
+            } else {
+                $('.watched_movies_container').hide();
+            }
+        });
+
+        $('.display_wished_movies').click(function () {
+            if($('.wished_movies_container').css('display') === 'none') {
+                $('.wished_movies_container').show();
+            } else {
+                $('.wished_movies_container').hide();
+            }
+        });
+    </script>
 
     <script>
         $(function(){

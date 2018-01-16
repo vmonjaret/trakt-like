@@ -3,6 +3,8 @@
 namespace AppBundle\Repository;
 use AppBundle\Entity\Movie;
 use AppBundle\Entity\User;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 
 /**
  * MovieRepository
@@ -12,6 +14,14 @@ use AppBundle\Entity\User;
  */
 class MovieRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findPopularQuery()
+    {
+        $query = $this->createQueryBuilder('m')
+            ->orderBy('m.popularity', 'DESC');
+
+        return $query->getQuery();
+    }
+
     public function hasLikedMovie(Movie $movie, User $user){
         $query = $this->createQueryBuilder('m')
             ->from('AppBundle:Movie', 'm')

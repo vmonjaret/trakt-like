@@ -32,7 +32,6 @@ class DefaultController extends Controller
     public function contactAction(Request $request)
     {
         $form = $this->createForm('AppBundle\Form\ContactType',null,array(
-            // To set the action use $this->generateUrl('route_identifier')
             'action' => $this->generateUrl('contact'),
             'method' => 'POST'
         ));
@@ -58,20 +57,18 @@ class DefaultController extends Controller
 
     private function sendEmail($data){
         $myappContactMail = 'haasmyriam8@gmail.com';
-        $myappContactPassword = 'kosima70';
+        $myappContactPassword = 'Kosima70';
 
-        $transport = \Swift_SmtpTransport::newInstance('smtp.zoho.com', 465,'ssl')
+        $transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465,'ssl')
             ->setUsername($myappContactMail)
             ->setPassword($myappContactPassword);
 
         $mailer = \Swift_Mailer::newInstance($transport);
 
-        $message = \Swift_Message::newInstance("Our Code World Contact Form ". $data["subject"])
+        $message = \Swift_Message::newInstance("Random Movie - ". $data["subject"])
             ->setFrom(array($myappContactMail => "Message by ".$data["name"]))
-            ->setTo(array(
-                $myappContactMail => $myappContactMail
-            ))
-            ->setBody($data["message"]."<br>ContactMail :".$data["email"]);
+            ->setTo(array($data["email"] => $data["email"]))
+            ->setBody($data["message"]."<br>ContactMail :".$data["email"], 'text/html');
 
         return $mailer->send($message);
     }

@@ -42,7 +42,18 @@
 
         $('.btn').click(function (e) {
             e.stopPropagation();
-            console.log(moviesId)
+            for(var i = 0; i < moviesId.length; i++){
+                $.ajax({
+                    url: '{{ (path('movie_like')) }}',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "movieId": moviesId[i]
+                    }
+                });
+            }
+
+            document.location.href="{{ path('userGenreTaste') }}";
         });
     </script>
 

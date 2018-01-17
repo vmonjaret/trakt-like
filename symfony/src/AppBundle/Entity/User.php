@@ -72,6 +72,11 @@ class User extends BaseUser
     private $moviesWished;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Genre", mappedBy="genreLiked")
+     */
+    private $genreLiked;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -81,6 +86,7 @@ class User extends BaseUser
         $this->moviesLiked = new ArrayCollection();
         $this->moviesWatched = new ArrayCollection();
         $this->moviesWished  = new ArrayCollection();
+        $this->genreLiked  = new ArrayCollection();
     }
 
     /**
@@ -286,5 +292,19 @@ class User extends BaseUser
     public function getMoviesWish()
     {
         return $this->moviesWished;
+    }
+
+    /**
+     * Add genreLiked
+     *
+     * @param Genre $genreLiked
+     *
+     * @return User
+     */
+    public function addGenreLiked(Genre $genreLiked)
+    {
+        $this->genreLiked[] = $genreLiked;
+
+        return $this;
     }
 }

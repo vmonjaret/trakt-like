@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Front;
 
+use AppBundle\Entity\Genre;
 use AppBundle\Entity\Movie;
 use AppBundle\Manager\MovieManager;
 use AppBundle\Utils\MovieDb;
@@ -97,13 +98,25 @@ class DefaultController extends Controller
      */
     public function userMovieTasteAction()
     {
-
         $em = $this->getDoctrine()->getManager();
         $movies = $em->getRepository(Movie::class)->findPopularQuery()->setMaxResults(12)->getResult();
 
-
         return $this->render('@FOSUser/Registration/select_movies.html.twig', array(
             'movies' => $movies
+        ));
+    }
+
+    /**
+     * @Route("/user-genre-taste", name="userGenreTaste")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function userGenreTasteAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $genres = $em->getRepository(Genre::class)->findAll();
+
+        return $this->render('@FOSUser/Registration/select_movies_genre.html.twig', array(
+            'genres' => $genres
         ));
     }
 }

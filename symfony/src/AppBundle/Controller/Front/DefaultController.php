@@ -2,9 +2,9 @@
 
 namespace AppBundle\Controller\Front;
 
+use AppBundle\Entity\Movie;
 use AppBundle\Manager\MovieManager;
 use AppBundle\Utils\MovieDb;
-use FOS\UserBundle\Model\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -89,5 +89,21 @@ class DefaultController extends Controller
     public function legalsMentionsAction()
     {
         return $this->render('front/legals_mentions.html.twig');
+    }
+
+    /**
+     * @Route("/user-movies-taste", name="userMoviesTaste")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function userMovieTasteAction()
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $movies = $em->getRepository(Movie::class)->findPopularQuery()->setMaxResults(12)->getResult();
+
+
+        return $this->render('@FOSUser/Registration/select_movies.html.twig', array(
+            'movies' => $movies
+        ));
     }
 }

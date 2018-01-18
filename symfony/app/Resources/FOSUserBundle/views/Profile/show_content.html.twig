@@ -167,7 +167,7 @@
         <div class="favorite_movies_container">
             {% for movie in user.moviesLiked %}
                 <div class="col s3 mt-2 profil_movie_vignette">
-                    <img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="col s12 p-0">
+                    <a href="{{ path('movie_show', {'slug': movie.slug}) }}"><img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="col s12 p-0"></a>
                     <div class="col s12 favorite_action_container">
                         {% if app.user %}
                             <i class="small tooltipped material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-tooltip="Ajouter à votre liste de film à voir">playlist_add</i>
@@ -181,7 +181,7 @@
         <div class="watched_movies_container">
             {% for movie in user.moviesWatched %}
                 <div class="col s3 mt-2 profil_movie_vignette">
-                    <img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="col s12 p-0">
+                    <a href="{{ path('movie_show', {'slug': movie.slug}) }}"><img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="col s12 p-0"></a>
                     <div class="col s12 favorite_action_container">
                         {% if app.user %}
                             <i class="small tooltipped material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-tooltip="Ajouter à votre liste de film à voir">playlist_add</i>
@@ -195,7 +195,7 @@
         <div class="wished_movies_container">
             {% for movie in user.moviesWished %}
                 <div class="col s3 mt-2 profil_movie_vignette">
-                    <img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="col s12 p-0">
+                    <a href="{{ path('movie_show', {'slug': movie.slug}) }}"><img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="col s12 p-0"></a>
                     <div class="col s12 favorite_action_container">
                         {% if app.user %}
                             <i class="small tooltipped material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-tooltip="Ajouter à votre liste de film à voir">playlist_add</i>

@@ -73,9 +73,10 @@ class User extends BaseUser
     private $moviesWished;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Genre", mappedBy="genreLiked")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Genre", cascade={"persist"})
+     * @ORM\JoinTable("favorite_genres")
      */
-    private $genreLiked;
+    private $genresFavorite;
 
     /**
      * User constructor.
@@ -87,7 +88,7 @@ class User extends BaseUser
         $this->moviesLiked = new ArrayCollection();
         $this->moviesWatched = new ArrayCollection();
         $this->moviesWished  = new ArrayCollection();
-        $this->genreLiked  = new ArrayCollection();
+        $this->genresFavorite = new ArrayCollection();
     }
 
     /**
@@ -296,16 +297,35 @@ class User extends BaseUser
     }
 
     /**
-     * Add genreLiked
+     * Add genresFavorite
      *
-     * @param Genre $genreLiked
+     * @param Genre $genreFavorite
      *
      * @return User
      */
-    public function addGenreLiked(Genre $genreLiked)
+    public function addGenresFavorite(Genre $genreFavorite)
     {
-        $this->genreLiked[] = $genreLiked;
+        $this->genresFavorite[] = $genreFavorite;
 
         return $this;
+    }
+
+    /**
+     * Remove genreFavorite
+     *
+     * @param Genre $genreFavorite
+     */
+    public function removeGenresFavorite(Genre $genreFavorite)
+    {
+        $this->genresFavorite->removeElement($genreFavorite);
+    }
+
+    /**
+     * Get genresFavorite
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGenresFavorite()
+    {
+        return $this->genresFavorite;
     }
 }

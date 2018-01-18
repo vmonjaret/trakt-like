@@ -35,19 +35,22 @@ class GenreController extends Controller
 
         if ($request->isXmlHttpRequest()) {
             $genreId = $request->request->get('genreId');
-
             $genre = $genreRepo->find($genreId);
 
             if ($genre != null) {
                 $user = $this->getUser();
-                $user->addGenreLiked($genre);
+                if ($user->getGenresFavorite()->contains($genre)) {
+                    $user->removeGenresFavorite($genre);
+                } else {
+                    $user->addGenresFavorite($genre);
+                }
                 $em->flush();
 
                 return new JsonResponse('Success');
             }
 
             return new JsonResponse('Error:Genre not found', 400);
-        }
+        };
 
         return new Response("Not an AJAX request", 400);
     }

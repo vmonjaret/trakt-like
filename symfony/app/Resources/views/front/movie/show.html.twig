@@ -11,7 +11,7 @@
                         <h1 class="m-0 mb-2" style="font-size: 1.6em;">{{ movie.title }}</h1>
                         <p class="m-0">{% if movie.releaseDate %}<span class="text-bold">Date de sortie :</span> {{ movie.releaseDate|date('d/m/Y') }}{% endif %}</p>
                         <p class="m-0"><span class="text-bold">Durée :</span> {{ movie.runtime }} min</p>
-                        <p class="m-0">Genres : {% for genre in movie.genres %}{{ genre.name }}{% if not loop.last %} | {% endif %}{% endfor %}</p>
+                        <p class="m-0"><span class="text-bold">Genres :</span> {% for genre in movie.genres %}{{ genre.name }}{% if not loop.last %} | {% endif %}{% endfor %}</p>
                         <p class="m-0"><span class="text-bold">Langue originale :</span> Anglais</p>
                         <p class="watchers">Spectateurs</p>
                         <div>

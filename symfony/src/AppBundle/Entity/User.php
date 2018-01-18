@@ -57,7 +57,6 @@ class User extends BaseUser
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", cascade={"persist"})
      * @ORM\JoinTable("liked_movies")
-     *
      */
     private $moviesLiked;
 
@@ -264,7 +263,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function addMoviesWish(Movie $moviesWished)
+    public function addMoviesWished(Movie $moviesWished)
     {
         $this->moviesWished[] = $moviesWished;
 
@@ -276,7 +275,7 @@ class User extends BaseUser
      *
      * @param Movie $moviesWished
      */
-    public function removeMoviesWish(Movie $moviesWished)
+    public function removeMoviesWished(Movie $moviesWished)
     {
         $this->moviesWished->removeElement($moviesWished);
     }
@@ -285,7 +284,7 @@ class User extends BaseUser
      * Get moviesWish
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getMoviesWish()
+    public function getMoviesWished()
     {
         return $this->moviesWished;
     }

@@ -82,12 +82,11 @@ class MovieController extends Controller
 
         if ($request->isXmlHttpRequest()) {
             $movieId = $request->request->get('movieId');
-
             $movie = $movieRepo->find($movieId);
 
             if ($movie != null) {
                 $user = $this->getUser();
-                if ($movieRepo->hasLikedMovie($movie, $user)) {
+                if ($user->getMoviesLiked()->contains($movie)) {
                     $user->removeMoviesLiked($movie);
                 } else {
                     $user->addMoviesLiked($movie);
@@ -126,7 +125,7 @@ class MovieController extends Controller
 
             if ($movie != null) {
                 $user = $this->getUser();
-                if ($movieRepo->hasWatchedMovie($movie, $user)) {
+                if ($user->getMoviesWatched()->contains($movie)) {
                     $user->removeMoviesWatched($movie);
                 } else {
                     $user->addMoviesWatched($movie);
@@ -165,10 +164,10 @@ class MovieController extends Controller
 
             if ($movie != null) {
                 $user = $this->getUser();
-                if ($movieRepo->hasWishedMovie($movie, $user)) {
-                    $user->removeMoviesWish($movie);
+                if ($user->getMoviesWished()->contains($movie)) {
+                    $user->removeMoviesWished($movie);
                 } else {
-                    $user->addMoviesWish($movie);
+                    $user->addMoviesWished($movie);
                 }
 
                 $em->flush();

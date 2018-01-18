@@ -23,9 +23,9 @@
                         </div>
                     </div>
                     <div class="col l5">
-                        <i class="small material-icons p-1 right cursor addToWishList" data-movieId="{{ movie.id }}">playlist_add</i>
-                        <i class="small material-icons p-1 right cursor addToWatched" data-movieId="{{ movie.id }}">remove_red_eye</i>
-                        <i class="small material-icons p-1 right cursor addToFavorite" data-movieId="{{ movie.id }}">favorite</i>
+                        <i class="small material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}">playlist_add</i>
+                        <i class="small material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}">remove_red_eye</i>
+                        <i class="small material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}">favorite</i>
                         <a class="waves-effect waves-light btn p-0 pl-2 pr-2 mt-2 right"><i class="material-icons left">shuffle</i>Film aléatoire</a>
                     </div>
                     <div class="col l12 mt-3">
@@ -163,8 +163,7 @@
                     "movieId": movieId
                 },
                 success: function () {
-                    if (e.target.style.color === 'red')    e.target.style.color = 'white';
-                    else                                   e.target.style.color = 'red';
+                    $(e.target).toggleClass('active');
                 }
             });
         });
@@ -180,8 +179,7 @@
                     "movieId": movieId
                 },
                 success: function () {
-                    if (e.target.style.color === 'green')  e.target.style.color = 'white';
-                    else                                   e.target.style.color = 'green';
+                    $(e.target).toggleClass('active');
                 }
             });
         });
@@ -197,8 +195,7 @@
                     "movieId": movieId
                 },
                 success: function () {
-                    if (e.target.style.color === 'blue')    e.target.style.color = 'white';
-                    else                                    e.target.style.color = 'blue';
+                    $(e.target).toggleClass('active');
                 }
             });
         });

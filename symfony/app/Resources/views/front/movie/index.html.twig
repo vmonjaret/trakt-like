@@ -42,11 +42,11 @@
                              onclick="location.href='{{ path('movie_show', { 'slug': movie.slug }) }}'">
                             {% if app.user %}
                                 <div>
-                                    <i class="small material-icons p-1 right addToWishList"
+                                    <i class="small material-icons p-1 right addToWishList {% if movie in app.user.moviesWished %}active{% endif %}"
                                        data-movieId="{{ movie.id }}">playlist_add</i>
-                                    <i class="small material-icons p-1 right addToWatched"
+                                    <i class="small material-icons p-1 right addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}"
                                        data-movieId="{{ movie.id }}">remove_red_eye</i>
-                                    <i class="small material-icons p-1 right addToFavorite"
+                                    <i class="small material-icons p-1 right addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}"
                                        data-movieId="{{ movie.id }}">favorite</i>
                                 </div>
                             {% endif %}
@@ -86,8 +86,7 @@
                     "movieId": movieId
                 },
                 success: function () {
-                    if (e.target.style.color === 'red') e.target.style.color = 'white';
-                    else e.target.style.color = 'red';
+                    $(e.target).toggleClass('active');
                 }
             });
         });
@@ -103,8 +102,7 @@
                     "movieId": movieId
                 },
                 success: function () {
-                    if (e.target.style.color === 'green') e.target.style.color = 'white';
-                    else e.target.style.color = 'green';
+                    $(e.target).toggleClass('active');
                 }
             });
         });
@@ -120,8 +118,7 @@
                     "movieId": movieId
                 },
                 success: function () {
-                    if (e.target.style.color === 'blue') e.target.style.color = 'white';
-                    else e.target.style.color = 'blue';
+                    $(e.target).toggleClass('active');
                 }
             });
         });

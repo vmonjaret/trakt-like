@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Front;
 
 use AppBundle\Entity\Movie;
+use AppBundle\Entity\User;
 use AppBundle\Utils\MovieDb;
 use Knp\Component\Pager\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -33,6 +34,8 @@ class MovieController extends Controller
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository(Movie::class)->findPopularQuery();
 
+        $user = $em->getRepository(User::class)->fullyFindById($this->getUser()->getId());
+
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
@@ -40,7 +43,8 @@ class MovieController extends Controller
         );
 
         return $this->render('front/movie/index.html.twig', array(
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'user' => $user,
         ));
     }
 
@@ -82,12 +86,11 @@ class MovieController extends Controller
 
         if ($request->isXmlHttpRequest()) {
             $movieId = $request->request->get('movieId');
-
             $movie = $movieRepo->find($movieId);
 
             if ($movie != null) {
                 $user = $this->getUser();
-                if ($movieRepo->hasLikedMovie($movie, $user)) {
+                if ($user->getMoviesLiked()->contains($movie)) {
                     $user->removeMoviesLiked($movie);
                 } else {
                     $user->addMoviesLiked($movie);
@@ -107,7 +110,7 @@ class MovieController extends Controller
     /**
      * Add/remove a movie as watched
      *
-     * @Route("/like", name="movie_watched")
+     * @Route("/watch", name="movie_watched")
      * @Method("POST")
      * @param Request $request
      * @internal param Movie $movie
@@ -126,7 +129,7 @@ class MovieController extends Controller
 
             if ($movie != null) {
                 $user = $this->getUser();
-                if ($movieRepo->hasWatchedMovie($movie, $user)) {
+                if ($user->getMoviesWatched()->contains($movie)) {
                     $user->removeMoviesWatched($movie);
                 } else {
                     $user->addMoviesWatched($movie);
@@ -165,10 +168,10 @@ class MovieController extends Controller
 
             if ($movie != null) {
                 $user = $this->getUser();
-                if ($movieRepo->hasWishedMovie($movie, $user)) {
-                    $user->removeMoviesWish($movie);
+                if ($user->getMoviesWished()->contains($movie)) {
+                    $user->removeMoviesWished($movie);
                 } else {
-                    $user->addMoviesWish($movie);
+                    $user->addMoviesWished($movie);
                 }
 
                 $em->flush();

@@ -10,7 +10,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="`user`")
  * @Vich\Uploadable
  */
@@ -55,19 +55,20 @@ class User extends BaseUser
     private $createdAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersLiked")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", cascade={"persist"})
      * @ORM\JoinTable("liked_movies")
-     *
      */
     private $moviesLiked;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersWatched")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", cascade={"persist"})
+     * @ORM\JoinTable("watched_movies")
      */
     private $moviesWatched;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersWished")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", cascade={"persist"})
+     * @ORM\JoinTable("wished_movies")
      */
     private $moviesWished;
 
@@ -268,7 +269,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function addMoviesWish(Movie $moviesWished)
+    public function addMoviesWished(Movie $moviesWished)
     {
         $this->moviesWished[] = $moviesWished;
 
@@ -280,7 +281,7 @@ class User extends BaseUser
      *
      * @param Movie $moviesWished
      */
-    public function removeMoviesWish(Movie $moviesWished)
+    public function removeMoviesWished(Movie $moviesWished)
     {
         $this->moviesWished->removeElement($moviesWished);
     }
@@ -289,7 +290,7 @@ class User extends BaseUser
      * Get moviesWish
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getMoviesWish()
+    public function getMoviesWished()
     {
         return $this->moviesWished;
     }

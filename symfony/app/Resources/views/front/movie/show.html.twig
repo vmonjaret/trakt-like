@@ -2,16 +2,17 @@
 
 {% block body %}
 
-    <div style="background-color: rgba(255, 40, 50, 0.9)">
+    <div style="box-shadow: 0px -3px 20px 0px;">
         <div class="container pt-5 pb-4">
             <div class="row">
                 <img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="col l4 pl-0">
                 <div class="col l8">
                     <div class="col l7">
-                        <h1 class="m-0 mb-2" style="font-size: 2em;">{{ movie.title }} {% if movie.releaseDate %}({{ movie.releaseDate|date('d/m/Y') }}){% endif %}</h1>
-                        <p class="m-0">Durée : {{ movie.runtime }} min</p>
-                        <p class="m-0">Genres : </p>
-                        <p class="m-0">Langue originale : Anglais</p>
+                        <h1 class="m-0 mb-2" style="font-size: 1.6em;">{{ movie.title }}</h1>
+                        <p class="m-0">{% if movie.releaseDate %}<span class="text-bold">Date de sortie :</span> {{ movie.releaseDate|date('d/m/Y') }}{% endif %}</p>
+                        <p class="m-0"><span class="text-bold">Durée :</span> {{ movie.runtime }} min</p>
+                        <p class="m-0">Genres : {% for genre in movie.genres %}{{ genre.name }}{% if not loop.last %} | {% endif %}{% endfor %}</p>
+                        <p class="m-0"><span class="text-bold">Langue originale :</span> Anglais</p>
                         <p class="watchers">Spectateurs</p>
                         <div>
                             <i class="tiny material-icons">grade</i>
@@ -23,9 +24,11 @@
                         </div>
                     </div>
                     <div class="col l5">
-                        <i class="small material-icons p-1 right cursor addToWishList" data-movieId="{{ movie.id }}">playlist_add</i>
-                        <i class="small material-icons p-1 right cursor addToWatched" data-movieId="{{ movie.id }}">remove_red_eye</i>
-                        <i class="small material-icons p-1 right cursor addToFavorite" data-movieId="{{ movie.id }}">favorite</i>
+                        {% if app.user %}
+                            <i class="small material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}">playlist_add</i>
+                            <i class="small material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}">remove_red_eye</i>
+                            <i class="small material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}">favorite</i>
+                        {% endif %}
                         <a class="waves-effect waves-light btn p-0 pl-2 pr-2 mt-2 right"><i class="material-icons left">shuffle</i>Film aléatoire</a>
                     </div>
                     <div class="col l12 mt-3">
@@ -163,8 +166,7 @@
                     "movieId": movieId
                 },
                 success: function () {
-                    if (e.target.style.color === 'red')    e.target.style.color = 'white';
-                    else                                   e.target.style.color = 'red';
+                    $(e.target).toggleClass('active');
                 }
             });
         });
@@ -180,8 +182,7 @@
                     "movieId": movieId
                 },
                 success: function () {
-                    if (e.target.style.color === 'green')  e.target.style.color = 'white';
-                    else                                   e.target.style.color = 'green';
+                    $(e.target).toggleClass('active');
                 }
             });
         });
@@ -197,8 +198,7 @@
                     "movieId": movieId
                 },
                 success: function () {
-                    if (e.target.style.color === 'blue')    e.target.style.color = 'white';
-                    else                                    e.target.style.color = 'blue';
+                    $(e.target).toggleClass('active');
                 }
             });
         });

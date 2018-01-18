@@ -33,4 +33,21 @@ class UserRepository extends EntityRepository
             return null;
         }
     }
+
+    public function getNbHoursMovie($id)
+    {
+        $query = $this->createQueryBuilder('u')
+            ->select('COUNT(m.id), SUM(m.runtime)')
+            ->where('u.id = :id')
+            ->leftJoin('u.moviesWatched', 'm')
+            ->setParameter('id', $id)
+            ->getQuery();
+
+        try {
+            $result = $query->getSingleResult();
+            return $result;
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
 }

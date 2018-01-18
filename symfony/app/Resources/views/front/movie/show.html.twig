@@ -10,7 +10,7 @@
                     <div class="col l7">
                         <h1 class="m-0 mb-2" style="font-size: 2em;">{{ movie.title }} {% if movie.releaseDate %}({{ movie.releaseDate|date('d/m/Y') }}){% endif %}</h1>
                         <p class="m-0">Durée : {{ movie.runtime }} min</p>
-                        <p class="m-0">Genres : </p>
+                        <p class="m-0">Genres : {% for genre in movie.genres %}{{ genre.name }}{% if not loop.last %} | {% endif %}{% endfor %}</p>
                         <p class="m-0">Langue originale : Anglais</p>
                         <p class="watchers">Spectateurs</p>
                         <div>
@@ -23,9 +23,11 @@
                         </div>
                     </div>
                     <div class="col l5">
-                        <i class="small material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}">playlist_add</i>
-                        <i class="small material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}">remove_red_eye</i>
-                        <i class="small material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}">favorite</i>
+                        {% if app.user %}
+                            <i class="small material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}">playlist_add</i>
+                            <i class="small material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}">remove_red_eye</i>
+                            <i class="small material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}">favorite</i>
+                        {% endif %}
                         <a class="waves-effect waves-light btn p-0 pl-2 pr-2 mt-2 right"><i class="material-icons left">shuffle</i>Film aléatoire</a>
                     </div>
                     <div class="col l12 mt-3">

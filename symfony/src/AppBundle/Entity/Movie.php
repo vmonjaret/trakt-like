@@ -82,7 +82,7 @@ class Movie
     private $popularity;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Genre", inversedBy="movies")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Genre", inversedBy="movies", fetch="EAGER")
      *
      */
     private $genres;

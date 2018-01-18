@@ -3,6 +3,8 @@
 namespace AppBundle\Repository;
 use AppBundle\Entity\Movie;
 use AppBundle\Entity\User;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 
 /**
  * MovieRepository
@@ -12,39 +14,11 @@ use AppBundle\Entity\User;
  */
 class MovieRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function hasLikedMovie(Movie $movie, User $user){
+    public function findPopularQuery()
+    {
         $query = $this->createQueryBuilder('m')
-            ->from('AppBundle:Movie', 'm')
-            ->leftJoin('m.usersLiked', 'u')
-            ->where('u.id = :user')
-            ->andWhere('m.id = :movie')
-            ->setParameter('user', $user->getId())
-            ->setParameter('movie', $movie->getId());
+            ->orderBy('m.popularity', 'DESC');
 
-        return $query->getQuery()->getFirstResult() !== null;
-    }
-
-    public function hasWatchedMovie(Movie $movie, User $user){
-        $query = $this->createQueryBuilder('m')
-            ->from('AppBundle:Movie', 'm')
-            ->leftJoin('m.usersWatched', 'u')
-            ->where('u.id = :user')
-            ->andWhere('m.id = :movie')
-            ->setParameter('user', $user->getId())
-            ->setParameter('movie', $movie->getId());
-
-        return $query->getQuery()->getFirstResult() !== null;
-    }
-
-    public function hasWishedMovie(Movie $movie, User $user){
-        $query = $this->createQueryBuilder('m')
-            ->from('AppBundle:Movie', 'm')
-            ->leftJoin('m.usersWish', 'u')
-            ->where('u.id = :user')
-            ->andWhere('m.id = :movie')
-            ->setParameter('user', $user->getId())
-            ->setParameter('movie', $movie->getId());
-
-        return $query->getQuery()->getFirstResult() !== null;
+        return $query->getQuery();
     }
 }

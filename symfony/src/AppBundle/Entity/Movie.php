@@ -15,6 +15,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Movie
 {
+    const NUM_ITEMS = 20;
+
     /**
      * @var int
      *
@@ -80,23 +82,10 @@ class Movie
     private $popularity;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Genre", inversedBy="movies")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Genre", inversedBy="movies", fetch="EAGER")
      *
      */
     private $genres;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="moviesLiked")
-     * @ORM\JoinTable("wished_movies")
-     */
-    private $usersLiked;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="moviesWatched")
-     * @ORM\JoinTable("watched_movies")
-     */
-    private $usersWatched;
-
 
     /**
      * Constructor

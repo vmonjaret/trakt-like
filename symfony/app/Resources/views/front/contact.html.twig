@@ -1,0 +1,47 @@
+{% extends 'front/base.html.twig' %}
+
+{% block meta_title %}Contact - {% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col m10 offset-m1 s12">
+                <h5 class="center-align mt-4">Contact</h5>
+                <div class="row">
+
+                    {{ form_start(form) }}
+
+                    <div>
+                        {{ form_widget(form.subject) }}
+                        {{ form_errors(form.subject) }}
+                    </div>
+                    <div>
+                        {{ form_widget(form.name) }}
+                        {{ form_errors(form.name) }}
+                    </div>
+                    <div>
+                        {{ form_widget(form.email) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+                    <div>
+                        {{ form_widget(form.message) }}
+                        {{ form_errors(form.message) }}
+                    </div>
+
+                    <div style="display:none">
+                        {{ form_rest(form) }}
+                    </div>
+
+                    <div class="col m12">
+                        <p class="right-align">
+                            <input class="btn btn-large waves-effect waves-light" type="submit" value="Envoyer">
+                        </p>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

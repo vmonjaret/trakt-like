@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col s4 description">
                 <h3>Sélectionnez vos genres préférés</h3>
-                <p>Cela nous aidera à trouver des films et séries TV que vous allez adorer !</p>
+                <p>Cela nous aidera à trouver des films que vous allez adorer !</p>
                 <div class="btn">Continuer</div>
             </div>
             <div class="col s8">
@@ -40,7 +40,18 @@
 
         $('.btn').click(function (e) {
             e.stopPropagation();
-            console.log(moviesGenreId)
+            for(var i = 0; i < moviesGenreId.length; i++){
+                $.ajax({
+                    url: '{{ (path('genre_like')) }}',
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "genreId": moviesGenreId[i]
+                    }
+                });
+            }
+
+            document.location.href="{{ path('movie_index') }}";
         });
     </script>
 

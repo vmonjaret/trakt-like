@@ -34,7 +34,7 @@ class RegistrationListener implements EventSubscriberInterface
 
     public function onRegistrationSuccess( FormEvent $event )
     {
-        $url = $this->router->generate('homepage');
+        $url = $this->router->generate('userMoviesTaste');
 
         $event->setResponse(new RedirectResponse($url));
     }

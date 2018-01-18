@@ -2,7 +2,7 @@
     <li>
         {% if app.user %}
             <div class="user-view">
-                <a href="{{ path('fos_user_profile_show') }}">
+                <a href="{{ path('user_profile') }}">
                     <div class="background trianglify" data-trianglify="{{ app.user.background }}">
                     </div>
                     <img class="circle" src="{{ app.user.avatar ? app.user.avatar : asset('images/avatar_default.jpg') }}">
@@ -24,10 +24,10 @@
     <li><div class="divider"></div></li>
     {% if app.user %}
         <li><a class="subheader">Profil</a></li>
-        <li><a href="{{ path('fos_user_profile_show') }}#resume"><i class="material-icons">dashboard</i>Dashboard</a></li>
-        <li><a href="{{ path('fos_user_profile_show') }}#progression"><i class="material-icons">view_list</i>Progression</a></li>
-        <li><a href="{{ path('fos_user_profile_show') }}#favorite"><i class="material-icons">favorite</i>Favoris, Déjà vus, A voir</a></li>
-        <li><a href="{{ path('fos_user_profile_show') }}#rate"><i class="material-icons">insert_comment</i>Notes & Critiques</a></li>
+        <li><a href="{{ path('user_profile') }}#resume"><i class="material-icons">dashboard</i>Dashboard</a></li>
+        <li><a href="{{ path('user_profile') }}#progression"><i class="material-icons">view_list</i>Progression</a></li>
+        <li><a href="{{ path('user_profile') }}#favorite"><i class="material-icons">favorite</i>Favoris, Déjà vus, A voir</a></li>
+        <li><a href="{{ path('user_profile') }}#rate"><i class="material-icons">insert_comment</i>Notes & Critiques</a></li>
         <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
     {% else %}
         <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>

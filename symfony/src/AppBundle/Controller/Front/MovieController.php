@@ -107,7 +107,7 @@ class MovieController extends Controller
     /**
      * Add/remove a movie as watched
      *
-     * @Route("/like", name="movie_watched")
+     * @Route("/watch", name="movie_watched")
      * @Method("POST")
      * @param Request $request
      * @internal param Movie $movie

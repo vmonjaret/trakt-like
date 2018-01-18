@@ -55,19 +55,21 @@ class User extends BaseUser
     private $createdAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersLiked")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", cascade={"persist"})
      * @ORM\JoinTable("liked_movies")
      *
      */
     private $moviesLiked;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersWatched")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", cascade={"persist"})
+     * @ORM\JoinTable("watched_movies")
      */
     private $moviesWatched;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="usersWished")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Movie", cascade={"persist"})
+     * @ORM\JoinTable("wished_movies")
      */
     private $moviesWished;
 

@@ -41,7 +41,7 @@
 <div class="row container">
     <div class="col s12 profile_menu">
         <ul class="tabs">
-            <li class="tab col s3"><a class="active" href="#resume">Résumé</a></li>
+            <li class="tab col s3"><a href="#resume">Résumé</a></li>
             <li class="tab col s3"><a href="#progression">Progression</a></li>
             <li class="tab col s3"><a href="#favorite">Favoris, Déjà vus, A voir</a></li>
             <li class="tab col s3"><a href="#rate">Notes & critiques</a></li>
@@ -156,56 +156,51 @@
 
     <div id="favorite" class="col s12">
         <div class="col s12 mt-4 mb-4" style="text-align: right">
-            <div class="btn mr-1 display_favorite_movies">Favoris</div>
-            <div class="btn mr-1 display_watched_movies">Déjà vus</div>
-            <div class="btn mr-1 display_wished_movies">à voir</div>
+            <div class="btn mr-1 display_favorite_movies active" {% if app.user.moviesLiked is empty %} onclick="Materialize.toast('Vous n\'avez pas ajouté vos films préférés!', 4000)"{% endif %}>Favoris</div>
+            <div class="btn mr-1 display_watched_movies" {% if app.user.moviesWatched is empty %} onclick="Materialize.toast('Vous n\'avez pas ajouté les films que vous avez vu!', 4000)"{% endif %}>Déjà vus</div>
+            <div class="btn mr-1 display_wished_movies" {% if app.user.moviesWished is empty %} onclick="Materialize.toast('Vous n\'avez pas ajouter de film à voir!', 4000)"{% endif %}>à voir</div>
         </div>
-        <div class="col s3 mt-2 profil_movie_vignette favorite_movies_container">
-            <img src="{{ asset('images/deadpool.jpg') }}" alt="" class="col s12 p-0">
-            <div class="col s12 favorite_action_container">
-                <i class="small material-icons p-1 right addToWishList" data-movieId="">playlist_add</i>
-                <i class="small material-icons p-1 right addToWatched" data-movieId="">remove_red_eye</i>
-                <i class="small material-icons p-1 right addToFavorite" data-movieId="">favorite</i>
-            </div>
-            <div class="col s12 favorite_description_container">
-                <p class="m-0">1S02E - Last Jedi</p>
-                <p class="m-0">Black Sails</p>
-            </div>
+        <div class="favorite_movies_container">
+            {% for movie in user.moviesLiked %}
+                <div class="col s3 mt-2 profil_movie_vignette">
+                    <img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="col s12 p-0">
+                    <div class="col s12 favorite_action_container">
+                        {% if app.user %}
+                            <i class="small material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}">playlist_add</i>
+                            <i class="small material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}">remove_red_eye</i>
+                            <i class="small material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}">favorite</i>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-        <div class="col s3 mt-2 profil_movie_vignette watched_movies_container">
-            <img src="{{ asset('images/starwars.jpg') }}" alt="" class="col s12 p-0">
-            <div class="col s12 favorite_action_container">
-                <i class="small material-icons p-1 right addToWishList" data-movieId="">playlist_add</i>
-                <i class="small material-icons p-1 right addToWatched" data-movieId="">remove_red_eye</i>
-                <i class="small material-icons p-1 right addToFavorite" data-movieId="">favorite</i>
-            </div>
-            <div class="col s12 favorite_description_container">
-                <p class="m-0">1S02E - Last Jedi</p>
-                <p class="m-0">Star Wars</p>
-            </div>
+        <div class="watched_movies_container">
+            {% for movie in user.moviesWatched %}
+                <div class="col s3 mt-2 profil_movie_vignette">
+                    <img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="col s12 p-0">
+                    <div class="col s12 favorite_action_container">
+                        {% if app.user %}
+                            <i class="small material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}">playlist_add</i>
+                            <i class="small material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}">remove_red_eye</i>
+                            <i class="small material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}">favorite</i>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-        <div class="col s3 mt-2 profil_movie_vignette wished_movies_container">
-            <img src="{{ asset('images/divergente.jpg') }}" alt="" class="col s12 p-0">
-            <div class="col s12 favorite_action_container">
-                <i class="small material-icons p-1 right addToWishList" data-movieId="">playlist_add</i>
-                <i class="small material-icons p-1 right addToWatched" data-movieId="">remove_red_eye</i>
-                <i class="small material-icons p-1 right addToFavorite" data-movieId="">favorite</i>
-            </div>
-            <div class="col s12 favorite_description_container">
-                <p class="m-0">1S02E - Last Jedi</p>
-                <p class="m-0">Black Sails</p>
-            </div>
-        </div>
-        <div class="col l12">
-            <ul class="pagination">
-                <li class="disabled"><a href=""><i class="material-icons">chevron_left</i></a></li>
-                <li class="active"><a href="">1</a></li>
-                <li class="waves-effect"><a href="">2</a></li>
-                <li class="waves-effect"><a href="">3</a></li>
-                <li class="waves-effect"><a href="">4</a></li>
-                <li class="waves-effect"><a href="">5</a></li>
-                <li class="waves-effect"><a href=""><i class="material-icons">chevron_right</i></a></li>
-            </ul>
+        <div class="wished_movies_container">
+            {% for movie in user.moviesWished %}
+                <div class="col s3 mt-2 profil_movie_vignette">
+                    <img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="col s12 p-0">
+                    <div class="col s12 favorite_action_container">
+                        {% if app.user %}
+                            <i class="small material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}">playlist_add</i>
+                            <i class="small material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}">remove_red_eye</i>
+                            <i class="small material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}">favorite</i>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 
@@ -219,28 +214,90 @@
     <script src="{{ asset('js/Chart.js') }}"></script>
 
     <script>
+        {% if app.user.moviesLiked is not empty %}
         $('.display_favorite_movies').click(function () {
             if($('.favorite_movies_container').css('display') === 'none') {
+                $('.display_favorite_movies').addClass('active');
                 $('.favorite_movies_container').show();
             } else {
+                $('.display_favorite_movies').removeClass('active');
                 $('.favorite_movies_container').hide();
             }
         });
+        {% endif %}
 
+        {% if app.user.moviesWatched is not empty %}
         $('.display_watched_movies').click(function () {
             if($('.watched_movies_container').css('display') === 'none') {
+                $('.display_watched_movies').addClass('active');
                 $('.watched_movies_container').show();
             } else {
+                $('.display_watched_movies').removeClass('active');
                 $('.watched_movies_container').hide();
             }
         });
+        {% endif %}
 
+        {% if app.user.moviesWished is not empty %}
         $('.display_wished_movies').click(function () {
             if($('.wished_movies_container').css('display') === 'none') {
+                $('.display_wished_movies').addClass('active');
                 $('.wished_movies_container').show();
             } else {
+                $('.display_wished_movies').removeClass('active');
                 $('.wished_movies_container').hide();
             }
+        });
+        {% endif %}
+    </script>
+
+    <script>
+        $('.addToFavorite').click(function (e) {
+            e.stopPropagation();
+            var movieId = $(this).attr('data-movieId');
+            $.ajax({
+                url:'{{ (path('movie_like')) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "movieId": movieId
+                },
+                success: function () {
+                    $(e.target).toggleClass('active');
+                }
+            });
+        });
+
+        $('.addToWatched').click(function (e) {
+            e.stopPropagation();
+            var movieId = $(this).attr('data-movieId');
+            $.ajax({
+                url:'{{ (path('movie_watched')) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "movieId": movieId
+                },
+                success: function () {
+                    $(e.target).toggleClass('active');
+                }
+            });
+        });
+
+        $('.addToWishList').click(function (e) {
+            e.stopPropagation();
+            var movieId = $(this).attr('data-movieId');
+            $.ajax({
+                url:'{{ (path('movie_wish')) }}',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "movieId": movieId
+                },
+                success: function () {
+                    $(e.target).toggleClass('active');
+                }
+            });
         });
     </script>
 

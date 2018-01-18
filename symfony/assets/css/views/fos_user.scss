@@ -101,6 +101,21 @@
 .watched_movies_container, .wished_movies_container {
   display: none;
 }
+.display_favorite_movies, .display_watched_movies, .display_wished_movies {
+  background-color: #909090;
+
+  &:hover {
+    background-color: lighten(#909090, 10%);
+  }
+
+  &.active {
+    background-color: $secondary-color;
+
+    &:hover {
+      background-color: lighten($secondary-color, 10%);
+    }
+  }
+}
 
 /** SELECT MOVIES **/
 .registration_select_movies {

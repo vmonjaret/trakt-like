@@ -15,6 +15,7 @@ class UserController extends Controller
     public function showAction()
     {
         $user = $this->getUser();
+        dump($user);
 
         return $this->render('@FOSUser/Profile/show.html.twig', array(
             'user' => $user,

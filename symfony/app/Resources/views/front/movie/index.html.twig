@@ -39,14 +39,12 @@
                         <div style="background-image: url('{{ movie.poster }}');"></div>
                         <div class="actions_buttons"
                              onclick="location.href='{{ path('movie_show', { 'slug': movie.slug }) }}'">
+
                             {% if app.user %}
                                 <div>
-                                    <i class="small material-icons p-1 right addToWishList {% if movie in app.user.moviesWished %}active{% endif %}"
-                                       data-movieId="{{ movie.id }}">playlist_add</i>
-                                    <i class="small material-icons p-1 right addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}"
-                                       data-movieId="{{ movie.id }}">remove_red_eye</i>
-                                    <i class="small material-icons p-1 right addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}"
-                                       data-movieId="{{ movie.id }}">favorite</i>
+                                    <i class="small tooltipped material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-tooltip="Ajouter à votre liste de film à voir">playlist_add</i>
+                                    <i class="small tooltipped material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-tooltip="Ajouter aux films déjà vus">remove_red_eye</i>
+                                    <i class="small tooltipped material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-tooltip="Ajouter à vos favoris">favorite</i>
                                 </div>
                             {% endif %}
                         </div>
@@ -74,6 +72,10 @@
     {{ parent() }}
 
     <script>
+        $(document).ready(function(){
+            $('.tooltipped').tooltip({delay: 500});
+        });
+
         $('.addToFavorite').click(function (e) {
             e.stopPropagation();
             var movieId = $(this).attr('data-movieId');

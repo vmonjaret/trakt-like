@@ -25,10 +25,11 @@
                     </div>
                     <div class="col l5">
                         {% if app.user %}
-                            <i class="small material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}">playlist_add</i>
-                            <i class="small material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}">remove_red_eye</i>
-                            <i class="small material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}">favorite</i>
+                            <i class="small tooltipped material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-delay="50" data-tooltip="Ajouter à votre liste de film à voir">playlist_add</i>
+                            <i class="small tooltipped material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-delay="50" data-tooltip="Ajouter aux films déjà vus">remove_red_eye</i>
+                            <i class="small tooltipped material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-delay="50" data-tooltip="Ajouter à vos favoris">favorite</i>
                         {% endif %}
+
                         <a class="waves-effect waves-light btn p-0 pl-2 pr-2 mt-2 right"><i class="material-icons left">shuffle</i>Film aléatoire</a>
                     </div>
                     <div class="col l12 mt-3">
@@ -155,6 +156,10 @@
     {{ parent() }}
 
     <script>
+        $(document).ready(function(){
+            $('.tooltipped').tooltip({delay: 50});
+        });
+
         $('.addToFavorite').click(function (e) {
             e.stopPropagation();
             var movieId = $(this).attr('data-movieId');

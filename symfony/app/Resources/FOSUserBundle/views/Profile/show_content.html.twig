@@ -170,9 +170,9 @@
                     <img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="col s12 p-0">
                     <div class="col s12 favorite_action_container">
                         {% if app.user %}
-                            <i class="small material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}">playlist_add</i>
-                            <i class="small material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}">remove_red_eye</i>
-                            <i class="small material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}">favorite</i>
+                            <i class="small tooltipped material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-tooltip="Ajouter à votre liste de film à voir">playlist_add</i>
+                            <i class="small tooltipped material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-tooltip="Ajouter aux films déjà vus">remove_red_eye</i>
+                            <i class="small tooltipped material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-tooltip="Ajouter à vos favoris">favorite</i>
                         {% endif %}
                     </div>
                 </div>
@@ -184,9 +184,9 @@
                     <img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="col s12 p-0">
                     <div class="col s12 favorite_action_container">
                         {% if app.user %}
-                            <i class="small material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}">playlist_add</i>
-                            <i class="small material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}">remove_red_eye</i>
-                            <i class="small material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}">favorite</i>
+                            <i class="small tooltipped material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-tooltip="Ajouter à votre liste de film à voir">playlist_add</i>
+                            <i class="small tooltipped material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-tooltip="Ajouter aux films déjà vus">remove_red_eye</i>
+                            <i class="small tooltipped material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-tooltip="Ajouter à vos favoris">favorite</i>
                         {% endif %}
                     </div>
                 </div>
@@ -198,9 +198,9 @@
                     <img src="{{ movie.poster }}" alt="Poster {{ movie.title }}" class="col s12 p-0">
                     <div class="col s12 favorite_action_container">
                         {% if app.user %}
-                            <i class="small material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}">playlist_add</i>
-                            <i class="small material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}">remove_red_eye</i>
-                            <i class="small material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}">favorite</i>
+                            <i class="small tooltipped material-icons p-1 right cursor addToWishList {% if movie in app.user.moviesWished %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-tooltip="Ajouter à votre liste de film à voir">playlist_add</i>
+                            <i class="small tooltipped material-icons p-1 right cursor addToWatched {% if movie in app.user.moviesWatched %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-tooltip="Ajouter aux films déjà vus">remove_red_eye</i>
+                            <i class="small tooltipped material-icons p-1 right cursor addToFavorite {% if movie in app.user.moviesLiked %}active{% endif %}" data-movieId="{{ movie.id }}" data-position="bottom" data-tooltip="Ajouter à vos favoris">favorite</i>
                         {% endif %}
                     </div>
                 </div>
@@ -218,6 +218,10 @@
     <script src="{{ asset('js/Chart.js') }}"></script>
 
     <script>
+        $(document).ready(function(){
+            $('.tooltipped').tooltip({delay: 500});
+        });
+
         {% if app.user.moviesLiked is not empty %}
         $('.display_favorite_movies').click(function () {
             if($('.favorite_movies_container').css('display') === 'none') {

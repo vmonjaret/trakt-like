@@ -88,6 +88,11 @@ class Movie
     private $genres;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Notation", mappedBy="movie", cascade={"persist"})
+     */
+    private $notations;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -320,5 +325,39 @@ class Movie
     public function getGenres()
     {
         return $this->genres;
+    }
+
+    /**
+     * Add notation
+     *
+     * @param \AppBundle\Entity\Notation $notation
+     *
+     * @return Movie
+     */
+    public function addNotation(\AppBundle\Entity\Notation $notation)
+    {
+        $this->notations[] = $notation;
+
+        return $this;
+    }
+
+    /**
+     * Remove notation
+     *
+     * @param \AppBundle\Entity\Notation $notation
+     */
+    public function removeNotation(\AppBundle\Entity\Notation $notation)
+    {
+        $this->notations->removeElement($notation);
+    }
+
+    /**
+     * Get notations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNotations()
+    {
+        return $this->notations;
     }
 }

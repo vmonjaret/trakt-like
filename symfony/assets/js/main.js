@@ -1,4 +1,5 @@
 import $ from 'jquery';
+require('./components/moviesActions');
 
 require("materialize-css/dist/js/materialize");
 

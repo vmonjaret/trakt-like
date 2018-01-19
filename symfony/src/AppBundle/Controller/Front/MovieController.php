@@ -4,7 +4,9 @@ namespace AppBundle\Controller\Front;
 
 use AppBundle\Entity\Movie;
 use AppBundle\Entity\User;
+use AppBundle\Manager\NotationManager;
 use AppBundle\Utils\MovieDb;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -72,7 +74,7 @@ class MovieController extends Controller
     /**
      * Like a movie
      *
-     * @Route("/like", name="movie_like")
+     * @Route("/like", name="movie_like", options={"expose"=true})
      * @Method("POST")
      * @param Request $request
      * @internal param Movie $movie
@@ -110,7 +112,7 @@ class MovieController extends Controller
     /**
      * Add/remove a movie as watched
      *
-     * @Route("/watch", name="movie_watched")
+     * @Route("/watch", name="movie_watched", options={"expose"=true})
      * @Method("POST")
      * @param Request $request
      * @internal param Movie $movie
@@ -149,7 +151,7 @@ class MovieController extends Controller
     /**
      * Add/remove a movie from the wish list
      *
-     * @Route("/wish", name="movie_wish")
+     * @Route("/wish", name="movie_wish", options={"expose"=true})
      * @Method("POST")
      * @param Request $request
      * @internal param Movie $movie
@@ -175,6 +177,37 @@ class MovieController extends Controller
                 }
 
                 $em->flush();
+
+                return new JsonResponse('Success');
+            }
+
+            return new JsonResponse('Error:Movie not found', 400);
+        }
+
+        return new Response("Not an AJAX request", 400);
+    }
+
+    /**
+     * Give a notation to a movie
+     *
+     * @Route("/mark", name="movie_mark", options={"expose"=true})
+     * @Method("POST")
+     * @param Request $request
+     * @internal param Movie $movie
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @return Response
+     */
+    public function MarkAction(Request $request, EntityManagerInterface $em, NotationManager $notationManager)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $movieId = $request->request->get('movieId');
+            $mark = $request->request->get('mark');
+
+            $movie = $em->getRepository(Movie::class)->find($movieId);
+
+            if ($movie != null) {
+                $user = $this->getUser();
+                $notationManager->markMovie($user, $movie, $mark);
 
                 return new JsonResponse('Success');
             }

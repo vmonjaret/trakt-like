@@ -79,6 +79,11 @@ class User extends BaseUser
     private $genresFavorite;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Notation", mappedBy="user", cascade={"persist"})
+     */
+    private $notations;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -327,5 +332,39 @@ class User extends BaseUser
     public function getGenresFavorite()
     {
         return $this->genresFavorite;
+    }
+
+    /**
+     * Add notation
+     *
+     * @param \AppBundle\Entity\Notation $notation
+     *
+     * @return User
+     */
+    public function addNotation(\AppBundle\Entity\Notation $notation)
+    {
+        $this->notations[] = $notation;
+
+        return $this;
+    }
+
+    /**
+     * Remove notation
+     *
+     * @param \AppBundle\Entity\Notation $notation
+     */
+    public function removeNotation(\AppBundle\Entity\Notation $notation)
+    {
+        $this->notations->removeElement($notation);
+    }
+
+    /**
+     * Get notations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNotations()
+    {
+        return $this->notations;
     }
 }

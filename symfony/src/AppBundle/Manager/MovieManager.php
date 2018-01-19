@@ -5,6 +5,7 @@ namespace AppBundle\Manager;
 use AppBundle\Entity\Genre;
 use AppBundle\Entity\Movie;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class MovieManager
 {
@@ -15,7 +16,7 @@ class MovieManager
      * MovieManager constructor.
      * @param EntityManager $em
      */
-    public function __construct( EntityManager $em)
+    public function __construct( EntityManagerInterface $em)
     {
         $this->em = $em;
     }

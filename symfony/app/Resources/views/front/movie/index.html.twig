@@ -75,53 +75,5 @@
         $(document).ready(function(){
             $('.tooltipped').tooltip({delay: 500});
         });
-
-        $('.addToFavorite').click(function (e) {
-            e.stopPropagation();
-            var movieId = $(this).attr('data-movieId');
-            $.ajax({
-                url: '{{ (path('movie_like')) }}',
-                type: "POST",
-                dataType: "json",
-                data: {
-                    "movieId": movieId
-                },
-                success: function () {
-                    $(e.target).toggleClass('active');
-                }
-            });
-        });
-
-        $('.addToWatched').click(function (e) {
-            e.stopPropagation();
-            var movieId = $(this).attr('data-movieId');
-            $.ajax({
-                url: '{{ (path('movie_watched')) }}',
-                type: "POST",
-                dataType: "json",
-                data: {
-                    "movieId": movieId
-                },
-                success: function () {
-                    $(e.target).toggleClass('active');
-                }
-            });
-        });
-
-        $('.addToWishList').click(function (e) {
-            e.stopPropagation();
-            var movieId = $(this).attr('data-movieId');
-            $.ajax({
-                url: '{{ (path('movie_wish')) }}',
-                type: "POST",
-                dataType: "json",
-                data: {
-                    "movieId": movieId
-                },
-                success: function () {
-                    $(e.target).toggleClass('active');
-                }
-            });
-        });
     </script>
 {% endblock %}

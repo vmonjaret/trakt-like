@@ -21,4 +21,23 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getQuery();
     }
+
+    public function findRecentQuery()
+    {
+        $query = $this->createQueryBuilder('m')
+            ->orderBy('m.releaseDate', 'DESC');
+
+        return $query->getQuery();
+    }
+
+    public function findPopularNotSeenQuery($user_id)
+    {
+        $query = $this->createQueryBuilder('m')
+            ->where('m.user_id = :id')
+            ->leftJoin('u.moviesWatched', 'm')
+            ->setParameter('id', $user_id)
+            ->orderBy('m.popularity', 'DESC');
+
+        return $query->getQuery();
+    }
 }

@@ -34,7 +34,14 @@ class MovieController extends Controller
     public function indexAction(Request $request, Paginator $paginator)
     {
         $em = $this->getDoctrine()->getManager();
-        $query = $em->getRepository(Movie::class)->findPopularQuery();
+        $sort = $request->query->get('filter');
+
+        if($sort == "recent") {
+            $query = $em->getRepository(Movie::class)->findRecentQuery();
+        } else {
+            $query = $em->getRepository(Movie::class)->findPopularQuery();
+        }
+
         $user = $em->getRepository(User::class)->fullyFindById($this->getUser()->getId());
 
         $pagination = $paginator->paginate(
@@ -48,35 +55,6 @@ class MovieController extends Controller
             'user' => $user,
         ));
     }
-
-    /**
-     * Lists all movie entities order by the most recent
-     *
-     * @Route("/recent", name="movie_index_recent")
-     * @Method("GET")
-     * @param Request $request
-     * @param Paginator $paginator
-     * @return Response
-     * @internal param MovieDb $movieDb
-     */
-    public function indexRecentAction(Request $request, Paginator $paginator)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->getRepository(Movie::class)->findRecentQuery();
-        $user = $em->getRepository(User::class)->fullyFindById($this->getUser()->getId());
-
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            Movie::NUM_ITEMS
-        );
-
-        return $this->render('front/movie/index.html.twig', array(
-            'pagination' => $pagination,
-            'user' => $user,
-        ));
-    }
-
 
     /**
      * Finds and displays a movie entity.

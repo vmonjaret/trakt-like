@@ -10,7 +10,7 @@
 
                 <ul class="mb-3">
                     <li><a href="{{ path('movie_index') }}">Les plus populaires</a></li>
-                    <li><a href="{{ path('movie_index_recent') }}">Derniers ajouts</a></li>
+                    <li><a href="{{ path('movie_index', {'filter': 'recent'}) }}">Derniers ajouts</a></li>
                 </ul>
                 <div class="line"></div>
                 {# TODO: replace with formtype #}

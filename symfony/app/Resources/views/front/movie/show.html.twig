@@ -81,7 +81,7 @@
         <div class="container">
             <div class="row">
                 <h5 class="pb-4">Commentaires</h5>
-                <a href="" class="right">Voir tous les commentaires</a>
+                {% if app.user %}<a href="" class="right">Voir tous les commentaires</a>{% endif %}
                 <div>
                     <div class="col l6 pl-0">
                         <div class="avatar_comments_container col l3" style="background-image: url('{{ asset('images/ryan_reynolds.jpg') }}');"></div>
@@ -98,7 +98,7 @@
                             </div>
                         </div>
                         <p class="col l12 pl-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id.</p>
-                        <a href="" class="col l12 pl-0">Lire la suite</a>
+                        {% if app.user %} <a href="" class="col l12 pl-0">Lire la suite</a>{% endif %}
                     </div>
                     <div class="col l6">
                         <div class="avatar_comments_container col l3" style="background-image: url('{{ asset('images/gosling.png') }}');"></div>
@@ -115,7 +115,7 @@
                             </div>
                         </div>
                         <p class="col l12 pl-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id.</p>
-                        <a href="" class="col l12 pl-0">Lire la suite</a>
+                        {% if app.user %}<a href="" class="col l12 pl-0">Lire la suite</a>{% endif %}
                     </div>
                 </div>
             </div>

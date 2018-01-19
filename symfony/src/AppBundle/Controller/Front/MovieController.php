@@ -3,7 +3,6 @@
 namespace AppBundle\Controller\Front;
 
 use AppBundle\Entity\Movie;
-use AppBundle\Entity\User;
 use AppBundle\Utils\MovieDb;
 use Knp\Component\Pager\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -42,8 +41,6 @@ class MovieController extends Controller
             $query = $em->getRepository(Movie::class)->findPopularQuery();
         }
 
-        $user = $em->getRepository(User::class)->fullyFindById($this->getUser()->getId());
-
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
@@ -51,8 +48,7 @@ class MovieController extends Controller
         );
 
         return $this->render('front/movie/index.html.twig', array(
-            'pagination' => $pagination,
-            'user' => $user,
+            'pagination' => $pagination
         ));
     }
 

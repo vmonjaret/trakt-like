@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Front;
 
 use AppBundle\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,6 +12,7 @@ class UserController extends Controller
 {
     /**
      * @Route("/profile", name="user_profile")
+     * @Method("GET")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function showAction()

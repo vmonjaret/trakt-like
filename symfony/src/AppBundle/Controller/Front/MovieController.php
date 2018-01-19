@@ -190,29 +190,43 @@ class MovieController extends Controller
         return new Response("Not an AJAX request", 400);
     }
 
-    public function searchAction(Request $request, Paginator $paginator)
+    public function searchAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(SearchType::class);
         $form->handleRequest($request);
 
-        if($form->isSubmitted()) {
-            $data = $form->getData();
-            $query = $em->getRepository(Movie::class)->search($data["search"]);
+        return $this->render('form/SearchBar.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
 
-            $pagination = $paginator->paginate(
-                $query,
-                $request->query->getInt('page', 1),
-                Movie::NUM_ITEMS
-            );
+    /**
+     * Search movies
+     *
+     * @Route("/search", name="search")
+     * @Method("Post")
+     * @param Request $request
+     * @param Paginator $paginator
+     * @return Response
+     * @internal param Movie $movie
+     */
+    public function resultSearch(Request $request, Paginator $paginator)
+    {
+        $em = $this->getDoctrine()->getManager();
 
-            return $this->render('front/movie/index.html.twig', array(
-                'pagination' => $pagination,
-                'form' => $form->createView()
-            ));
-        }
+        $form = $this->createForm(SearchType::class);
+        $form->handleRequest($request);
+        $data = $form->getData();
+        $query = $em->getRepository(Movie::class)->search($data["search"]);
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            Movie::NUM_ITEMS
+        );
 
         return $this->render('front/movie/index.html.twig', array(
+            'pagination' => $pagination,
             'form' => $form->createView()
         ));
     }

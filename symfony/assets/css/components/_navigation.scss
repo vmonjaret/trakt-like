@@ -10,9 +10,12 @@
   margin-left: 40px; top: 0
 }
 
-.brand-logo img {
-  width: 66px;
-  padding-top: 0.1em;
+.brand-logo {
+  height: 100%;
+   img {
+     width: 66px;
+     padding-top: 0.1em;
+   }
 }
 
 .nav-wrapper {

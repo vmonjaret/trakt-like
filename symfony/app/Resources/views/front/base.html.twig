@@ -16,6 +16,12 @@
 <header class="navbar-fixed">
     <nav>
         <div class="nav-wrapper">
+            {{ render(controller('AppBundle:Front\\Movie:search')) }}
+            {{ form_start(form) }}
+            {{ form_rest(form) }}
+            <input type="submit" value="Chercher">
+            {{ form_end(form) }}
+
             <form class="search_form">
                 <div class="input-field">
                     <input id="search" type="search" required>

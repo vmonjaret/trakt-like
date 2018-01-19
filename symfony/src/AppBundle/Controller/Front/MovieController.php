@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Front;
 
 use AppBundle\Entity\Movie;
+use AppBundle\Form\SearchType;
 use AppBundle\Utils\MovieDb;
 use Knp\Component\Pager\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -187,5 +188,32 @@ class MovieController extends Controller
         }
 
         return new Response("Not an AJAX request", 400);
+    }
+
+    public function searchAction(Request $request, Paginator $paginator)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(SearchType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()) {
+            $data = $form->getData();
+            $query = $em->getRepository(Movie::class)->search($data["search"]);
+
+            $pagination = $paginator->paginate(
+                $query,
+                $request->query->getInt('page', 1),
+                Movie::NUM_ITEMS
+            );
+
+            return $this->render('front/movie/index.html.twig', array(
+                'pagination' => $pagination,
+                'form' => $form->createView()
+            ));
+        }
+
+        return $this->render('front/movie/index.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 }

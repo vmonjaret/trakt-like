@@ -29,4 +29,15 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getQuery();
     }
+
+    public function search($data)
+    {
+        $query = $this->createQueryBuilder('m')
+            ->where('m.title LIKE :title')
+            ->setParameter('title', '%' . $data . '%')
+            ->orderBy('m.id', 'ASC')
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }

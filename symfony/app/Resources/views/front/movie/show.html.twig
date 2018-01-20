@@ -38,7 +38,7 @@
                         {% if app.user %}
                             <div class="mt-4">
                                 <div class="text-bold">Votre note</div>
-                                <div id="movie-rating" data-movieId="{{ movie.id }}" data-rate="{{ notation ? notation.mark : null }}"></div>
+                                <div id="movie-rating" data-movieId="{{ movie.id }}" data-rate="{{ notation ? notation.mark : '' }}"></div>
                                 <div class="col l5">
                                     <a class="waves-effect waves-light btn p-0 pl-1 pr-1 right" style="font-size: 0.9em; text-transform: none;"><i class="material-icons left m-0 mr-2">edit</i>Ajouter un commentaire</a>
                                 </div>

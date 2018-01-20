@@ -82,6 +82,27 @@
                     <a href="{{ path('fos_user_security_login') }}" class="right">Se connecter pour voir les commentaires</a>
                 {% endif %}
                 <div>
+                    {% if topComments is null %}
+                        Aucun utilisateur à commenté et noté un film pour le moment.
+                    {% elseif topComments.negative is null %}
+                        <div class="col l12 pl-0">
+                            <div class="avatar_comments_container col l3" style="background-image: url('{{ topComments.positive.avatar ? topComments.positive.avatar : asset('images/avatar_default.jpg') }}');"></div>
+                            <div class="col l9">
+                                <p class="title_comments m-0">Commentaire le plus utile</p>
+                                <p class="m-0">Par {{ topComments.positive.username }}, le {{ topComments.positive[0].createdAt|date("d/m/Y") }}</p>
+                                <div>
+                                    <!-- <i class="tiny material-icons">grade</i>
+                                     <i class="tiny material-icons">grade</i>
+                                     <i class="tiny material-icons">grade</i>
+                                     <i class="tiny material-icons">grade</i>
+                                     <i class="tiny material-icons">grade</i>-->
+                                    <span> {{ topComments.positive.mark }} étoiles</span>
+                                </div>
+                            </div>
+                            <p class="col l12 pl-0">{{ topComments.positive[0].content|length > 150 ? topComments.positive[0].content|slice(0, 150) ~ '…' : topComments.positive[0].content }}</p>
+                            {% if app.user %} <a href="{{ path('movie_all_comments', { 'slug': movie.slug }) }}" class="col l12 pl-0">Lire la suite</a>{% endif %}
+                        </div>
+                    {% else %}
                     <div class="col l6 pl-0">
                         <div class="avatar_comments_container col l3" style="background-image: url('{{ topComments.positive.avatar ? topComments.positive.avatar : asset('images/avatar_default.jpg') }}');"></div>
                         <div class="col l9">
@@ -116,6 +137,7 @@
                         <p class="col l12 pl-0">{{ topComments.negative[0].content|length > 150 ? topComments.negative[0].content|slice(0, 150) ~ '…' : topComments.negative[0].content }}</p>
                         {% if app.user %}<a href="{{ path('movie_all_comments', { 'slug': movie.slug }) }}" class="col l12 pl-0">Lire la suite</a>{% endif %}
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

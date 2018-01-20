@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use Doctrine\ORM\NoResultException;
 
 /**
  * CommentRepository
@@ -28,7 +29,7 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
     {
         $queryPositive = $this->createQueryBuilder('c')
             ->leftJoin('c.user', 'u')
-            ->addSelect('u.username, u.avatar')
+            ->addSelect('u.username, u.avatar', 'u.id')
             ->leftJoin('u.notations', 'n')
             ->addSelect('n.mark')
             ->where('c.movie = :id')
@@ -36,11 +37,12 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('id', $movieId)
             ->orderBy('n.mark', 'DESC')
             ->setMaxResults(1)
-            ->getQuery();
+            ->getQuery()
+            ->getSingleResult();
 
         $queryNegative = $this->createQueryBuilder('c')
             ->leftJoin('c.user', 'u')
-            ->addSelect('u.username, u.avatar')
+            ->addSelect('u.username, u.avatar', 'u.id')
             ->leftJoin('u.notations', 'n')
             ->addSelect('n.mark')
             ->where('c.movie = :id')
@@ -48,13 +50,22 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('id', $movieId)
             ->orderBy('n.mark', 'ASC')
             ->setMaxResults(1)
-            ->getQuery();
+            ->getQuery()
+            ->getSingleResult();
 
-        $results = [
-            'positive' => $queryPositive->getSingleResult(),
-            'negative' => $queryNegative->getSingleResult()
-        ];
+        if($queryNegative['id'] == $queryPositive['id']){
+            $queryNegative = null;
+        }
 
-        return $results;
+        try {
+            $results = [
+                'positive' => $queryPositive,
+                'negative' => $queryNegative
+            ];
+
+            return $results;
+        } catch (NoResultException $e) {
+            return null;
+        }
     }
 }

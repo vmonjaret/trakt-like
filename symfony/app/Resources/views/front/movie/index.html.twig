@@ -2,15 +2,15 @@
 
 {% block body %}
 
-    <div>
+    <div class="movie_index">
         <div class="row mb-0" style="background-color: black;">
 
             <div class="col l3 movie_tv_menu">
                 <h2>Films</h2>
 
                 <ul class="mb-3">
-                    <li><a href="">Les plus populaires</a></li>
-                    <li><a href="">Derniers ajouts</a></li>
+                    <li><a href="{{ path('movie_index') }}">Les plus populaires</a></li>
+                    <li><a href="{{ path('movie_index', {'filter': 'recent'}) }}">Derniers ajouts</a></li>
                 </ul>
                 <div class="line"></div>
                 {# TODO: replace with formtype #}

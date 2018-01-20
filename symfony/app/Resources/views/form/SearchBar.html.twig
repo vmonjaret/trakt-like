@@ -1,0 +1,8 @@
+{{ form_start(form, {
+    'attr' : {'class' : 'search_form', 'action' : path('search')}
+}) }}
+<label class="label-icon search_icon" for="search"><i class="material-icons">search</i></label>
+<div class="input-field search_form">
+    {{ form_rest(form) }}
+</div>
+{{ form_end(form) }}

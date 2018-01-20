@@ -11,3 +11,14 @@ $active-color: color("light-blue", "lighten-1") !default;
     border: 3px solid $active-color;
   }
 }
+
+.search_icon {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 1em;
+}
+
+.search_form {
+  display: inline-block;
+  vertical-align: baseline;
+}

@@ -4,9 +4,10 @@ namespace AppBundle\Controller\Front;
 
 use AppBundle\Entity\Genre;
 use AppBundle\Entity\Movie;
-use AppBundle\Manager\MovieManager;
 use AppBundle\Utils\MovieDb;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -14,8 +15,13 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
+     * @Method("GET")
+     * @param MovieDb $movieDb
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
+     * @internal param MovieManager $movieManager
      */
-    public function indexAction(Request $request, MovieDb $movieDb, MovieManager $movieManager)
+    public function indexAction(MovieDb $movieDb)
     {
         $movies = $movieDb->getPopular(1, 5);
 
@@ -27,6 +33,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/contact", name="contact")
+     * @Method("GET")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -78,6 +85,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/cgu", name="cgu")
+     * @Method("GET")
      */
     public function cguAction()
     {
@@ -94,6 +102,8 @@ class DefaultController extends Controller
 
     /**
      * @Route("/user-movies-taste", name="userMoviesTaste")
+     * @Method("GET")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function userMovieTasteAction()
@@ -108,6 +118,8 @@ class DefaultController extends Controller
 
     /**
      * @Route("/user-genre-taste", name="userGenreTaste")
+     * @Method("GET")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function userGenreTasteAction()

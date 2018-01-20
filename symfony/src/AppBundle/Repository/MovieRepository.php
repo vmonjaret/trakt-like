@@ -37,4 +37,23 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
             return null;
         }
     }
+
+    public function findRecentQuery()
+    {
+        $query = $this->createQueryBuilder('m')
+            ->orderBy('m.releaseDate', 'DESC');
+
+        return $query->getQuery();
+    }
+
+    public function search($data)
+    {
+        $query = $this->createQueryBuilder('m')
+            ->where('m.title LIKE :title')
+            ->setParameter('title', '%' . $data . '%')
+            ->orderBy('m.id', 'ASC')
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }

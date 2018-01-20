@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Front;
 
 use AppBundle\Entity\Movie;
+use AppBundle\Entity\Notation;
 use AppBundle\Entity\User;
 use AppBundle\Manager\NotationManager;
 use AppBundle\Utils\MovieDb;
@@ -57,17 +58,31 @@ class MovieController extends Controller
      * @Method("GET")
      * @param Movie $movie
      * @param MovieDb $movieDb
+     * @param EntityManagerInterface $em
      * @return Response
      */
-    public function showAction(Movie $movie, MovieDb $movieDb)
+    public function showAction($slug, MovieDb $movieDb, EntityManagerInterface $em)
     {
+        $movie = $em->getRepository(Movie::class)->findOneBySlugWithGenres($slug);
         $actors = $movieDb->getActors($movie->getTmDbId());
         $recommendations = $movieDb->getRecommendations($movie->getTmDbId(), 3);
+        $notation = null;
+        $user = null;
+
+        if (null !== $this->getUser()) {
+            $user = $em->getRepository(User::class)->fullyFindById($this->getUser()->getId());
+            $notation = $em->getRepository(Notation::class)->findOneBy([
+                'movie' => $movie,
+                'user' => $this->getUser()
+            ]);
+        }
 
         return $this->render('front/movie/show.html.twig', array(
             'movie' => $movie,
             'actors'=> $actors,
-            'recommendations' => $recommendations
+            'recommendations' => $recommendations,
+            'notation' => $notation,
+            'user' => $user,
         ));
     }
 

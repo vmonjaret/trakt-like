@@ -21,4 +21,20 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getQuery();
     }
+
+    public function findOneBySlugWithGenres($movieSlug)
+    {
+        $query = $this->createQueryBuilder('m')
+            ->leftJoin('m.genres', 'g')
+            ->addSelect('g')
+            ->where('m.slug = :slug')
+            ->setParameter('slug', $movieSlug)
+            ->getQuery();
+
+        try {
+            return $query->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
 }

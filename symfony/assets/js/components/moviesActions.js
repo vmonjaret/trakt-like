@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import Routing from "./routing";
+require('jquery-star-rating-plugin/src/jquery.star.rating');
 
 // Like movies
 $('.addToFavorite').click(function (e) {
@@ -53,3 +54,19 @@ $('.addToWishList').click(function (e) {
 });
 
 // Mark movies
+$('#movie-rating').addRating({
+    //fieldName: 'movie-rating',
+    //fieldId: 'movie-rating-input',
+    onClick: (parent, rate) => {
+        $.ajax({
+            url:Routing.generate('movie_mark'),
+            type: "POST",
+            dataType: "json",
+            data: {
+                "movieId": parent.data('movieid'),
+                "mark": rate
+            }
+        });
+    },
+    iconSize: '48px'
+});

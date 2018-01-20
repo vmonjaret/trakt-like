@@ -78,41 +78,43 @@
                 <h5 class="pb-4">Commentaires</h5>
                 {% if app.user %}
                     <a href="{{ path('movie_all_comments', { 'slug': movie.slug }) }}" class="right">Voir tous les commentaires</a>
+                {% else %}
+                    <a href="{{ path('fos_user_security_login') }}" class="right">Se connecter pour voir les commentaires</a>
                 {% endif %}
                 <div>
                     <div class="col l6 pl-0">
-                        <div class="avatar_comments_container col l3" style="background-image: url('{{ asset('images/ryan_reynolds.jpg') }}');"></div>
+                        <div class="avatar_comments_container col l3" style="background-image: url('{{ topComments.positive.avatar ? topComments.positive.avatar : asset('images/avatar_default.jpg') }}');"></div>
                         <div class="col l9">
                             <p class="title_comments m-0">Commentaire positif le plus utile</p>
-                            <p class="m-0">Par Ryan1552, le 10/10/2017</p>
+                            <p class="m-0">Par {{ topComments.positive.username }}, le {{ topComments.positive[0].createdAt|date("d/m/Y") }}</p>
                             <div>
+                               <!-- <i class="tiny material-icons">grade</i>
                                 <i class="tiny material-icons">grade</i>
                                 <i class="tiny material-icons">grade</i>
                                 <i class="tiny material-icons">grade</i>
-                                <i class="tiny material-icons">grade</i>
-                                <i class="tiny material-icons">grade</i>
-                                <span>4.1 Excellent</span>
+                                <i class="tiny material-icons">grade</i>-->
+                                <span> {{ topComments.positive.mark }} étoiles</span>
                             </div>
                         </div>
-                        <p class="col l12 pl-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id.</p>
-                        {% if app.user %} <a href="" class="col l12 pl-0">Lire la suite</a>{% endif %}
+                        <p class="col l12 pl-0">{{ topComments.positive[0].content|length > 150 ? topComments.positive[0].content|slice(0, 150) ~ '…' : topComments.positive[0].content }}</p>
+                        {% if app.user %} <a href="{{ path('movie_all_comments', { 'slug': movie.slug }) }}" class="col l12 pl-0">Lire la suite</a>{% endif %}
                     </div>
                     <div class="col l6">
-                        <div class="avatar_comments_container col l3" style="background-image: url('{{ asset('images/gosling.png') }}');"></div>
+                        <div class="avatar_comments_container col l3" style="background-image: url('{{ topComments.negative.avatar ? topComments.negative.avatar : asset('images/avatar_default.jpg') }}');"></div>
                         <div class="col l9">
                             <p class="title_comments m-0">Commentaire négatif le plus utile</p>
-                            <p class="m-0">Par Ryan1552, le 10/10/2017</p>
+                            <p class="m-0">Par {{ topComments.negative.username }}, le {{ topComments.negative[0].createdAt|date("d/m/Y") }}</p>
                             <div>
+                                <!--<i class="tiny material-icons">grade</i>
                                 <i class="tiny material-icons">grade</i>
                                 <i class="tiny material-icons">grade</i>
                                 <i class="tiny material-icons">grade</i>
-                                <i class="tiny material-icons">grade</i>
-                                <i class="tiny material-icons">grade</i>
-                                <span>4.1 Excellent</span>
+                                <i class="tiny material-icons">grade</i>-->
+                                <span>{{ topComments.negative.mark }} étoiles</span>
                             </div>
                         </div>
-                        <p class="col l12 pl-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id.</p>
-                        {% if app.user %}<a href="" class="col l12 pl-0">Lire la suite</a>{% endif %}
+                        <p class="col l12 pl-0">{{ topComments.negative[0].content|length > 150 ? topComments.negative[0].content|slice(0, 150) ~ '…' : topComments.negative[0].content }}</p>
+                        {% if app.user %}<a href="{{ path('movie_all_comments', { 'slug': movie.slug }) }}" class="col l12 pl-0">Lire la suite</a>{% endif %}
                     </div>
                 </div>
             </div>

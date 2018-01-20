@@ -75,6 +75,7 @@ class MovieController extends Controller
         $movie = $em->getRepository(Movie::class)->findOneBySlugWithGenres($slug);
         $actors = $movieDb->getActors($movie->getTmDbId());
         $recommendations = $movieDb->getRecommendations($movie->getTmDbId(), 3);
+        $topComments = $em->getRepository(Comment::class)->topCommentsfindByMovie($movie->getId());
         $notation = null;
         $user = null;
 
@@ -92,6 +93,7 @@ class MovieController extends Controller
             'recommendations' => $recommendations,
             'notation' => $notation,
             'user' => $user,
+            'topComments' => $topComments
         ));
     }
 

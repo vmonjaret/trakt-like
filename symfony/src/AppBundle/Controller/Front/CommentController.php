@@ -30,7 +30,7 @@ class CommentController extends Controller
     {
         $movie = $em->getRepository(Movie::class)->findOneBySlugWithGenres($slug);
         $comments = $em->getRepository(Comment::class)->findByMovieWithUsernameAndAvatar($movie->getId());
-dump($comments);
+
         return $this->render('front/comment/index.html.twig', [
             'movie'=> $movie,
             'comments' => $comments

@@ -16,10 +16,45 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('c.user', 'u')
             ->addSelect('u.username, u.avatar')
             ->where('c.movie = :id')
+            ->andWhere('c.published = 1')
             ->setParameter('id', $movieId)
             ->orderBy('c.createdAt', 'DESC')
             ->getQuery();
 
         return $query->getResult();
+    }
+
+    public function topCommentsfindByMovie($movieId)
+    {
+        $queryPositive = $this->createQueryBuilder('c')
+            ->leftJoin('c.user', 'u')
+            ->addSelect('u.username, u.avatar')
+            ->leftJoin('u.notations', 'n')
+            ->addSelect('n.mark')
+            ->where('c.movie = :id')
+            ->andWhere('c.published = 1')
+            ->setParameter('id', $movieId)
+            ->orderBy('n.mark', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery();
+
+        $queryNegative = $this->createQueryBuilder('c')
+            ->leftJoin('c.user', 'u')
+            ->addSelect('u.username, u.avatar')
+            ->leftJoin('u.notations', 'n')
+            ->addSelect('n.mark')
+            ->where('c.movie = :id')
+            ->andWhere('c.published = 1')
+            ->setParameter('id', $movieId)
+            ->orderBy('n.mark', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery();
+
+        $results = [
+            'positive' => $queryPositive->getSingleResult(),
+            'negative' => $queryNegative->getSingleResult()
+        ];
+
+        return $results;
     }
 }

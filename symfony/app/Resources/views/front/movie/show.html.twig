@@ -77,7 +77,7 @@
             <div class="row">
                 <h5 class="pb-4">Commentaires</h5>
                 {% if app.user %}
-                    <a href="" class="right">Voir tous les commentaires</a>
+                    <a href="{{ path('movie_all_comments', { 'slug': movie.slug }) }}" class="right">Voir tous les commentaires</a>
                 {% endif %}
                 <div>
                     <div class="col l6 pl-0">

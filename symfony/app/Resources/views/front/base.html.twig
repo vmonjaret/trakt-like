@@ -25,7 +25,7 @@
                 <li><a href="{{ path('movie_index') }}">Films</a></li>
             </ul>
 
-            <a href="{{ path('movie_random') }}" class="brand-logo center">
+            <a href="{{ path('movie_random') }}" class="brand-logo center tooltipped" data-position="bottom" data-tooltip="Film aléatoire">
                 <img src="{{ asset('images/logo.png') }}" alt="Logo Random Movie">
             </a>
 
@@ -83,6 +83,11 @@
         $('.button-collapse').sideNav({
             edge: 'right'
         });
+
+        $(document).ready(function(){
+            $('.tooltipped').tooltip({delay: 500);
+        });
+
     </script>
 {% endblock %}
 

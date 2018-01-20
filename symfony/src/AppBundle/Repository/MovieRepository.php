@@ -2,10 +2,6 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\Movie;
-use AppBundle\Entity\User;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 
 /**
  * MovieRepository

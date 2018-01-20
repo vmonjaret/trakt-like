@@ -2,10 +2,7 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 
 /**

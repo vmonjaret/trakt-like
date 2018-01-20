@@ -2,10 +2,7 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 
 /**
@@ -49,5 +46,40 @@ class UserRepository extends EntityRepository
         } catch (NoResultException $e) {
             return null;
         }
+    }
+
+
+    public function random($id, $em)
+    {
+        $sql = " 
+        SELECT *
+          FROM movie
+          LEFT JOIN movie_genre as moviesGenre ON moviesGenre.movie_id = movie.id
+          where 
+          (moviesGenre.genre_id IN (
+              SELECT DISTINCT(favoriteMoviesGenre.genre_id) FROM movie
+              LEFT JOIN liked_movies as likedMovies ON likedMovies.user_id = :id
+              LEFT JOIN movie_genre as favoriteMoviesGenre ON favoriteMoviesGenre.movie_id = likedMovies.movie_id)
+              OR moviesGenre.genre_id IN (
+              SELECT DISTINCT(favoriteGenres.genre_id) FROM movie
+              LEFT JOIN favorite_genres as favoriteGenres ON favoriteGenres.user_id = :id)
+          )
+          AND movie.id NOT IN (
+              SELECT DISTINCT(likedMovies.movie_id) FROM movie
+              LEFT JOIN liked_movies as likedMovies ON likedMovies.user_id = :id
+          )
+          AND movie.id NOT IN (
+              SELECT DISTINCT(watchedMovies.movie_id) FROM movie
+              LEFT JOIN watched_movies as watchedMovies ON watchedMovies.user_id = :id
+          )
+          GROUP BY id
+          ORDER BY RAND()
+        ";
+
+        $params['id'] = $id;
+
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
     }
 }

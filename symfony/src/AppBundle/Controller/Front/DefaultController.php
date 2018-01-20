@@ -4,6 +4,8 @@ namespace AppBundle\Controller\Front;
 
 use AppBundle\Entity\Genre;
 use AppBundle\Entity\Movie;
+use AppBundle\Entity\Notation;
+use AppBundle\Entity\User;
 use AppBundle\Utils\MovieDb;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -129,6 +131,47 @@ class DefaultController extends Controller
 
         return $this->render('@FOSUser/Registration/select_movies_genre.html.twig', array(
             'genres' => $genres
+        ));
+    }
+
+    /**
+     * Finds and displays a movie entity.
+     *
+     * @Route("/random", name="movie_random")
+     * @Method("GET")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Movie $movie
+     * @internal param MovieDb $movieDb
+     */
+    public function randomAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->getRepository(User::class)->random($this->getUser()->getId(), $em);
+
+        $movieRepo = $em->getRepository(Movie::class);
+        $movie = $movieRepo->find($query[0]['id']);
+
+        $movieDb = $this->container->get(MovieDb::class);
+
+        $actors = $movieDb->getActors($movie->getTmDbId());
+        $recommendations = $movieDb->getRecommendations($movie->getTmDbId(), 3);
+        $notation = null;
+        $user = null;
+
+        if (null !== $this->getUser()) {
+            $user = $em->getRepository(User::class)->fullyFindById($this->getUser()->getId());
+            $notation = $em->getRepository(Notation::class)->findOneBy([
+                'movie' => $movie,
+                'user' => $this->getUser()
+            ]);
+        }
+
+        return $this->render('front/movie/show.html.twig', array(
+            'movie' => $movie,
+            'actors'=> $actors,
+            'recommendations' => $recommendations,
+            'notation' => $notation,
+            'user' => $user,
         ));
     }
 }

@@ -203,8 +203,8 @@ class MovieController extends Controller
     /**
      * Search movies
      *
-     * @Route("/search", name="search")
-     * @Method("Post")
+     * @Route("/search", name="movie_search")
+     * @Method("POST")
      * @param Request $request
      * @param Paginator $paginator
      * @return Response

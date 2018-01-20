@@ -17,6 +17,7 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
             ->addSelect('u.username, u.avatar')
             ->where('c.movie = :id')
             ->setParameter('id', $movieId)
+            ->orderBy('c.createdAt', 'DESC')
             ->getQuery();
 
         return $query->getResult();

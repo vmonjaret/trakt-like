@@ -7,6 +7,15 @@
   vertical-align: middle;
 }
 
+#movie-rating {
+  float: left;
+
+  i {
+    cursor: pointer;
+    font-size: 35px !important;
+  }
+}
+
 .actor_container{
   .card-content {
     padding: 1em 0.5em;

@@ -15,6 +15,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
+    const RATING = [
+        '0' => 'Médiocre',
+        '1' => 'A éviter',
+        '2' => 'Moyen',
+        '3' => 'Super',
+        '4' => 'Excellent',
+        '5' => 'Parfait'
+    ];
+
     /**
      * @Route("/", name="homepage")
      * @Method("GET")
@@ -147,7 +156,7 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $query = $em->getRepository(User::class)->random($this->getUser()->getId(), $em);
-
+dump($query);
         $movieRepo = $em->getRepository(Movie::class);
         $movie = $movieRepo->find($query[0]['id']);
 
@@ -157,6 +166,15 @@ class DefaultController extends Controller
         $recommendations = $movieDb->getRecommendations($movie->getTmDbId(), 3);
         $notation = null;
         $user = null;
+
+        $spectatorRate = $em->getRepository(Movie::class)->getAverageRating($movie->getId());
+        dump($spectatorRate);
+        $spectatorLabel = self::RATING[floor($spectatorRate[1])];
+
+        $spectatorRating = [
+            'rate'=> round( $spectatorRate[1], 2, PHP_ROUND_HALF_UP),
+            'label' => $spectatorLabel
+        ];
 
         if (null !== $this->getUser()) {
             $user = $em->getRepository(User::class)->fullyFindById($this->getUser()->getId());
@@ -172,6 +190,7 @@ class DefaultController extends Controller
             'recommendations' => $recommendations,
             'notation' => $notation,
             'user' => $user,
+            'spectatorRating' => $spectatorRating
         ));
     }
 }

@@ -96,13 +96,14 @@ class MovieController extends Controller
     }
 
     /**
-     * @Route("/{slug}/comment", name="movie_comment")
+     * @Route("/{slug}/comments/add", name="movie_comment")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
      * @param Movie $movie
+     * @param EntityManagerInterface $em
      * @return Response
      */
-    public function commentAction(Request $request, Movie $movie, EntityManagerInterface $em)
+    public function addCommentAction(Request $request, Movie $movie, EntityManagerInterface $em)
     {
         $comment = new Comment($movie, $this->getUser());
         $form = $this->createForm(CommentType::class, $comment);

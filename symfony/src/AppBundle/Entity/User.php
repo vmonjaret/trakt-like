@@ -84,6 +84,11 @@ class User extends BaseUser
     private $notations;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="user", cascade={"persist"})
+     */
+    private $comments;
+
+    /**
      * User constructor.
      */
     public function __construct()

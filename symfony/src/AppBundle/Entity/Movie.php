@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Genre;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -93,11 +94,17 @@ class Movie
     private $notations;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="movie", cascade={"persist"})
+     */
+    private $comments;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->genres = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->genres = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**

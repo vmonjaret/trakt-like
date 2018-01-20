@@ -2,9 +2,11 @@
 
 namespace AppBundle\Controller\Front;
 
+use AppBundle\Entity\Comment;
 use AppBundle\Entity\Movie;
 use AppBundle\Entity\Notation;
 use AppBundle\Entity\User;
+use AppBundle\Form\CommentType;
 use AppBundle\Manager\NotationManager;
 use AppBundle\Form\SearchType;
 use AppBundle\Utils\MovieDb;
@@ -62,12 +64,13 @@ class MovieController extends Controller
      *
      * @Route("/{slug}", name="movie_show")
      * @Method("GET")
-     * @param Movie $movie
+     * @param $slug
      * @param MovieDb $movieDb
      * @param EntityManagerInterface $em
+     * @param Request $request
      * @return Response
      */
-    public function showAction($slug, MovieDb $movieDb, EntityManagerInterface $em)
+    public function showAction($slug, MovieDb $movieDb, EntityManagerInterface $em, Request $request)
     {
         $movie = $em->getRepository(Movie::class)->findOneBySlugWithGenres($slug);
         $actors = $movieDb->getActors($movie->getTmDbId());
@@ -90,6 +93,42 @@ class MovieController extends Controller
             'notation' => $notation,
             'user' => $user,
         ));
+    }
+
+    /**
+     * @Route("/{slug}/comments/add", name="movie_comment")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param Request $request
+     * @param Movie $movie
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function addCommentAction(Request $request, Movie $movie, EntityManagerInterface $em)
+    {
+        $comment = new Comment($movie, $this->getUser());
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+        $user = $em->getRepository(User::class)->fullyFindById($this->getUser()->getId());
+        $notation = $em->getRepository(Notation::class)->findOneBy([
+            'movie' => $movie,
+            'user' => $this->getUser()
+        ]);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($comment);
+            $em->flush();
+
+            $this->addFlash('success', 'Commentaire ajouté');
+
+            return $this->redirectToRoute('movie_show', ['slug' => $movie->getSlug()]);
+        }
+
+        return $this->render('front/movie/comment.html.twig', [
+            'user' => $user,
+            'movie' => $movie,
+            'notation' => $notation,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**

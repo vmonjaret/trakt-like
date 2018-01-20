@@ -10,13 +10,13 @@
                 <a href="{{ path('movie_show', { 'slug': movie.slug }) }}">{{ movie.title }}</a>
             </h2>
 
-            <h4>55 commentaires utilisateurs</h4>
+            <h4>{{ comments|length }} commentaires utilisateurs</h4>
             {% for comment in comments %}
                 <ul class="collection">
                     <li class="collection-item avatar">
                         <img class="circle" src="{{ comment.avatar ? comment.avatar : asset('images/avatar_default.jpg') }}">
                         <div class="col l9">
-                            <p class="m-0">Par {{ comment.username }}, le 10/10/2017</p>
+                            <p class="m-0 text-bold">Par {{ comment.username }}, le {{ comment[0].createdAt|date("d/m/Y") }}</p>
                         </div>
                         <p>{{ comment[0].content }}</p>
                     </li>

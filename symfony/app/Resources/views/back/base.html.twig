@@ -64,6 +64,11 @@
 </footer>
 {% block javascripts %}
     <script src="{{ asset('build/back.js') }}"></script>
+    <script>
+        $('.button-collapse').sideNav({
+            edge: 'right'
+        });
+    </script>
 {% endblock %}
 
 </body>

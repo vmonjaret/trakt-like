@@ -46,6 +46,9 @@
                     <a href="{{ path('user_disable', {'id': user.id, 'token': csrf_token('disable_user')}) }}" class="btn">
                         {{ user.enabled ? "Désactiver" : "Activer" }} l'utilisateur
                     </a>
+                    {% if is_granted("ROLE_SUPER_ADMIN") and user.enabled %}
+                        <a href="{{ path('homepage', {'_switch_user': user.username}) }}" class="btn right">Impersonate</a>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>

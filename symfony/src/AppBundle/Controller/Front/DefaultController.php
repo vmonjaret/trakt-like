@@ -6,6 +6,7 @@ use AppBundle\Entity\Genre;
 use AppBundle\Entity\Movie;
 use AppBundle\Entity\Notation;
 use AppBundle\Entity\User;
+use AppBundle\Form\ContactType;
 use AppBundle\Utils\MovieDb;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -28,61 +29,38 @@ class DefaultController extends Controller
         $movies = $movieDb->getPopular(1, 5);
 
         return $this->render('front/default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
             'movies' => $movies
         ]);
     }
 
     /**
      * @Route("/contact", name="contact")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function contactAction(Request $request)
+    public function contactAction(Request $request, \Swift_Mailer $mailer)
     {
-        $form = $this->createForm("AppBundle\Form\ContactType",null,array(
-            "action" => $this->generateUrl("contact"),
-            "method" => "POST"
-        ));
+        $form = $this->createForm(ContactType::class);
+        $form->handleRequest($request);
 
-        if ($request->isMethod("POST")) {
-            $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $message = (new \Swift_Message($data['subject']))
+                ->setFrom($data['email'])
+                ->setTo('vmonjaret@gmail.com')
+                ->setBody($data["message"], 'text/html');
 
-            if($form->isValid()){
-                // Send mail
-                if($this->sendEmail($form->getData())){
-                    $data = $form->getData();
-                    return $this->render("front/contact/send_email.html.twig", array(
-                        "name" => $data["name"]
-                    ));
-                }else{
-                    var_dump("Error :(");
-                }
-            }
+            $mailer->send($message);
+
+            $this->addFlash("success", "Mail envoyé avec succés");
+            return $this->redirectToRoute('homepage');
         }
 
         return $this->render("front/contact.html.twig", array(
             'form' => $form->createView()
         ));
-    }
-
-    private function sendEmail($data){
-        $myappContactMail = "haasmyriam8@gmail.com";
-        $myappContactPassword = "Kosima70";
-
-        $transport = \Swift_SmtpTransport::newInstance("smtp.gmail.com", 465,"ssl")
-            ->setUsername($myappContactMail)
-            ->setPassword($myappContactPassword);
-
-        $mailer = \Swift_Mailer::newInstance($transport);
-
-        $message = \Swift_Message::newInstance("Random Movie - ". $data["subject"])
-            ->setFrom(array($myappContactMail => "Message by ".$data["name"]))
-            ->setTo(array($data["email"] => $data["email"]))
-            ->setBody($data["message"]."<br>ContactMail :".$data["email"], 'text/html');
-
-        return $mailer->send($message);
     }
 
     /**

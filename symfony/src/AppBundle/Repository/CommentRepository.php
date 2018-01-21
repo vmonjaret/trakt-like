@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 
 /**
@@ -67,5 +68,53 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
         } catch (NoResultException $e) {
             return null;
         }
+    }
+
+    public function countAll()
+    {
+        try {
+            return $this->createQueryBuilder('c')
+                ->select('count(c)')
+                ->getQuery()->getSingleScalarResult();
+        } catch (NoResultException $e) {
+            return null;
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
+    }
+
+    public function countSignaled()
+    {
+        try {
+            return $this->createQueryBuilder('c')
+                ->select('count(c)')
+                ->where('c.signaled = true')
+                ->getQuery()->getSingleScalarResult();
+        } catch (NoResultException $e) {
+            return null;
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
+    }
+
+    public function findAllWithUserAndMovieQuery()
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.user', 'u')
+            ->addSelect('u.username')
+            ->leftJoin('c.movie', 'm')
+            ->addSelect('m.title')
+            ->getQuery();
+    }
+
+    public function findAllSignaledWithUserAndMovieQuery()
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.user', 'u')
+            ->addSelect('u.username')
+            ->leftJoin('c.movie', 'm')
+            ->addSelect('m.title')
+            ->where('c.signaled = true')
+            ->getQuery();
     }
 }

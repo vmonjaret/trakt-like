@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Back;
 
+use AppBundle\Entity\Comment;
 use AppBundle\Entity\User;
 use AppBundle\Manager\MovieManager;
 use AppBundle\Utils\MovieDb;
@@ -18,9 +19,13 @@ class DefaultController extends Controller
     public function indexAction(Request $request, EntityManagerInterface $em)
     {
         $users = $em->getRepository(User::class)->countAll();
+        $comments = $em->getRepository(Comment::class)->countAll();
+        $commentsSignaled = $em->getRepository(Comment::class)->countSignaled();
 
         return $this->render('back/default/index.html.twig', [
-            'users' => $users
+            'users' => $users,
+            'comments' => $comments,
+            'commentsSignaled' => $commentsSignaled
         ]);
     }
 }

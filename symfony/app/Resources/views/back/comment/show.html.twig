@@ -1,0 +1,46 @@
+{% extends 'back/base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="card">
+            <div class="card-content">
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Utilisateur</th>
+                        <td>
+                            <img src="{{ getUserAvatar(comment.user) }}" alt="" class="circle" width="50px">
+                            <span>{{ comment.user.username }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Film</th>
+                        <td>{{ comment.movie.title }}</td>
+                    </tr>
+                    <tr>
+                        <th>Contenu</th>
+                        <td>{{ comment.content }}</td>
+                    </tr>
+                    <tr>
+                        <th>Posté le</th>
+                        <td>{{ comment.createdAt | date('d/m/Y H:m:s') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Signalé?</th>
+                        <td>{{ comment.signaled ? "Oui" : "Non" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Publié?</th>
+                        <td>{{ comment.published ? "Oui" : "Non" }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-action">
+                <a href="{{ path('comment_publish', {'id': comment.id, 'token': csrf_token('publish_comment')}) }}" class="btn">
+                    {{ comment.published ? "Dépublier" : "Publier" }} le commentaire
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

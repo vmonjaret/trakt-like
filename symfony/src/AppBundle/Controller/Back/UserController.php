@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -45,5 +46,30 @@ class UserController extends Controller
         return $this->render('back/user/show.html.twig', [
             'user' => $user
         ]);
+    }
+
+    /**
+     * @Route("/{id}/disable", name="user_disable")
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function disableAction(Request $request, User $user, EntityManagerInterface $em)
+    {
+        $token = $request->query->get('token');
+
+        if (!$this->isCsrfTokenValid('disable_user', $token)) {
+            throw new Exception("CSRF attack");
+        }
+
+        if ($user->isEnabled()) {
+            $user->setEnabled(false);
+            $this->addFlash("success", "Utilisateur désactivé");
+        } else {
+            $user->setEnabled(true);
+            $this->addFlash("success", "Utilisateur activé");
+        }
+        $em->flush();
+
+        return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
     }
 }

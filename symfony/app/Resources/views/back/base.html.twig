@@ -26,12 +26,13 @@
 
             <ul class="right">
                 <li>
-                    <div class="profil_nav_icon_pseudo">
+                    <div data-activates="slide-out" class="button-collapse profil_nav_icon_pseudo">
                         <img src="{{ getUserAvatar(app.user) }}" alt="{{ app.user.username }}" class="circle" width="50px">
                         <span>{{ app.user.username }}</span>
                     </div>
                 </li>
             </ul>
+            {% include 'front/partials/_nav.html.twig' %}
         </div>
     </nav>
 </header>

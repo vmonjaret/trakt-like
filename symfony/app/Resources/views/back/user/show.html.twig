@@ -22,8 +22,31 @@
                         <th>Dernière connexion</th>
                         <td>{{ user.lastLogin | date('d/m/Y H:m:s') }}</td>
                     </tr>
+                    <tr>
+                        <th>Rôles</th>
+                        <td>
+                            {% if "ROLE_SUPER_ADMIN" in user.roles %}
+                                Super administrateur
+                            {% elseif "ROLE_ADMIN" in user.roles %}
+                                Administrateur
+                            {% else %}
+                                Utilisateur
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Statut</th>
+                        <td>{{ user.enabled ? "Activé" : "Désactivé" }}</td>
+                    </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="card-action">
+                {% if user.id != app.user.id %}
+                    <a href="{{ path('user_disable', {'id': user.id, 'token': csrf_token('disable_user')}) }}" class="btn">
+                        {{ user.enabled ? "Désactiver" : "Activer" }} l'utilisateur
+                    </a>
+                {% endif %}
             </div>
         </div>
     </div>

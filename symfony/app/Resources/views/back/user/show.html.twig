@@ -1,0 +1,30 @@
+{% extends 'back/base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="card">
+            <div class="card-content">
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Avatar</th>
+                        <td><img src="{{ getUserAvatar(user) }}" alt="" class="circle" width="50px"></td>
+                    </tr>
+                    <tr>
+                        <th>Pseudo</th>
+                        <td>{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                        <th>Mail</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Dernière connexion</th>
+                        <td>{{ user.lastLogin | date('d/m/Y H:m:s') }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

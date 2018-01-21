@@ -6,7 +6,9 @@ Encore
     .setPublicPath('/build')
     .cleanupOutputBeforeBuild()
     .addEntry('app', './assets/js/main.js')
+    .addEntry('back', './assets/js/back.js')
     .addStyleEntry('global', './assets/css/global.scss')
+    .addStyleEntry('dashboard', './assets/css/back.scss')
     .enableSassLoader(function (sassOptions) {
     }, {
         resolveUrlLoader: false

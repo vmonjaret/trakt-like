@@ -26,6 +26,7 @@
             </div>
 
             <ul class="right">
+                <li><a href="{{ path('homepage') }}">Retour au site</a></li>
                 <li>
                     <div data-activates="slide-out" class="button-collapse profil_nav_icon_pseudo">
                         <img src="{{ getUserAvatar(app.user) }}" alt="{{ app.user.username }}" class="circle" width="50px">
@@ -47,13 +48,13 @@
                 <h6 class="white-text"><a href="">A propos</a></h6>
             </div>
             <div class="col l2 s12">
-                <h6 class="white-text"><a href="">Aide</a></h6>
+                <h6 class="white-text"><a href="{{ path('contact') }}">Contact</a></h6>
             </div>
             <div class="col l3 s12">
-                <h6 class="white-text"><a href="">Conditions d'utilisation</a></h6>
+                <h6 class="white-text"><a href="{{ path('cgu') }}">Conditions d'utilisation</a></h6>
             </div>
             <div class="col l3 s12">
-                <h6 class="white-text"><a href="">Politique de confidentialité</a></h6>
+                <h6 class="white-text"><a href="{{ path('legalsMentions') }}">Mentions légales</a></h6>
             </div>
         </div>
     </div>

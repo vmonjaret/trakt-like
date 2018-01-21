@@ -1,6 +1,7 @@
 import $ from 'jquery';
 
 require("materialize-css/dist/js/materialize");
+require("./components/alert")($);
 
 global.$ = global.jQuery = $;
 

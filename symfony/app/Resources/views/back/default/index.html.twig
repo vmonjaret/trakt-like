@@ -1,7 +1,41 @@
 {% extends 'back/base.html.twig' %}
 
 {% block body %}
-
-    <h1>Dashboard</h1>
-
+<div class="container">
+    <div class="row">
+        <div class="col s12 m6 l4">
+            <div class="card green white-text">
+                <div class="card-content pb-0">
+                    <span class="card-title"><i class="material-icons">group</i> Utilisateurs</span>
+                    <h4>{{ users }} <span class="small">Utilisateurs</span></h4>
+                </div>
+                <div class="card-action green darken-1">
+                    <a href="{{ path('user_index') }}" class="white-text">Gérer les utilisateurs ></a>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6 l4">
+            <div class="card blue white-text">
+                <div class="card-content pb-0">
+                    <span class="card-title"><i class="material-icons">comment</i> Commentaires</span>
+                    <h4>{{ comments }} <span class="small">Commentaires</span></h4>
+                </div>
+                <div class="card-action blue darken-1">
+                    <a href="{{ path('comment_index') }}" class="white-text">Gérer les commentaires ></a>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6 l4">
+            <div class="card purple white-text">
+                <div class="card-content pb-0">
+                    <span class="card-title"><i class="material-icons">mode_comment</i> Signalés</span>
+                    <h4>{{ commentsSignaled }} <span class="small"> commentaires</span></h4>
+                </div>
+                <div class="card-action purple darken-1">
+                    <a href="{{ path('comment_signaled') }}" class="white-text">Gérer les signalés ></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

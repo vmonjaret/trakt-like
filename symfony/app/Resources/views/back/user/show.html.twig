@@ -1,0 +1,56 @@
+{% extends 'back/base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="card">
+            <div class="card-content">
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Avatar</th>
+                        <td><img src="{{ getUserAvatar(user) }}" alt="" class="circle" width="50px"></td>
+                    </tr>
+                    <tr>
+                        <th>Pseudo</th>
+                        <td>{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                        <th>Mail</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Dernière connexion</th>
+                        <td>{{ user.lastLogin | date('d/m/Y H:m:s') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Rôles</th>
+                        <td>
+                            {% if "ROLE_SUPER_ADMIN" in user.roles %}
+                                Super administrateur
+                            {% elseif "ROLE_ADMIN" in user.roles %}
+                                Administrateur
+                            {% else %}
+                                Utilisateur
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Statut</th>
+                        <td>{{ user.enabled ? "Activé" : "Désactivé" }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-action">
+                {% if user.id != app.user.id %}
+                    <a href="{{ path('user_disable', {'id': user.id, 'token': csrf_token('disable_user')}) }}" class="btn">
+                        {{ user.enabled ? "Désactiver" : "Activer" }} l'utilisateur
+                    </a>
+                    {% if is_granted("ROLE_SUPER_ADMIN") and user.enabled %}
+                        <a href="{{ path('homepage', {'_switch_user': user.username}) }}" class="btn right">Impersonate</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

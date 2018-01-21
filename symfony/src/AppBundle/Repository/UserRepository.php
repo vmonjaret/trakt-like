@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 
 /**
@@ -48,7 +49,6 @@ class UserRepository extends EntityRepository
         }
     }
 
-
     public function random($id, $em)
     {
         $sql = " 
@@ -81,5 +81,23 @@ class UserRepository extends EntityRepository
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute($params);
         return $stmt->fetchAll();
+    }
+
+    public function countAll()
+    {
+        try {
+            return $this->createQueryBuilder('u')
+                ->select('count(u)')
+                ->getQuery()->getSingleScalarResult();
+        } catch (NoResultException $e) {
+            return null;
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
+    }
+
+    public function findAllQuery()
+    {
+        return $this->createQueryBuilder('u')->getQuery();
     }
 }

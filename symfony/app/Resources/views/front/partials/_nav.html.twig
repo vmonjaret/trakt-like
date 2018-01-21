@@ -28,6 +28,14 @@
         <li><a href="{{ path('user_profile') }}#progression"><i class="material-icons">view_list</i>Progression</a></li>
         <li><a href="{{ path('user_profile') }}#favorite"><i class="material-icons">favorite</i>Favoris, Déjà vus, A voir</a></li>
         <li><a href="{{ path('user_profile') }}#rate"><i class="material-icons">insert_comment</i>Notes & Critiques</a></li>
+        {% if is_granted("ROLE_ADMIN") %}
+            <li><a href="{{ path('dashboard') }}"><i class="material-icons">vpn_key</i>Administration</a></li>
+        {% endif %}
+        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+            <li>
+                <a href="{{ path('user_show', {'id': app.user.id, '_switch_user': '_exit'}) }}">Arreter l'impersonation</a>
+            </li>
+        {% endif %}
         <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
     {% else %}
         <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>

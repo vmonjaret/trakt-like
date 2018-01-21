@@ -6,54 +6,35 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('build/global.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/dashboard.css') }}">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
     <title>{% block meta_title %}Random Movie{% endblock %}</title>
 </head>
 <body>
+{{ include('_partials/_alert.html.twig') }}
 <header class="navbar-fixed">
     <nav>
         <div class="nav-wrapper">
-            <form class="search_form">
-                <div class="input-field">
-                    <input id="search" type="search" required>
-                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                    <i class="material-icons">close</i>
-                </div>
-            </form>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-            <ul class="hide-on-med-and-down brand_nav_right">
-                <li><a href="sass.html">Series</a></li>
-            </ul>
-            <ul class="hide-on-med-and-down brand_nav_left">
-                <li><a href="{{ path('movie_index') }}">Films</a></li>
-            </ul>
-            <ul class="side-nav" id="mobile-demo">
-                <li><a href="sass.html">Series</a></li>
-                <li><a href="{{ path('movie_index') }}">Films</a></li>
-            </ul>
 
-            <a href="#" class="brand-logo center">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo Random Movie">
-            </a>
+            <div class="container">
+                <a href="{{ path('dashboard') }}" class="brand-logo">
+                    Administration
+                </a>
+            </div>
 
             <ul class="right">
+                <li><a href="{{ path('homepage') }}">Retour au site</a></li>
                 <li>
-                    {% if app.user %}
-                        {# TODO: beautify this #}
-                        <img src="{{ app.user.avatar ? app.user.avatar : asset('images/avatar_default.jpg') }}"
-                             alt="{{ app.user.username }}" class="circle" width="50px">
+                    <div data-activates="slide-out" class="button-collapse profil_nav_icon_pseudo">
+                        <img src="{{ getUserAvatar(app.user) }}" alt="{{ app.user.username }}" class="circle" width="50px">
                         <span>{{ app.user.username }}</span>
-                    {% else %}
-                        <a href="{{ path('fos_user_security_login') }}">
-                            <i class="material-icons hide-on-large-only">account_circle</i>
-                            <span class="hide-on-med-and-down">Connexion</span>
-                        </a>
-                    {% endif %}
+                    </div>
                 </li>
             </ul>
+            {% include 'front/partials/_nav.html.twig' %}
         </div>
     </nav>
 </header>
@@ -67,13 +48,13 @@
                 <h6 class="white-text"><a href="">A propos</a></h6>
             </div>
             <div class="col l2 s12">
-                <h6 class="white-text"><a href="">Aide</a></h6>
+                <h6 class="white-text"><a href="{{ path('contact') }}">Contact</a></h6>
             </div>
             <div class="col l3 s12">
-                <h6 class="white-text"><a href="">Conditions d'utilisation</a></h6>
+                <h6 class="white-text"><a href="{{ path('cgu') }}">Conditions d'utilisation</a></h6>
             </div>
             <div class="col l3 s12">
-                <h6 class="white-text"><a href="">Politique de confidentialité</a></h6>
+                <h6 class="white-text"><a href="{{ path('legalsMentions') }}">Mentions légales</a></h6>
             </div>
         </div>
     </div>
@@ -84,7 +65,12 @@
     </div>
 </footer>
 {% block javascripts %}
-    <script src="{{ asset('build/app.js') }}"></script>
+    <script src="{{ asset('build/back.js') }}"></script>
+    <script>
+        $('.button-collapse').sideNav({
+            edge: 'right'
+        });
+    </script>
 {% endblock %}
 
 </body>

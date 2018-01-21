@@ -1,8 +1,7 @@
 import $ from 'jquery';
-require('./components/moviesActions');
-require("./components/alert")($);
 
 require("materialize-css/dist/js/materialize");
+require("./components/alert")($);
 
 global.$ = global.jQuery = $;
 

@@ -1,0 +1,30 @@
+{% extends 'back/base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <table class="striped">
+            <thead>
+            <tr>
+                <th>Pseudo</th>
+                <th>Activé?</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in pagination %}
+                <tr>
+                    <td><a href="{{ path('user_show', {'id': user.id}) }}" class="black-text">{{ user.username }}</a></td>
+                    <td><i class="material-icons">{{ user.enabled ? "done" : "clear" }}</i></td>
+                    <td>
+                        <a href="{{ path('user_show', {'id': user.id}) }}" class="btn blue"><i class="material-icons">visibility</i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="col l12">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+{% endblock %}

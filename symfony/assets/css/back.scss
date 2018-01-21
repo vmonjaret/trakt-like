@@ -8,4 +8,7 @@
 @import "components/alerts";
 @import "components/navigation";
 @import "components/class";
-@import "components/pagination";
+
+.pagination li, .pagination li a {
+  color: #000;
+}

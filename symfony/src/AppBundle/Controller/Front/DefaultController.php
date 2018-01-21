@@ -139,6 +139,7 @@ class DefaultController extends Controller
      *
      * @Route("/random", name="movie_random")
      * @Method("GET")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @return \Symfony\Component\HttpFoundation\Response
      * @internal param Movie $movie
      * @internal param MovieDb $movieDb
@@ -151,27 +152,6 @@ class DefaultController extends Controller
         $movieRepo = $em->getRepository(Movie::class);
         $movie = $movieRepo->find($query[0]['id']);
 
-        $movieDb = $this->container->get(MovieDb::class);
-
-        $actors = $movieDb->getActors($movie->getTmDbId());
-        $recommendations = $movieDb->getRecommendations($movie->getTmDbId(), 3);
-        $notation = null;
-        $user = null;
-
-        if (null !== $this->getUser()) {
-            $user = $em->getRepository(User::class)->fullyFindById($this->getUser()->getId());
-            $notation = $em->getRepository(Notation::class)->findOneBy([
-                'movie' => $movie,
-                'user' => $this->getUser()
-            ]);
-        }
-
-        return $this->render('front/movie/show.html.twig', array(
-            'movie' => $movie,
-            'actors'=> $actors,
-            'recommendations' => $recommendations,
-            'notation' => $notation,
-            'user' => $user,
-        ));
+        return $this->redirectToRoute('movie_show', ['slug' => $movie->getSlug()]);
     }
 }

@@ -24,6 +24,7 @@ class UserFixture extends Fixture
     public function load(ObjectManager $manager)
     {
         $userManager = $this->container->get('fos_user.user_manager');
+        $genres = $manager->getRepository(Genre::class)->findAll();
 
         $admin = $userManager->createUser();
         $admin->setUsername('admin');
@@ -31,6 +32,8 @@ class UserFixture extends Fixture
         $admin->setPlainPassword('s7xN3BAQ');
         $admin->setEnabled(true);
         $admin->setRoles(['ROLE_SUPER_ADMIN']);
+        $this->addFavorite($admin, $genres);
+        $this->hydrateWithMovies($manager, $admin);
 
         $userManager->updateUser($admin);
 
@@ -40,10 +43,11 @@ class UserFixture extends Fixture
         $teacher->setPlainPassword('dK6ja9fL');
         $teacher->setEnabled(true);
         $teacher->setRoles(['ROLE_SUPER_ADMIN']);
+        $this->addFavorite($teacher, $genres);
+        $this->hydrateWithMovies($manager, $teacher);
 
         $userManager->updateUser($teacher);
 
-        $genres = $manager->getRepository(Genre::class)->findAll();
         $faker = \Faker\Factory::create('fr_FR');
 
         for ($i = 0; $i < 10; $i++) {
@@ -87,6 +91,16 @@ class UserFixture extends Fixture
             $tmp = rand(0, $movieCount);
             if (!$user->getMoviesWished()->contains($movies[$tmp])) {
                 $user->addMoviesWished($movies[$tmp]);
+            }
+        }
+    }
+
+    public function addFavorite(User $user, $genres)
+    {
+        for ($j = 0; $j < 4; $j++) {
+            $tmp = rand(0, count($genres) - 1);
+            if (!$user->getGenresFavorite()->contains($genres[$tmp])) {
+                $user->addGenresFavorite($genres[$tmp]);
             }
         }
     }

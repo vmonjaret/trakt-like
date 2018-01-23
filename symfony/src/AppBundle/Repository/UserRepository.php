@@ -96,6 +96,38 @@ class UserRepository extends EntityRepository
         }
     }
 
+    public function countAllComments($id)
+    {
+        try {
+            return $this->createQueryBuilder('u')
+                ->select('count(c.id)')
+                ->where('u.id = :id')
+                ->leftJoin('u.comments', 'c')
+                ->setParameter('id', $id)
+                ->getQuery()->getSingleScalarResult();
+        } catch (NoResultException $e) {
+            return null;
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
+    }
+
+    public function countAllNotations($id)
+    {
+        try {
+            return $this->createQueryBuilder('u')
+                ->select('count(n.movie_id)')
+                ->where('u.id = :id')
+                ->leftJoin('u.notations', 'n')
+                ->setParameter('id', $id)
+                ->getQuery()->getSingleScalarResult();
+        } catch (NoResultException $e) {
+            return null;
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
+    }
+
     public function findAllQuery()
     {
         return $this->createQueryBuilder('u')->getQuery();

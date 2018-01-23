@@ -21,6 +21,8 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $nbHoursMoviesStats = $em->getRepository(User::class)->getNbHoursMovie($user->getId());
 
+        $nbComments = $em->getRepository(User::class)->countAllComments($user->getId());
+
         $days = floor ($nbHoursMoviesStats[2] / 1440);
         $hours = floor (($nbHoursMoviesStats[2] - $days * 1440) / 60);
         $minutes = $nbHoursMoviesStats[2] - ($days * 1440) - ($hours * 60);
@@ -30,7 +32,8 @@ class UserController extends Controller
         return $this->render('@FOSUser/Profile/show.html.twig', array(
             'user' => $user,
             'nbWatchedMovies' => $nbHoursMoviesStats[1],
-            'nbHoursMovies' => $nbHoursMovies
+            'nbHoursMovies' => $nbHoursMovies,
+            'nbComments' => $nbComments,
         ));
     }
 }

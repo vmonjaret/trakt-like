@@ -7,7 +7,9 @@
             <h1>Random Movie</h1>
             <p>A cours d'idée pour vos soirées ?</p>
             <p>Nous nous occupons de tout !</p>
-            <a href="{{ path('fos_user_registration_register') }}" class="btn">Rejoins la communauté</a>
+            {% if app.user %}
+                <a href="{{ path('fos_user_registration_register') }}" class="btn">Rejoins la communauté</a>
+            {% endif %}
         </div>
         <img src="{{ asset('images/dark_vador_homepage.jpg') }}" alt="">
     </div>

@@ -20,7 +20,7 @@
                             <i class="tiny material-icons">grade</i>
                             <i class="tiny material-icons">grade</i>
                             <i class="tiny material-icons">grade</i>
-                            <span>4.1 Excellent</span>
+                            <span>{% if spectatorRating is empty %}Aucune notes pour ce film{% else %}{{ spectatorRating.rate }} {{ spectatorRating.label }} {% endif %}</span>
                         </div>
                     </div>
                     <div class="col l5">

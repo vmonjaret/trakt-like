@@ -27,6 +27,15 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class MovieController extends Controller
 {
+    const RATING = [
+        '0' => 'Médiocre',
+        '1' => 'A éviter',
+        '2' => 'Moyen',
+        '3' => 'Super',
+        '4' => 'Excellent',
+        '5' => 'Parfait'
+    ];
+
     /**
      * Lists all movie entities.
      *
@@ -69,6 +78,7 @@ class MovieController extends Controller
      * @param EntityManagerInterface $em
      * @param Request $request
      * @return Response
+     * @internal param Movie $movie
      */
     public function showAction($slug, MovieDb $movieDb, EntityManagerInterface $em, Request $request)
     {
@@ -78,6 +88,18 @@ class MovieController extends Controller
         $topComments = $em->getRepository(Comment::class)->topCommentsfindByMovie($movie->getId());
         $notation = null;
         $user = null;
+        $spectatorRate = $em->getRepository(Movie::class)->getAverageRating($movie->getId());
+
+        if(null == $spectatorRate[1]) {
+            $spectatorRating = [];
+        } else {
+            $spectatorLabel = self::RATING[floor($spectatorRate[1])];
+
+            $spectatorRating = [
+                'rate'=> round( $spectatorRate[1], 2, PHP_ROUND_HALF_UP),
+                'label' => $spectatorLabel
+            ];
+        }
 
         if (null !== $this->getUser()) {
             $user = $em->getRepository(User::class)->fullyFindById($this->getUser()->getId());
@@ -86,14 +108,14 @@ class MovieController extends Controller
                 'user' => $this->getUser()
             ]);
         }
-
         return $this->render('front/movie/show.html.twig', array(
             'movie' => $movie,
             'actors'=> $actors,
             'recommendations' => $recommendations,
             'notation' => $notation,
             'user' => $user,
-            'topComments' => $topComments
+            'topComments' => $topComments,
+            'spectatorRating' => $spectatorRating
         ));
     }
 

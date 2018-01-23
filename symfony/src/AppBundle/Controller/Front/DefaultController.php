@@ -16,6 +16,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
+    const RATING = [
+        '0' => 'Médiocre',
+        '1' => 'A éviter',
+        '2' => 'Moyen',
+        '3' => 'Super',
+        '4' => 'Excellent',
+        '5' => 'Parfait'
+    ];
+
     /**
      * @Route("/", name="homepage")
      * @Method("GET")

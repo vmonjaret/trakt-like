@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use Doctrine\ORM\NoResultException;
+
 
 /**
  * MovieRepository
@@ -55,4 +57,19 @@ class MovieRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
+    public function getAverageRating($id)
+    {
+        $query = $this->createQueryBuilder('m')
+            ->select(' AVG(rate.mark)')
+            ->where('m.id = :id')
+            ->leftJoin('m.notations', 'rate')
+            ->setParameter('id', $id)
+            ->getQuery();
+
+        try {
+            return $query->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
 }

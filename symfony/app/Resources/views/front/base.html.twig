@@ -19,9 +19,9 @@
         <div class="nav-wrapper">
             {{ render(controller('AppBundle:Front\\Movie:search', {'request': app.request})) }}
 
-            {#<ul class="hide-on-med-and-down brand_nav_right">#}
-                {#<li><a href="sass.html">Series</a></li>#}
-            {#</ul>#}
+            <ul class="hide-on-med-and-down brand_nav_right">
+                <li><a href="{{ path('homepage') }}">Accueil</a></li>
+            </ul>
             <ul class="hide-on-med-and-down brand_nav_left">
                 <li><a href="{{ path('movie_index') }}">Films</a></li>
             </ul>

@@ -125,6 +125,17 @@ class DefaultController extends Controller
     public function randomAction()
     {
         $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository(User::class)->fullyFindById($this->getUser());
+        if ($user->getMoviesLiked()->isEmpty() && $user->getMoviesWished()->isEmpty() && $user->getMoviesWatched()->isEmpty() ) {
+            $this->addFlash("danger", "Veuillez renseigner un panel de film");
+            return $this->redirectToRoute("userMoviesTaste");
+        }
+        if ($user->getGenresFavorite()->isEmpty() ) {
+            $this->addFlash("danger", "Veuillez renseigner vos genres favoris");
+            return $this->redirectToRoute("userGenreTaste");
+        }
+
         $query = $em->getRepository(User::class)->random($this->getUser()->getId(), $em);
 
         $movieRepo = $em->getRepository(Movie::class);

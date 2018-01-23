@@ -87,8 +87,6 @@ class MovieController extends Controller
             ]);
         }
 
-        dump($topComments);
-
         return $this->render('front/movie/show.html.twig', array(
             'movie' => $movie,
             'actors'=> $actors,

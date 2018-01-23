@@ -14,6 +14,10 @@ fos_user_profile_edit:
     path:     /profile/edit
     defaults: { _controller: 'FOSUserBundle:Profile:edit' }
 
+fos_user_profile_show:
+     path:     /profile
+     defaults: { _controller: 'AppBundle:Front\User:show' }
+
 fos_user_register:
     resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
     prefix: /register

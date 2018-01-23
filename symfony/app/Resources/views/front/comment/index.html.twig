@@ -19,6 +19,10 @@
                             <p class="m-0 text-bold">Par {{ comment.username }}, le {{ comment[0].createdAt|date("d/m/Y") }}</p>
                         </div>
                         <p>{{ comment[0].content }}</p>
+                        <a href="{{ path('comment_signal', {'id': comment[0].id, 'token': csrf_token('signal_comment')}) }}"
+                           class="right black-text">
+                            Signaler le commentaire
+                        </a>
                     </li>
                 </ul>
             {% endfor %}

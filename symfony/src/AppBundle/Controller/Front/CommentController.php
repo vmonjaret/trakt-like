@@ -1,19 +1,21 @@
 <?php
 
 namespace AppBundle\Controller\Front;
+
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Movie;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\BrowserKit\Request;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Comment controller.
  *
- * @Route("comment")
+ * @Route("/comments")
  */
 class CommentController extends Controller
 {
@@ -35,5 +37,25 @@ class CommentController extends Controller
             'movie'=> $movie,
             'comments' => $comments
         ]);
+    }
+
+    /**
+     * @Route("/{id}/signal", name="comment_signal")
+     * @param Request $request
+     * @param Comment $comment
+     */
+    public function signalAction(Request $request, Comment $comment, EntityManagerInterface $em)
+    {
+        $token = $request->query->get('token');
+
+        if (! $this->isCsrfTokenValid('signal_comment', $token)) {
+            throw new Exception('CSRF attack');
+        }
+
+        $comment->setSignaled(true);
+        $em->flush();
+
+        $this->addFlash("success", "Commentaire signalé");
+        return $this->redirectToRoute('movie_show', ['slug' => $comment->getMovie()->getSlug()]);
     }
 }

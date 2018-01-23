@@ -5,7 +5,7 @@
                 <a href="{{ path('user_profile') }}">
                     <div class="background trianglify" data-trianglify="{{ app.user.background }}">
                     </div>
-                    <img class="circle" src="{{ app.user.avatar ? app.user.avatar : asset('images/avatar_default.jpg') }}">
+                    <img class="circle" src="{{ getUserAvatar(app.user) }}">
                     <span class="white-text name">{{ app.user.username }}</span>
                     <span class="white-text email">{{ app.user.email }}</span>
                 </a>

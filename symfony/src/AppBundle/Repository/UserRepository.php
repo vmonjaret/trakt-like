@@ -116,7 +116,7 @@ class UserRepository extends EntityRepository
     {
         try {
             return $this->createQueryBuilder('u')
-                ->select('count(n.movie_id)')
+                ->select('count(n.movie)')
                 ->where('u.id = :id')
                 ->leftJoin('u.notations', 'n')
                 ->setParameter('id', $id)

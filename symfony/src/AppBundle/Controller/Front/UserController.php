@@ -22,6 +22,7 @@ class UserController extends Controller
         $nbHoursMoviesStats = $em->getRepository(User::class)->getNbHoursMovie($user->getId());
 
         $nbComments = $em->getRepository(User::class)->countAllComments($user->getId());
+        $nbNotations = $em->getRepository(User::class)->countAllNotations($user->getId());
 
         $days = floor ($nbHoursMoviesStats[2] / 1440);
         $hours = floor (($nbHoursMoviesStats[2] - $days * 1440) / 60);
@@ -34,6 +35,7 @@ class UserController extends Controller
             'nbWatchedMovies' => $nbHoursMoviesStats[1],
             'nbHoursMovies' => $nbHoursMovies,
             'nbComments' => $nbComments,
+            'nbNotations' => $nbNotations
         ));
     }
 }

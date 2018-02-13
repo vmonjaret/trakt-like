@@ -1,16 +1,4 @@
-# trakt-like
+symfony
+=======
 
-
-## Installation
-
-```
-cd docker
-cp .env.dist .env
-docker-compose up -d --build
-docker-compose exec php bash
-composer install
-exit
-cd ../symfony
-yarn install
-yarn prod
-```
+A Symfony project created on November 3, 2017, 11:41 am.

@@ -6,7 +6,7 @@
     "jquery-star-rating-plugin": "git+ssh://git@github.com:vmonjaret/jquery-star-rating-plugin.git",
     "material-design-icons": "^3.0.1",
     "materialize-css": "^0.100.2",
-    "node-sass": "^4.7.2",
+    "node-sass": "^7.0.0",
     "sass-loader": "^6.0.6",
     "trianglify": "^1.2.0",
     "webpack-build-notifier": "^0.1.18"
